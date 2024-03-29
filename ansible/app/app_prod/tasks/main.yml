@@ -1,0 +1,80 @@
+---
+# tasks file for app_prod
+  - name: Update apt package cache
+    apt:
+      update_cache: yes
+      
+  - name: Add lines to /etc/hosts
+    template:
+      src: hosts.j2
+      dest: /etc/hosts
+      owner: root
+      group: root
+      mode: '0644'
+      
+  - name: Install DotNet Runtime, SDK, Git, Net-Tools, and Nginx
+    apt:
+      name: "{{ item.name }}"
+      state: "{{ item.state }}"
+    loop: "{{ packages_to_install }}"             
+
+  - name: Edit nginx default conf
+    template:
+      src: ehealth_nginx.conf.j2
+      dest: /etc/nginx/sites-enabled/default
+      force: yes
+
+  - name: Remove directory /tmp/ehealth if it exists
+    command: sudo rm -rf /tmp/ehealth
+    ignore_errors: true
+
+  - name: Create ehealth app directory
+    command: sudo mkdir -p /var/www/html/ehealth/
+    ignore_errors: true 
+
+  - name: Clone Ehealth Asp Files with Sparse Checkout
+    command: >
+      sh -c '
+        git clone --branch={{ branch_name }} --filter=blob:none --sparse {{ repository_url }} /tmp/ehealth/ &&
+        cd /tmp/ehealth/ &&
+        git sparse-checkout set EhealthV2/*
+      '
+    environment:
+      GIT_TERMINAL_PROMPT: "0"
+
+  - name: Publish Ehealth app
+    command: sudo dotnet publish /tmp/ehealth/EhealthV2 -o /var/www/html/ehealth/EhealthV2
+
+  - name: Create directory /var/www/.dotnet for the Service
+    file:
+      path: "{{ dotnet_directory_path }}"
+      state: directory
+      owner: "{{ dotnet_directory_owner }}"
+      group: "{{ dotnet_directory_group }}"
+      mode: "{{ dotnet_directory_mode }}"
+
+  - name: Create the service
+    template:
+      src: ehealth_dotnet.service.j2
+      dest: /etc/systemd/system/ehealth_dotnet.service
+
+  - name: Reload systemd daemon
+    systemd:
+      daemon_reload: yes
+  
+  - name: Start services
+    service:
+      name: "{{ item.name }}"
+      state: started
+    loop: "{{ services_to_start }}"
+
+  - name: Restart nginx service
+    service:
+      name: nginx
+      state: restarted
+
+  - name: Copy Host Conf
+    file:
+      src: inventory.hosts
+      dest: /home/rooty
+      force: yes
