@@ -22,8 +22,8 @@ variable "root_user_password" {
 }
 
 variable "group_name" {
-  description = "group name of the lab"
-  default     = "ansible_group"
+  description = "Production"
+  default     = "production_group"
 }
 
 variable "group_location" {

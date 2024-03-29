@@ -51,14 +51,13 @@ resource "azurerm_network_interface" "nic_prod_nodes" {
     subnet_id                     = azurerm_subnet.subnet_prod.id
     private_ip_address_allocation = "Static"
     private_ip_address            = "10.0.1.${10 + count.index}"
-    public_ip_address_id          = azurerm_public_ip.pubip_node_serve[count.index].id
+    public_ip_address_id          = count.index == 0 ? azurerm_public_ip.pubip_node_web.id : null
   }
-  depends_on = [azurerm_resource_group.prod_group]
+  depends_on = [azurerm_resource_group.prod_group, azurerm_public_ip.pubip_node_web]
 }
 
-resource "azurerm_public_ip" "pubip_node_serve" {
-  count               = var.node_count
-  name                = "pubip_node_${count.index}"
+resource "azurerm_public_ip" "pubip_node_web" {
+  name                = "pubip_node_web"
   resource_group_name = var.group_name
   location            = var.group_location
   allocation_method   = "Static"
@@ -220,7 +219,7 @@ resource "azurerm_network_security_group" "prod_security_group" {
     destination_port_range     = "80"
     source_address_prefix      = "10.0.1.10/32"
     destination_address_prefix = "10.0.1.11/32"
-  } 
+  }
   security_rule {
     name                       = "MYSQL"
     priority                   = 103
@@ -231,7 +230,7 @@ resource "azurerm_network_security_group" "prod_security_group" {
     destination_port_range     = "3306"
     source_address_prefix      = "10.0.1.11/32"
     destination_address_prefix = "10.0.1.12/32"
-  }  
+  }
 
   tags = {
     env = "Production"
