@@ -25,10 +25,13 @@ resource "azurerm_resource_group" "prod_group" {
   location = var.group_location
 }
 
+################################################
+# NODES - PRODUCTION - NETWORK
+################################################
 resource "azurerm_virtual_network" "vnet_prod" {
   name                = "vnet_${var.environment}"
   resource_group_name = var.group_name
-  address_space       = var.env_space_cidr
+  address_space       = var.env_space_cidr_nodes
   location            = var.group_location
   depends_on          = [azurerm_resource_group.prod_group]
 }
@@ -37,7 +40,7 @@ resource "azurerm_subnet" "subnet_prod" {
   name                 = "subnet_${var.environment}_internal"
   resource_group_name  = var.group_name
   virtual_network_name = azurerm_virtual_network.vnet_prod.name
-  address_prefixes     = var.env_subnet_space_cidr
+  address_prefixes     = var.env_space_cidr_nodes
   depends_on           = [azurerm_resource_group.prod_group]
 }
 
@@ -68,19 +71,37 @@ resource "azurerm_public_ip" "pubip_node_web" {
   depends_on = [azurerm_resource_group.prod_group]
 }
 
+######################################
+# CONTROLLER - NETWORK - PRODUCTION
+######################################
+
+resource "azurerm_virtual_network" "vnet_prod_controller" {
+  name                = "vnet_${var.environment}_controller"
+  resource_group_name = var.group_name
+  address_space       = var.env_space_cidr_control
+  location            = var.group_location
+  depends_on          = [azurerm_resource_group.prod_group]
+}
+
+resource "azurerm_subnet" "subnet_prod_controller" {
+  name                 = "subnet_controller_${var.environment}_internal"
+  resource_group_name  = var.group_name
+  virtual_network_name = azurerm_virtual_network.vnet_prod_controller.name
+  address_prefixes     = var.env_subnet_space_cidr_control
+  depends_on           = [azurerm_resource_group.prod_group]
+}
+
 resource "azurerm_network_interface" "nic_prod_controller" {
   name                = "nic_${var.environment}_controller"
   resource_group_name = var.group_name
   location            = var.group_location
   ip_configuration {
     name                          = "nic_controller_config"
-    subnet_id                     = azurerm_subnet.subnet_prod.id
+    subnet_id                     = azurerm_subnet.subnet_prod_controller.id
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.pubip_controller.id
   }
 }
-
-
 
 resource "azurerm_public_ip" "pubip_controller" {
   name                = "pubip_controller"
@@ -181,10 +202,10 @@ resource "azurerm_linux_virtual_machine" "nodes" {
 }
 
 #########################
-# Ansible SecGroup
+# NODES - SECURITY RULES
 #########################
-resource "azurerm_network_security_group" "prod_security_group" {
-  name                = "${var.environment}_security_group"
+resource "azurerm_network_security_group" "prod_security_group_nodes" {
+  name                = "${var.environment}_security_group_nodes"
   location            = var.group_location
   resource_group_name = var.group_name
   security_rule {
@@ -195,8 +216,8 @@ resource "azurerm_network_security_group" "prod_security_group" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "22"
-    source_address_prefix      = "*"
-    destination_address_prefix = azurerm_subnet.subnet_prod.address_prefixes[0]
+    source_address_prefix      = var.env_subnet_space_cidr_control[0]
+    destination_address_prefix = var.env_subnet_space_cidr_nodes[0]
   }
   security_rule {
     name                       = "HTTP-APP"
@@ -237,21 +258,77 @@ resource "azurerm_network_security_group" "prod_security_group" {
   }
   depends_on = [azurerm_resource_group.prod_group]
 }
-
-resource "azurerm_network_interface_security_group_association" "prod_sga_controller" {
-  network_interface_id      = azurerm_network_interface.nic_prod_controller.id
-  network_security_group_id = azurerm_network_security_group.prod_security_group.id
-  depends_on                = [azurerm_network_security_group.prod_security_group, azurerm_network_interface.nic_prod_controller]
-}
-
+# Association
 resource "azurerm_network_interface_security_group_association" "prod_sga_nodes" {
   for_each = { for idx, nic in azurerm_network_interface.nic_prod_nodes : idx => nic }
 
   network_interface_id      = each.value.id
-  network_security_group_id = azurerm_network_security_group.prod_security_group.id
-  depends_on                = [azurerm_network_interface.nic_prod_nodes, azurerm_network_security_group.prod_security_group]
+  network_security_group_id = azurerm_network_security_group.prod_security_group_nodes.id
+  depends_on                = [azurerm_network_interface.nic_prod_nodes, azurerm_network_security_group.prod_security_group_nodes]
 }
 
+########################################################
+# CONTROLLER SECURITY RULES
+########################################################
 
+resource "azurerm_network_security_group" "prod_security_group_controller" {
+  name                = "${var.environment}_security_group_controller"
+  location            = var.group_location
+  resource_group_name = var.group_name
+  security_rule {
+    name                       = "SSH"
+    priority                   = 100
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "22"
+    source_address_prefix      = "*"
+    destination_address_prefix = azurerm_subnet.subnet_prod_controller.address_prefixes[0]
+  }
+
+  tags = {
+    env = "Production"
+  }
+  depends_on = [azurerm_resource_group.prod_group]
+}
+# Association
+resource "azurerm_network_interface_security_group_association" "prod_sga_controller" {
+  network_interface_id      = azurerm_network_interface.nic_prod_controller.id
+  network_security_group_id = azurerm_network_security_group.prod_security_group_controller.id
+  depends_on                = [azurerm_network_security_group.prod_security_group_controller, azurerm_network_interface.nic_prod_controller]
+}
+
+##########################################################
+#  Peering to access nodes from Controller
+##########################################################
+
+# Peering connection from vnet_prod_controller to vnet_prod
+resource "azurerm_virtual_network_peering" "vnet_controller_to_prod" {
+  name                         = "vnet-controller-to-prod"
+  resource_group_name          = var.group_name
+  virtual_network_name         = azurerm_virtual_network.vnet_prod_controller.name
+  remote_virtual_network_id    = azurerm_virtual_network.vnet_prod.id
+  allow_virtual_network_access = true
+  allow_forwarded_traffic      = false
+  allow_gateway_transit        = false
+  use_remote_gateways          = false
+
+  depends_on = [azurerm_resource_group.prod_group]
+}
+
+# Peering connection from vnet_prod to vnet_prod_controller
+resource "azurerm_virtual_network_peering" "vnet_prod_to_controller" {
+  name                         = "vnet-prod-to-controller"
+  resource_group_name          = var.group_name
+  virtual_network_name         = azurerm_virtual_network.vnet_prod.name
+  remote_virtual_network_id    = azurerm_virtual_network.vnet_prod_controller.id
+  allow_virtual_network_access = true
+  allow_forwarded_traffic      = false
+  allow_gateway_transit        = false
+  use_remote_gateways          = false
+
+  depends_on = [azurerm_resource_group.prod_group]
+}
 
 
