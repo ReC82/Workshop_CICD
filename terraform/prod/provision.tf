@@ -37,7 +37,7 @@ resource "null_resource" "controller_provision" {
       private_key = tls_private_key.ssh_key_linux_openssh.private_key_openssh
     }
   }
-  depends_on = [tls_private_key.ssh_key_linux_openssh, null_resource.output_private_ips]
+  depends_on = [tls_private_key.ssh_key_linux_openssh, null_resource.output_private_ips, azurerm_virtual_network_peering.vnet_controller_to_prod, azurerm_virtual_network_peering.vnet_prod_to_controller]
 }
 
 resource "null_resource" "output_private_ips" {
