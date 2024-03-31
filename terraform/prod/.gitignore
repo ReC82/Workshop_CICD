@@ -1,2 +1,3 @@
 .terraform/*
-module_prod_aws/module_prod_aws_provider.tf
+module_prod_aws/module_prod_aws_provider_subid.tf
+module_prod_azure/module_prod_azure_provider_subid.tf
