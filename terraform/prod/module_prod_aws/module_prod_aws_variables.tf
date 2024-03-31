@@ -1,3 +1,7 @@
+variable "aws_ami" {
+    default = "ami-08116b9957a259459"
+}
+
 variable "environment" {
   description = "Work envirronement"
   default     = "prod"

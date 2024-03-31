@@ -2,21 +2,17 @@
 locals {
   module_sources = {
     "azure" = {
-      module1 = "./module_prod_azure"
-      # Add more modules as needed
+      module_prod_azure = "./module_prod_azure"
     }
     "aws" = {
-      module1 = "./module_prod_aws"
-      # Add more modules as needed
+      module_prod_aws = "./module_prod_aws"
     }
     "default" = {
-      module1 = "./module_prod_azure"
-      # Add more modules as needed
+      module_prod_default = "./module_prod_azure"
     }
   }
 }
 
-# Define a list of objects representing modules
 locals {
   modules_list = [
     for module_name, module_source in local.module_sources[infra_environment] : {
@@ -26,7 +22,7 @@ locals {
   ]
 }
 
-# Import modules based on the value of the environment variable
+# Import modules based on infra_environment
 module "azure_modules" {
   source = local.modules_list[*].source
 }

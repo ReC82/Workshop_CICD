@@ -87,7 +87,7 @@ resource "local_file" "export_public_key" {
 }
 
 resource "aws_instance" "nodecontroller" {
-  ami                         = "ami-0c55b159cbfafe1f0" # Amazon Linux 2
+  ami                         = var.aws_ami
   instance_type               = "t2.micro"
   subnet_id                   = aws_subnet.subnet_prod_controller.id
   associate_public_ip_address = true
@@ -100,7 +100,7 @@ resource "aws_instance" "nodecontroller" {
 
 resource "aws_instance" "nodes" {
   count                       = var.node_count
-  ami                         = "ami-0c55b159cbfafe1f0" # Amazon Linux 2
+  ami                         = var.aws_ami
   instance_type               = "t2.micro"
   subnet_id                   = aws_subnet.subnet_prod.id
   associate_public_ip_address = true
