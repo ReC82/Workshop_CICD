@@ -1,2 +1,2 @@
 .terraform/*
-**/module_prod_aws_providers.tf
+./*/module_prod_aws_providers.tf
