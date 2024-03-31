@@ -74,7 +74,7 @@
       state: restarted
 
   - name: Copy Host Conf
-    file:
-      src: inventory.hosts
-      dest: /home/rooty
+    template:
+      src: inventory.hosts.j2
+      dest: /home/rooty/ansible/inventory.hosts
       force: yes
