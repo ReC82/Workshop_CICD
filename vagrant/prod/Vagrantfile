@@ -1,0 +1,94 @@
+# Create a array of hash for 2 servers
+servers = [
+  {
+    :server_hostname => "node_web01",
+    :server_ip => "10.0.1.10",
+    :server_function => "NODE",
+    :server_box => "ubuntu/focal64",
+    :ssh_port => "2220"
+  },
+  {
+    :server_hostname => "node_db02",
+    :server_ip => "10.0.1.11",
+    :server_function => "NODE",
+    :server_box => "envimation/ubuntu-xenial",
+    :ssh_port => "2210"
+  },
+  {
+    :server_hostname => "node_api03",
+    :server_ip => "10.0.1.12",
+    :server_function => "NODE",
+    :server_box => "envimation/ubuntu-xenial",
+    :ssh_port => "2210"
+  },
+  {
+    :server_hostname => "controller",
+    :server_ip => "10.0.1.1",
+    :server_function => "CONTROL",
+    :server_box => "envimation/ubuntu-xenial",
+    :ssh_port => "2201"
+  }
+]
+
+Vagrant.configure("2") do |config|
+  servers.each do |server|
+    config.vm.define server[:server_hostname] do |srv|
+      srv.vm.box = server[:server_box]
+      srv.vm.hostname = server[:server_hostname]
+      srv.vm.network "private_network", ip: server[:server_ip]
+      srv.vm.network "forwarded_port", guest: 22, host: server[:ssh_port], id: "ssh"
+      config.vm.synced_folder "./shared_folder", "/home/vagrant/shared"
+      # Inline provision based on server function
+      if server[:server_function] == "NODE"
+        srv.vm.provision "shell", run: "always",inline: <<-SHELL
+          sudo apt-get -y update
+          mkdir -p /home/vagrant/.ssh/
+          cd /home/vagrant/.ssh
+          ssh-keygen -t rsa -N "" -C "id_rsa" -f id_rsa # -N "" stands for no password
+          sudo rm -r /home/vagrant/shared/*
+          cp id_rsa* /home/vagrant/shared
+          sudo chmod 600 id_rsa
+          sudo chown vagrant:vagrant id_rsa
+          if [ -f "/home/vagrant/.ssh/id_rsa.pub" ]; then
+            echo "The Key Exists"
+            cat /home/vagrant/.ssh/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys
+            #ssh-copy-id -i id_rsa -o "StrictHostKeyChecking=no" vagrant@10.0.5.10
+          fi
+        SHELL
+        srv.vm.provision "shell", inline: <<-SHELL
+
+        SHELL
+        # srv.vm.network "forwarded_port", guest: 80, host: 8888, id: "http"
+        srv.vm.provider :virtualbox do |vbox|
+          vbox.customize ["modifyvm", :id, "--memory", 512]
+          vbox.customize ["modifyvm", :id, "--cpus", 1]
+        end
+      elsif server[:server_function] == "CONTROL"
+        # srv.vm.provision "shell", path: "mysql_provision.sh"
+        srv.vm.provision "shell", run: "always", inline: <<-SHELL
+          #echo "export ENV_VAR_MYSQL=value_mysql" >> /home/vagrant/.bashrc
+          sudo apt-get update
+          sudo apt-get install -y ansible nano iputils-ping vim
+          mkdir -p /home/vagrant/.ssh/
+          cd /home/vagrant/.ssh
+          cp /home/vagrant/shared/* .
+          sudo chmod 600 id_rsa
+          sudo chown vagrant:vagrant id_rsa
+          if [ -f "/home/vagrant/shared/id_rsa.pub" ]; then
+            echo "The Key Exists"
+            cat /home/vagrant/shared/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys
+            ssh-copy-id -i id_rsa -o "StrictHostKeyChecking=no" vagrant@10.0.5.10
+          fi
+          echo "[servers]" >> /etc/ansible/hosts
+          echo "10.0.1.10" >> /etc/ansible/hosts
+          ssh-keyscan -H 10.0.1.10 >> /home/vagrant/.ssh/known_hosts
+          #ansible -o HostKeyChecking=no -m ping servers
+        SHELL
+        srv.vm.provider :virtualbox do |vbox|
+          vbox.customize ["modifyvm", :id, "--memory", 1024]
+          vbox.customize ["modifyvm", :id, "--cpus", 1]
+        end
+      end
+    end
+  end
+end
