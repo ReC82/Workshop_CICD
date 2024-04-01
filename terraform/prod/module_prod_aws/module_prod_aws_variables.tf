@@ -9,22 +9,22 @@ variable "environment" {
 
 variable "env_space_cidr_nodes" {
   description = "Address Space Prod Env"
-  default     = ["10.0.0.0/16"]
+  default     = "10.0.0.0/16"
 }
 
 variable "env_subnet_space_cidr_nodes" {
   description = "Address Space Subnet Prod Env"
-  default     = ["10.0.1.0/24"]
+  default     = "10.0.1.0/24"
 }
 
 variable "env_space_cidr_control" {
   description = "Address Space Control Prod Env"
-  default     = ["10.1.0.0/16"]
+  default     = "10.1.0.0/16"
 }
 
 variable "env_subnet_space_cidr_control" {
   description = "Address Space Subnet Prod Env"
-  default     = ["10.1.1.0/24"]
+  default     = "10.1.1.0/24"
 }
 
 variable "root_user_name" {

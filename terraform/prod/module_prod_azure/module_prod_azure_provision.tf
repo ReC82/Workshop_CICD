@@ -1,4 +1,4 @@
-# ansible-playbook -i /home/rooty/ansible/inventory.hosts /home/rooty/ansible/dotnet_playbook.yaml
+# ansible-playbook -i  ansible/app_prod/templates/inventory.hosts.j2 ansible/app_prod.yaml
 
 resource "null_resource" "cp_playbooks" {
   provisioner "file" {
@@ -26,7 +26,8 @@ resource "null_resource" "controller_provision" {
       "echo '${tls_private_key.ssh_key_linux_openssh.private_key_openssh}' > /home/rooty/.ssh/id_rsa",
       "chmod 600 /home/rooty/.ssh/id_rsa",
       "dos2unix ip_list.txt",
-      "while IFS= read -r ip; do ssh-keyscan -H $ip >> /home/rooty/.ssh/known_hosts; done < ip_list.txt"
+      "while IFS= read -r ip; do ssh-keyscan -H $ip >> /home/rooty/.ssh/known_hosts; done < ip_list.txt",
+      "ansible-playbook -i  ansible/app_prod/templates/inventory.hosts.j2 ansible/app_prod.yaml"
       #"sudo sed -i 's/^;host_key_checking=True/host_key_checking = False/' /home/rooty/ansible.cfg",
       #"sudo cp -f private_nodes.txt /etc/ansible/hosts"
     ]

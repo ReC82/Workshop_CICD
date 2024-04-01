@@ -1,8 +1,3 @@
-# Create AWS resource group
-resource "aws_resource_group" "prod_group" {
-  name = var.group_name
-}
-
 ################################################
 # NODES - PRODUCTION - NETWORK
 ################################################
@@ -91,9 +86,10 @@ resource "aws_instance" "nodecontroller" {
   instance_type               = "t2.micro"
   subnet_id                   = aws_subnet.subnet_prod_controller.id
   associate_public_ip_address = true
-  key_name                    = tls_private_key.ssh_key_linux_openssh.id
+  key_name                    = "priv.pem"
 
   tags = {
+    Env = "Production"
     Name = "nodecontroller"
   }
 }
@@ -104,7 +100,7 @@ resource "aws_instance" "nodes" {
   instance_type               = "t2.micro"
   subnet_id                   = aws_subnet.subnet_prod.id
   associate_public_ip_address = true
-  key_name                    = tls_private_key.ssh_key_linux_openssh.id
+  key_name                    = tls_private_key.ssh_key_linux_openssh
 
   tags = {
     Name = "node-${var.node_names[count.index]}${format("%02d", count.index + 1)}"
@@ -122,7 +118,7 @@ resource "aws_security_group" "prod_security_group_nodes" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = [var.env_subnet_space_cidr_control[0]]
+    cidr_blocks = [var.env_subnet_space_cidr_control]
   }
 
   ingress {

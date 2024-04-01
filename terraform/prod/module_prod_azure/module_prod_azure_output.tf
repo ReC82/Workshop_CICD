@@ -12,3 +12,7 @@ output "private_ip_addresses" {
     for idx, nic in azurerm_network_interface.nic_prod_nodes : idx => nic.ip_configuration[0].private_ip_address
   }
 }
+
+output "webapp_ip" {
+    value = azurerm_public_ip.pubip_node_web.ip_address
+}
