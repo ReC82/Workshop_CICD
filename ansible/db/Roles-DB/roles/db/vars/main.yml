@@ -1,0 +1,8 @@
+  
+    new_mysql_root_password: redacted
+    mysqlsoftware:
+      - mysql-server
+      - mysql-client
+  
+
+    mysql_root_pass: "root"
