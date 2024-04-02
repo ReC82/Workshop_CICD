@@ -4,7 +4,6 @@
 ###########
 - name: Setup SpringBoot Api
   become: yes
-  hosts: apis
   tasks:
     - name: Update apt package cache
       apt:
