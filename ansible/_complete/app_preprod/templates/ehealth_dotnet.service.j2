@@ -1,0 +1,17 @@
+[Unit]
+Description=Ehealth WebApp Service
+
+[Service]
+WorkingDirectory=/var/www/html/ehealth
+ExecStart=/usr/bin/dotnet /var/www/html/ehealth/EhealthV2/EhealthV2.dll
+Restart=always
+# Restart service after 10 seconds if the dotnet service crashes:
+RestartSec=10
+KillSignal=SIGINT
+SyslogIdentifier=myfirstapp-identifier
+User=www-data
+Environment=ASPNETCORE_ENVIRONMENT=Development
+Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+
+[Install]
+WantedBy=multi-user.target

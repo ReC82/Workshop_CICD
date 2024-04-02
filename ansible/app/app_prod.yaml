@@ -1,0 +1,7 @@
+# app_prod.yaml
+
+- name: Playbook for deploying app_prod role
+  hosts: ehealth_app_prod
+  become: yes
+  roles:
+    - app_prod

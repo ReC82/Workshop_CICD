@@ -1,0 +1,31 @@
+---
+# vars file for app_prod
+
+host_entries:
+  - "10.0.1.10 ehealth_app_prod"
+  - "10.0.1.11 ehealth_db_prod"
+  - "10.0.1.12 ehealth_api_prod"
+
+repository_url: "https://github.com/ReC82/EHealthFull.git"
+branch_name: "main"
+
+dotnet_directory_path: "/var/www/.dotnet"
+dotnet_directory_owner: "www-data"
+dotnet_directory_group: "www-data"
+dotnet_directory_mode: "0755"
+
+packages_to_install:
+  - name: dotnet-runtime-8.0
+    state: present
+  - name: dotnet-sdk-8.0
+    state: present
+  - name: git
+    state: present
+  - name: net-tools
+    state: present
+  - name: nginx
+    state: latest
+
+services_to_start:
+  - name: nginx
+  - name: ehealth_dotnet

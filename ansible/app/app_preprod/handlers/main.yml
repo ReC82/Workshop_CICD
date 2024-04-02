@@ -1,0 +1,6 @@
+---
+# handlers file for app_prod
+  - name: Start Ehealth service
+    service:
+      name: ehealth_dotnet
+      state: started

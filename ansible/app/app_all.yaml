@@ -1,0 +1,19 @@
+# app_all.yaml
+
+- name: Playbook for deploying app_prod role
+  hosts: ehealth_app_prod
+  become: yes
+  roles:
+    - app_prod
+
+- name: Playbook for deploying app_preprod role
+  hosts: ehealth_app_preprod
+  become: yes
+  roles:
+    - app_preprod
+
+- name: Playbook for deploying app_ci role
+  hosts: ehealth_app_ci
+  become: yes
+  roles:
+    - app_ci

@@ -1,0 +1,6 @@
+- name: Playbook for deploying app_ci role
+  hosts: ehealth_app_ci
+  become: yes
+  roles:
+    - app_ci
+    - api_ci
