@@ -1,5 +1,5 @@
 # ENV
-environment="PROD"
+environment="prod"
 # WEB
 web_ip_prod="10.0.1.10"
 web_ip_preprod="10.0.2.10"
@@ -19,7 +19,7 @@ sudo apt-get install -y ansible nano iputils-ping vim git
 
 ssh-keyscan -H "${web_ip_prod}" >> /home/vagrant/.ssh/known_hosts
 ssh-keyscan -H "${db_ip_prod}" >> /home/vagrant/.ssh/known_hosts
-ssh-keyscan -H "${$api_ip_prod}" >> /home/vagrant/.ssh/known_hosts
+ssh-keyscan -H "${api_ip_prod}" >> /home/vagrant/.ssh/known_hosts
 eval "$(ssh-agent -s)"
 ssh-keyscan -H github.com >> /home/vagrant/.ssh/known_hosts
 ssh-add /home/vagrant/.ssh/infrakey
@@ -35,7 +35,7 @@ ${db_ip_prod}
 ${api_ip_prod}
 EOF
 # ANSIBLE PROD - Provide a complete YAML : APP - API - DB
-sudo -u vagrant ansible-playbook -i inventory.${environment}.host --key-file .ssh/infrakey /home/vagrant/Workshop_CICD/ansible/app/app_prod.yaml
+sudo -u vagrant ansible-playbook -i inventory.${environment}.host --key-file .ssh/infrakey /home/vagrant/Workshop_CICD/ansible/_complete/pb-prod.yaml
 # ANSIBLE PREPROD
 # sudo -u vagrant ansible-playbook -i inventory.${environment}.host --key-file .ssh/infrakey /home/vagrant/Workshop_CICD/ansible/app/pre-production.yaml
 # ANSIBLE CI

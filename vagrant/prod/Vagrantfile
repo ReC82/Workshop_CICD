@@ -2,16 +2,20 @@ require 'csv'
 
 servers = []
 
+env = "prod" # !!! CONTROLLER
+
 CSV.foreach("servers.csv", headers: true) do |row|
-  servers << {
-    :server_hostname => row["server_hostname"],
-    :server_ip => row["server_ip"],
-    :env => row["env"],
-    :server_function => row["server_function"],
-    :server_box => row["server_box"],
-    :ssh_port => row["ssh_port"],
-    :http_port => row["http_port"]
-  }
+  if true # row["env"] == env
+    servers << {
+      :server_hostname => row["server_hostname"],
+      :server_ip => row["server_ip"],
+      :env => row["env"],
+      :server_function => row["server_function"],
+      :server_box => row["server_box"],
+      :ssh_port => row["ssh_port"],
+      :http_port => row["http_port"]
+    }
+  end
 end
 
 Vagrant.configure("2") do |config|
@@ -32,14 +36,19 @@ Vagrant.configure("2") do |config|
         # CONFIGURE PORT FOR WEBSERVER
         if server[:server_hostname].include?("web")
           srv.vm.network "forwarded_port", guest: 80, host: server[:http_port], id: "http"
+          srv.vm.provider :virtualbox do |vbox|
+            vbox.customize ["modifyvm", :id, "--memory", 1024]
+            vbox.customize ["modifyvm", :id, "--cpus", 1]
+          end
+        else
+          # CONFIGURE MEMORY AND CPU FOR NODES != WEB
+          srv.vm.provider :virtualbox do |vbox|
+            vbox.customize ["modifyvm", :id, "--memory", 512]
+            vbox.customize ["modifyvm", :id, "--cpus", 1]
+          end
         end
         # EXECUTE NODE SCRIPT
         srv.vm.provision "shell", run: "always", path: "scripts/setup_nodes.sh"
-        # CONFIGURE MEMORY AND CPU FOR NODES
-        srv.vm.provider :virtualbox do |vbox|
-          vbox.customize ["modifyvm", :id, "--memory", 512]
-          vbox.customize ["modifyvm", :id, "--cpus", 1]
-        end
       elsif server[:server_function] == "CONTROL"
         # EXECUTE CONTROLLER SCRIPT
         srv.vm.provision "shell", run: "always", path: "scripts/setup_control.sh"

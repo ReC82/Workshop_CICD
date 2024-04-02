@@ -7,8 +7,8 @@ if [ ! -f "/home/vagrant/shared/infrakey.pub" ]; then
     cp /home/vagrant/.ssh/infrakey* /home/vagrant/shared
 else
     echo "The Key Exists"
-    sudo chown vagrant:vagrant /home/vagrant/.ssh/infrakey
-    sudo chmod 600 /home/vagrant/.ssh/infrakey
     cp /home/vagrant/shared/infrakey* .
+    sudo chown vagrant:vagrant /home/vagrant/.ssh/infrakey
+    sudo chmod 600 /home/vagrant/.ssh/infrakey 
     cat /home/vagrant/.ssh/infrakey.pub >> /home/vagrant/.ssh/authorized_keys
 fi
