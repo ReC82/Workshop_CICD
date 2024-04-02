@@ -4,3 +4,4 @@
   roles:
     - app_ci
     - api_ci
+    - db_ci

@@ -1,0 +1,87 @@
+- name: Add line to /etc/hosts
+  lineinfile:
+    path: /etc/hosts
+    line: "{{ item }}"
+    state: present
+  loop:
+    - "10.0.1.10 ehealth_web"
+    - "10.0.1.11 ehealth_db"
+    - "10.0.1.12 ehealth_api"  
+- name: Installing Mysql
+  package:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  loop:
+    - mysql-server
+    - mysql-client 
+    - python3-mysqldb
+    - libmysqlclient-dev
+- name: Install phpMyAdmin dependencies
+  apt:
+    name:
+      - apache2
+      - php
+      - php-mysql
+      - php-json
+      - php-mbstring
+      - php-zip
+      - php-gd
+      - php-curl
+      - php-xml
+      - php-bcmath
+      - php-intl
+      - php-xmlrpc
+      - php-soap
+      - phpmyadmin
+    state: present        
+- name: start and enable mysql service
+  service:
+    name: mysql
+    state: started
+    enabled: yes
+- name: creating mysql user
+  mysql_user:
+    name: "dbadmin"
+    password: "Th!s!s@Fuck!nGS3cr3t!"
+    priv: '*.*:ALL'
+    host: '%'
+    state: present
+- name: creating ehealth database (not mandatory)
+  mysql_db:
+    name: "ehealth"
+    state: present
+- name: Enable remote login to mysql
+  lineinfile:
+      path: /etc/mysql/mysql.conf.d/mysqld.cnf
+      regexp: '^bind-address'
+      line: 'bind-address = 0.0.0.0'
+      backup: yes
+  notify: # Doesn't seems to work
+      - Restart mysql
+- name: Install Net-Tools For Debug
+  apt:
+    name: net-tools
+    state: present
+- name: Add phpMyAdmin configuration to Apache
+  lineinfile:
+    path: /etc/apache2/apache2.conf
+    line: 'Include /etc/apache2/conf-available/phpmyadmin.conf'
+- name: Create phpMyAdmin configuration file
+  template:
+    src: /home/rooty/ansible/phpmyadmin.conf.j2
+    dest: /etc/apache2/conf-available/phpmyadmin.conf
+    owner: root
+    group: root
+    mode: 0644           
+- name: Restart Apache service
+  become: true
+  service:
+    name: apache2
+    state: restarted
+- name: Restart Mysql Svc
+  become: true
+  service:
+    name: mysql
+    state: restarted        
+ 

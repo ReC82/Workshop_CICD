@@ -4,3 +4,4 @@
   roles:
     - app_preprod
     - api_preprod
+    - db_preprod
