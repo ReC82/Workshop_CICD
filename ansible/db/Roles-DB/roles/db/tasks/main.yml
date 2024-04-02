@@ -1,89 +1,85 @@
-- hosts: dbservers:ALL
-  tasks:
-    ##############################
-    #   udpate ubuntu
-    ##############################
-    - name: "apt-get update -y"
-      apt:
-        update_cache: yes
-        cache_valid_time: 3600
+
+ ##############################
+ #   udpate ubuntu
+ ##############################
+- name: "apt-get update -y"
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
     
-    ##############################
-    #   install mysql server
-    ##############################
-    - name: Install MySQL server
-      shell: apt-get -y install mysql-server
+##############################
+#   install mysql server
+##############################
+- name: Install MySQL server
+  shell: apt-get -y install mysql-server
 
-    - name: Install MySQL client
-      shell: apt-get -y install mysql-client
+- name: Install MySQL client
+  shell: apt-get -y install mysql-client
 
-    - name: Start the MySQL service
-      action: service name=mysql state=started
+- name: Start the MySQL service
+  action: service name=mysql state=started
 
-    - name: Create new databases with names 'db-test'
-      community.mysql.mysql_db:
-        name:
-          - db-test
-        state: present
+- name: Create new databases with names 'db-test'
+  community.mysql.mysql_db:
+    name:
+      - db-test
+      state: present
 
-    - name: Create database user with name 'bob' and password '12345' with all database privileges
-      community.mysql.mysql_user:
-        name: bob
-        password: 12345
-        priv: '*.*:ALL'
-        state: present    
+- name: Create database user with name 'bob' and password '12345' with all database privileges
+  community.mysql.mysql_user:
+    name: bob
+    password: 12345
+    priv: '*.*:ALL'
+    state: present    
 
-    ##############################
-    #   install ufw
-    ##############################
+##############################
+#   install ufw
+##############################
 
-    - name: Install ufw 
-      shell: apt-get install ufw -y 
+- name: Install ufw 
+  shell: apt-get install ufw -y 
 
-    - name: Opening (allow HTTP) TCP  
-      shell: ufw allow 80/tcp comment 'Allow HTTP'
-    
-    - name:  Opening (allow HTTP port 8080) TCP/8080
-      shell: ufw allow 8080/tcp comment 'Allow HTTP port 8080'
-    
-    - name:  Opening (allow HTTPS) TCP   
-      shell: ufw allow 443/tcp comment 'Allow HTTPS'  
+- name: Opening (allow HTTP) TCP  
+  shell: ufw allow 80/tcp comment 'Allow HTTP'
 
-    - name: Allow SSH connections on port 22
-      shell: ufw allow 22/tcp comment 'Allow SSH'
+- name:  Opening (allow HTTP port 8080) TCP/8080
+  shell: ufw allow 8080/tcp comment 'Allow HTTP port 8080'
 
-    - name:  Enabled firewall ufw
-      shell: ufw --force enable  
+- name:  Opening (allow HTTPS) TCP   
+  shell: ufw allow 443/tcp comment 'Allow HTTPS'  
 
-    ##############################
-    #   install net-tools
-    ##############################
-    - name: Install net-tools
-      shell: apt-get install net-tools -y    
+- name: Allow SSH connections on port 22
+  shell: ufw allow 22/tcp comment 'Allow SSH'
 
-- hosts: db_ci:dbservers
-  tasks:
-    - name: Install phpmyadmin package
-      apt:
-        name: phpmyadmin
-        state: present
-        update_cache: yes
+- name:  Enabled firewall ufw
+  shell: ufw --force enable  
 
-    - name: Set debconf values for phpmyadmin
-      debconf:
-        name: "{{ item.name }}"
-        question: "{{ item.question }}"
-        value: "{{ item.value }}"
-        vtype: "{{ item.vtype }}"
-      loop:
-        - { name: "phpmyadmin", question: "phpmyadmin/dbconfig-install", value: "true", vtype: "boolean" }
-        - { name: "phpmyadmin", question: "phpmyadmin/app-password-confirm", value: "{{ mysql_root_pass }}", vtype: "password" }
-        - { name: "phpmyadmin", question: "phpmyadmin/mysql/admin-pass", value: "{{ mysql_root_pass }}", vtype: "password" }
-        - { name: "phpmyadmin", question: "phpmyadmin/mysql/app-pass", value: "{{ mysql_root_pass }}", vtype: "password" }
-        - { name: "phpmyadmin", question: "phpmyadmin/reconfigure-webserver", value: "", vtype: "multiselect" }
+##############################
+#   install net-tools
+##############################
+- name: Install net-tools
+  shell: apt-get install net-tools -y    
+- name: Install phpmyadmin package
+  apt:
+    name: phpmyadmin
+    state: present
+    update_cache: yes
 
-    - name: Create symbolic link for phpmyadmin
-      file:
-        src: /usr/share/phpmyadmin
-        dest: /var/www/phpmyadmin
-        state: link
+- name: Set debconf values for phpmyadmin
+  debconf:
+    name: "{{ item.name }}"
+    question: "{{ item.question }}"
+    value: "{{ item.value }}"
+    vtype: "{{ item.vtype }}"
+  loop:
+    - { name: "phpmyadmin", question: "phpmyadmin/dbconfig-install", value: "true", vtype: "boolean" }
+    - { name: "phpmyadmin", question: "phpmyadmin/app-password-confirm", value: "{{ mysql_root_pass }}", vtype: "password" }
+    - { name: "phpmyadmin", question: "phpmyadmin/mysql/admin-pass", value: "{{ mysql_root_pass }}", vtype: "password" }
+    - { name: "phpmyadmin", question: "phpmyadmin/mysql/app-pass", value: "{{ mysql_root_pass }}", vtype: "password" }
+    - { name: "phpmyadmin", question: "phpmyadmin/reconfigure-webserver", value: "", vtype: "multiselect" }
+
+- name: Create symbolic link for phpmyadmin
+  file:
+    src: /usr/share/phpmyadmin
+    dest: /var/www/phpmyadmin
+    state: link
