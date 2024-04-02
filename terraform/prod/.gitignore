@@ -1,7 +1,9 @@
 .terraform/*
+.terraform/
 ./terraform.tfst*
 ./terraform.tfstate.backup
-./.terraform.lock.hcl
+.terraform.lock.hcl
+.terraform.lock.hcl
 *.lock.hcl
 *.tfstate
 
@@ -9,3 +11,5 @@ module_prod_aws/module_prod_aws_provider_subid.tf
 module_prod_azure/module_prod_azure_provider_subid.tf
 module_prod_azure_provider_subid.tf
 module_prod_aws_provider_subid.tf
+
+priv.pem

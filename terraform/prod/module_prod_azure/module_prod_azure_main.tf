@@ -293,7 +293,7 @@ resource "azurerm_virtual_network_peering" "vnet_controller_to_prod" {
   allow_gateway_transit        = false
   use_remote_gateways          = false
 
-  depends_on = [azurerm_resource_group.prod_group]
+  depends_on = [azurerm_resource_group.prod_group, azurerm_virtual_network.vnet_prod, azurerm_virtual_network.vnet_prod_controller]
 }
 
 # Peering connection from vnet_prod to vnet_prod_controller
