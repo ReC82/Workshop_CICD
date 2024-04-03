@@ -56,6 +56,15 @@
     src: /var/tmp/api/Eclipse/Ehealth/target/Ehealth-0.0.1-SNAPSHOT.jar
     dest: /var/www/api/ehealth_api.jar
     remote_src: yes
+- name: Create the Api service
+  become: true
+  template:
+    src: ehealth_api.service.j2
+    dest: /etc/systemd/system/ehealth_api.service
+- name: Reload systemd to read the new service file
+  become: true
+  systemd:
+    daemon_reload: yes
 - name: Enable and start ehealth service
   systemd:
     name: ehealth_api
