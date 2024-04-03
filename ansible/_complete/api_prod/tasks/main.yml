@@ -52,10 +52,10 @@
     path: /var/www/api/
     state: directory
 - name: Copy JAR file
-  become: true
   copy:
     src: /var/tmp/api/Eclipse/Ehealth/target/Ehealth-0.0.1-SNAPSHOT.jar
     dest: /var/www/api/ehealth_api.jar
+    remote_src: yes
 - name: Enable and start ehealth service
   systemd:
     name: ehealth_api
