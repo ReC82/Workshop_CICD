@@ -19,6 +19,7 @@
     - mysql-client 
     - python3-mysqldb
     - libmysqlclient-dev
+  serial: 1
     
 - name: start and enable mysql service
   service:
