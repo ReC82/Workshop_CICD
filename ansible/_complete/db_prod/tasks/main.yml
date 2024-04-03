@@ -1,4 +1,5 @@
 - name: Add line to /etc/hosts
+  become: true
   lineinfile:
     path: /etc/hosts
     line: "{{ item }}"
