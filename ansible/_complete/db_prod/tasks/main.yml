@@ -69,7 +69,7 @@
     line: 'Include /etc/apache2/conf-available/phpmyadmin.conf'
 - name: Create phpMyAdmin configuration file
   template:
-    src: /home/rooty/ansible/phpmyadmin.conf.j2
+    src: phpmyadmin.conf.j2
     dest: /etc/apache2/conf-available/phpmyadmin.conf
     owner: root
     group: root
