@@ -17,7 +17,7 @@
     - mysql-client 
     - python3-mysqldb
     - libmysqlclient-dev
-    - net-tools     
+    
 - name: start and enable mysql service
   service:
     name: mysql
