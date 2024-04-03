@@ -9,6 +9,7 @@
     - "10.0.1.11 ehealth_db"
     - "10.0.1.12 ehealth_api"  
 - name: Installing Mysql
+  become: true
   package:
     name: "{{ item }}"
     state: present
