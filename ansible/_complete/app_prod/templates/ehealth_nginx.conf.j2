@@ -6,7 +6,7 @@ map $http_connection $connection_upgrade {
 
 server {
     listen        80;
-    server_name   "ehealth";
+    server_name   _;
 
     location / {
         proxy_pass         http://localhost:5000;
