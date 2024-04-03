@@ -5,6 +5,7 @@
     - app_prod
 - name: Playbook for deploying db_prod role
   hosts: ehealth_db_prod
+  serial: 1
   become: yes
   roles:
     - db_prod

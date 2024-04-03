@@ -9,7 +9,7 @@
     - "10.0.1.11 ehealth_db"
     - "10.0.1.12 ehealth_api"  
 - name: Installing Mysql
-  become: true
+  become: true  
   package:
     name: "{{ item }}"
     state: present
@@ -19,7 +19,6 @@
     - mysql-client 
     - python3-mysqldb
     - libmysqlclient-dev
-  serial: 1
     
 - name: start and enable mysql service
   service:
