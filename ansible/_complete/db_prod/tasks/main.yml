@@ -45,11 +45,6 @@
   apt:
     name: net-tools
     state: present
-- name: Restart Apache service
-  become: true
-  service:
-    name: apache2
-    state: restarted
 - name: Restart Mysql Svc
   become: true
   service:
