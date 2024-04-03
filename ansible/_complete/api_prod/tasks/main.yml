@@ -4,7 +4,8 @@
 ###########
 - name: Update apt package cache
   apt:
-    update_cache: yes   
+    update_cache: yes
+
 - name: Install required packages
   apt:
     name: "{{ item }}"
@@ -15,6 +16,7 @@
     - mysql-client
     - openjdk-17-jdk
     - maven
+
 - name: Add line to /etc/hosts
   lineinfile:
     path: /etc/hosts
@@ -23,10 +25,11 @@
   loop:
     - "10.0.1.10 ehealth_web"
     - "10.0.1.11 ehealth_db"
-    - "10.0.1.12 ehealth_api"            
+    - "10.0.1.12 ehealth_api" 
+
 - name: Remove directory /var/tmp/api if it exists
   command: sudo rm -rf /var/tmp/api
-  ignore_errors: yes           
+  ignore_errors: true           
 - name: Clone Eclipse Project
   command: >
     sh -c '
@@ -35,14 +38,14 @@
       git sparse-checkout set Eclipse/Ehealth/*
     '
   environment:
-    GIT_TERMINAL_PROMPT: 0
+    GIT_TERMINAL_PROMPT: "0"
 - name: Set executable permission on mvnw script
-  become: yes
+  become: true
   file:
     path: /var/tmp/api/Eclipse/Ehealth/mvnw
     mode: "+x"
 - name: Change directory to the Maven project and Compile Java
-  become: yes
+  become: true
   shell: cd /var/tmp/api/Eclipse/Ehealth/ && sudo ./mvnw clean package
 - name: Create the finale api directory
   file:

@@ -29,7 +29,8 @@
     ignore_errors: true
 
   - name: Create ehealth app directory
-    command: sudo mkdir -p /var/www/html/ehealth/
+    become : true
+    command: mkdir -p /var/www/html/ehealth/
     ignore_errors: true 
 
   - name: Clone Ehealth Asp Files with Sparse Checkout

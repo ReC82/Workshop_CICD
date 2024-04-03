@@ -73,7 +73,8 @@
     dest: /etc/apache2/conf-available/phpmyadmin.conf
     owner: root
     group: root
-    mode: 0644           
+    mode: 0644
+    ignore: true       
 - name: Restart Apache service
   become: true
   service:
