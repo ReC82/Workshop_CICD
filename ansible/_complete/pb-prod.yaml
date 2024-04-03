@@ -3,5 +3,5 @@
   become: yes
   roles:
     - app_prod
-    - api_prod
     - db_prod
+    - api_prod
