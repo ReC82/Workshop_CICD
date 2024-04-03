@@ -69,12 +69,12 @@
     line: 'Include /etc/apache2/conf-available/phpmyadmin.conf'
 - name: Create phpMyAdmin configuration file
   template:
+    become: true
     src: phpmyadmin.conf.j2
     dest: /etc/apache2/conf-available/phpmyadmin.conf
     owner: root
     group: root
     mode: 0644
-    ignore: true       
 - name: Restart Apache service
   become: true
   service:
