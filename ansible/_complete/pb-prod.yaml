@@ -3,5 +3,13 @@
   become: yes
   roles:
     - app_prod
+- name: Playbook for deploying db_prod role
+  hosts: ehealth_db_prod
+  become: yes
+  roles:
     - db_prod
+- name: Playbook for deploying api_prod role
+  hosts: ehealth_api_prod
+  become: yes
+  roles:   
     - api_prod
