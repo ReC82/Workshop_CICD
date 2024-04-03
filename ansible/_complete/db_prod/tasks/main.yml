@@ -16,25 +16,7 @@
     - mysql-server
     - mysql-client 
     - python3-mysqldb
-    - libmysqlclient-dev
-- name: Install phpMyAdmin dependencies
-  apt:
-    name:
-      - apache2
-      - php
-      - php-mysql
-      - php-json
-      - php-mbstring
-      - php-zip
-      - php-gd
-      - php-curl
-      - php-xml
-      - php-bcmath
-      - php-intl
-      - php-xmlrpc
-      - php-soap
-      - phpmyadmin
-    state: present        
+    - libmysqlclient-dev       
 - name: start and enable mysql service
   service:
     name: mysql
@@ -63,18 +45,6 @@
   apt:
     name: net-tools
     state: present
-- name: Add phpMyAdmin configuration to Apache
-  lineinfile:
-    path: /etc/apache2/apache2.conf
-    line: 'Include /etc/apache2/conf-available/phpmyadmin.conf'
-- name: Create phpMyAdmin configuration file
-  become: true
-  template:
-    src: phpmyadmin.conf.j2
-    dest: /etc/apache2/conf-available/phpmyadmin.conf
-    owner: root
-    group: root
-    mode: 0644
 - name: Restart Apache service
   become: true
   service:
