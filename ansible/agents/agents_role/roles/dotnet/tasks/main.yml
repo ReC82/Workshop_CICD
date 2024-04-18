@@ -1,0 +1,30 @@
+
+ ##############################
+ #   udpate ubuntu
+ ##############################
+- name: "apt-get update -y"
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+    
+##############################
+#   install .NET SDK + GIT
+##############################
+- name: Install Dotnetsdk
+  shell: apt-get -y install dotnet-sdk-8.0 # Check the version
+
+- name: Install git
+  shell: apt-get -y install git
+
+##############################
+#   install ufw
+##############################
+
+- name: Install ufw 
+  shell: apt-get install ufw -y 
+
+- name: Allow SSH connections on port 22
+  shell: ufw allow 22/tcp comment 'Allow SSH'
+
+- name:  Enabled firewall ufw
+  shell: ufw --force enable  

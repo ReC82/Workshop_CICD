@@ -1,0 +1,10 @@
+- name: Playbook for deploying agents01 tools
+  hosts: agent-01
+  become: yes
+  roles:
+    - maven
+- name: Playbook for deploying agents02 tools
+  hosts: agent-02
+  become: yes
+  roles:
+    - dotnet
