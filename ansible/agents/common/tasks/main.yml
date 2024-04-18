@@ -1,0 +1,29 @@
+
+ ##############################
+ #   udpate ubuntu
+ ##############################
+- name: "apt-get update -y"
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+    
+##############################
+#   install java runtinme
+##############################
+- name: Install java jre
+  shell: apt-get install default-jre
+
+- name: Create a new user
+  user:
+    name: jenkins
+    shell: /bin/bash
+    create_home: yes
+
+- name: Set password for the user
+  ansible.builtin.shell: echo "jenkins:jenkins" | chpasswd
+
+- name: Create Working Directory
+  file:
+    path: /home/jenkins/workingdir
+    state: directory
+    mode: "0755"
