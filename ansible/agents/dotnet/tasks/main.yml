@@ -12,7 +12,7 @@
 ##############################
 - name: Install Dotnetsdk
   apt:
-  - name: dotnet-sdk-8.0
+    name: dotnet-sdk-8.0
     state: present
 
 ##############################
@@ -21,7 +21,7 @@
 
 - name: Install ufw 
   apt:
-  - name: ufw
+    name: ufw
     state: present
 
 - name: Allow SSH connections on port 22

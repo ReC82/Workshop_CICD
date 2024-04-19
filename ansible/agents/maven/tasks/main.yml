@@ -12,12 +12,12 @@
 ##############################
 - name: Install java sdk
   apt:
-  - name: openjdk-17-jdk # Check the version
+    name: openjdk-17-jdk # Check the version
     state: present
 
 - name: Install maven
   apt:
-  - name: maven
+    name: maven
     state: present
 
 ##############################

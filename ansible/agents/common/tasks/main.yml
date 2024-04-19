@@ -17,7 +17,7 @@
 
 - name: Install git
   apt:
-  - name: git
+    name: git
     state: present
 
 - name: Create a new user
