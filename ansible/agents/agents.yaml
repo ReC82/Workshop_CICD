@@ -4,12 +4,12 @@
   roles:
     - common
 - name: Playbook for deploying agents01 tools
-  hosts: agent-01
+  hosts: TheAgent-0
   become: yes
   roles:
     - maven
 - name: Playbook for deploying agents02 tools
-  hosts: agent-02
+  hosts: TheAgent-1
   become: yes
   roles:
     - dotnet

@@ -10,8 +10,15 @@
 ##############################
 #   install java runtinme
 ##############################
-- name: Install java jre
-  shell: apt-get install default-jre
+- name: Install Java JRE
+  apt:
+    name: default-jre
+    state: present
+
+- name: Install git
+  apt:
+  - name: git
+    state: present
 
 - name: Create a new user
   user:

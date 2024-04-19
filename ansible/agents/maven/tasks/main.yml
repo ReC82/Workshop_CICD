@@ -11,13 +11,14 @@
 #   install java compiler
 ##############################
 - name: Install java sdk
-  shell: apt-get -y install openjdk-17-jdk # Check the version
+  apt:
+  - name: openjdk-17-jdk # Check the version
+    state: present
 
 - name: Install maven
-  shell: apt-get -y install maven # Check the version
-
-- name: Install git
-  shell: apt-get -y install git
+  apt:
+  - name: maven
+    state: present
 
 ##############################
 # Install Docker
