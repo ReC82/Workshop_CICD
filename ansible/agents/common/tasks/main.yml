@@ -34,3 +34,16 @@
     path: /home/jenkins/workingdir
     state: directory
     mode: "0755"
+
+##############################
+#   install ufw
+##############################
+
+- name: Install ufw 
+  shell: apt-get install ufw -y 
+
+- name: Allow SSH connections on port 22
+  shell: ufw allow 22/tcp comment 'Allow SSH'
+
+- name:  Enabled firewall ufw
+  shell: ufw --force enable  

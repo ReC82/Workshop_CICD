@@ -14,23 +14,3 @@
   apt:
     name: dotnet-sdk-8.0
     state: present
-
-##############################
-#   install ufw
-##############################
-
-- name: Install ufw 
-  apt:
-    name: ufw
-    state: present
-
-- name: Allow SSH connections on port 22
-  ufw:
-    rule: allow
-    port: 22
-    proto: tcp
-    comment: "Allow SSH"
-
-- name: Enable firewall ufw
-  ufw:
-    state: enabled
