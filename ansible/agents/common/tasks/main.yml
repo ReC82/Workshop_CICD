@@ -6,7 +6,11 @@
   apt:
     update_cache: yes
     cache_valid_time: 3600
-    
+
+- name: Set TimeZone
+  ansible.builtin.timezone:
+    name: Europe/Brussels
+
 ##############################
 #   install java runtinme
 ##############################
@@ -36,6 +40,12 @@
     owner: jenkins
     group: jenkins
     mode: "0755"
+
+- name: Change ownership of authorized_keys
+  ansible.builtin.file:
+    path: /home/jenkins/.ssh/authorized_keys
+    owner: jenkins
+    group: jenkin
 
 ##############################
 #   install ufw
