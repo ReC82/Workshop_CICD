@@ -29,23 +29,44 @@
     name: jenkins
     shell: /bin/bash
     create_home: yes
+    password: "{{ 'jenkins' | password_hash('sha512') }}"
+  become: true
 
-- name: Set password for the user
-  ansible.builtin.shell: echo "jenkins:jenkins" | chpasswd
-
-- name: Create Working Directory
+- name: Create working directory for Jenkins
   file:
     path: /home/jenkins/workingdir
     state: directory
     owner: jenkins
     group: jenkins
     mode: "0755"
+  become: true
 
-- name: Change ownership of authorized_keys
-  ansible.builtin.file:
-    path: /home/jenkins/.ssh/authorized_keys
+- name: Ensure .ssh folder exists
+  file:
+    path: /home/jenkins/.ssh
+    state: directory
     owner: jenkins
-    group: jenkin
+    group: jenkins
+    mode: "0700"
+  become: true
+
+- name: Ensure authorized_keys file exists
+  file:
+    path: /home/jenkins/.ssh/authorized_keys
+    state: touch
+    owner: jenkins
+    group: jenkins
+    mode: "0644"
+  become: true
+
+- name: Ensure ownership of .ssh and authorized_keys
+  file:
+    path: /home/jenkins/.ssh
+    owner: jenkins
+    group: jenkins
+    recurse: true
+  become: true
+
 
 ##############################
 #   install ufw

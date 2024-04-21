@@ -16,6 +16,17 @@
       command: mv /tmp/apache-jmeter-5.6.3 /var/lib/apache-jmeter
       args:
         creates: /var/lib/apache-jmeter
+
+    - name: Ensure the /var/lib/apache-jmeter/bin/user.properties file exists
+      file:
+        path: /var/lib/apache-jmeter/bin/user.properties
+        state: touch
+
+    - name: Add a custom line to user.properties
+      lineinfile:
+        path: /var/lib/apache-jmeter/bin/user.properties
+        line: "jmeter.save.saveservice.output_format=xml"
+        insertbefore: EOF
     
     - name: Append JMETER_HOME to /etc/profile
       lineinfile:
