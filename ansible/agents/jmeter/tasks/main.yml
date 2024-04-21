@@ -1,0 +1,30 @@
+##############################
+#   install Jmeter
+##############################
+    - name: Download Apache JMeter 
+      get_url:
+        url: https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.6.3.tgz
+        dest: /tmp/apache-jmeter-5.6.3.tgz
+    
+    - name: Extract to /tmp
+      unarchive:
+        src: /tmp/apache-jmeter-5.6.3.tgz
+        dest: /tmp
+        creates: /tmp/apache-jmeter-5.6.3
+    
+    - name: Move extracted directory to /var/lib/apache-jmeter
+      command: mv /tmp/apache-jmeter-5.6.3 /var/lib/apache-jmeter
+      args:
+        creates: /var/lib/apache-jmeter
+    
+    - name: Append JMETER_HOME to /etc/profile
+      lineinfile:
+        path: /etc/profile
+        line: "export JMETER_HOME=/var/lib/apache-jmeter/bin/"
+        insertbefore: EOF
+    
+    - name: Append JMETER_HOME/bin to PATH in /etc/profile
+      lineinfile:
+        path: /etc/profile
+        line: 'export PATH=\$JMETER_HOME/bin:\$PATH'
+        insertbefore: EOF
