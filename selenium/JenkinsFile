@@ -1,9 +1,29 @@
 pipeline {
     agent { label 'selenium' }
+
     stages {
-        stage('test') {
+        stage('Run Selenium Test') {
             steps {
-                shell 'selenium-side-runner -c "goog:chromeOptions.args=[disable-infobars, headless] BasicTest.side'
+                // Run Selenium-side-runner and store the output
+                script {
+                    def output = sh(script: 'selenium-side-runner -c "goog:chromeOptions.args=[disable-infobars, headless]" BasicTest.side', returnStdout: true).trim()
+
+                    // Write the output to a file (e.g., test results)
+                    writeFile file: 'selenium_test_results.txt', text: output
+                }
+            }
+        }
+
+        stage('Publish Test Report') {
+            steps {
+                // Archive the test results for later retrieval
+                archiveArtifacts artifacts: 'selenium_test_results.txt', fingerprint: true
+
+                // Display the results in the console output
+                script {
+                    def reportContent = readFile 'selenium_test_results.txt'
+                    echo "Selenium Test Results:\n${reportContent}"
+                }
             }
         }
     }
