@@ -8,18 +8,5 @@ pipeline {
                 sh 'selenium-side-runner -c "goog:chromeOptions.args=[headless,no-sandbox,remote-debugging-pipe] browserName=chrome" /home/jenkins/workingdir/BasicTest.side'
             }
         }
-
-        stage('Publish Test Report') {
-            steps {
-                // Archive the test results for later retrieval
-                archiveArtifacts artifacts: 'selenium_test_results.txt', fingerprint: true
-
-                // Display the results in the console output
-                script {
-                    def reportContent = readFile 'selenium_test_results.txt'
-                    echo "Selenium Test Results:\n${reportContent}"
-                }
-            }
-        }
     }
 }
