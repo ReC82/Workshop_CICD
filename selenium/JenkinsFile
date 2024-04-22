@@ -5,12 +5,7 @@ pipeline {
         stage('Run Selenium Test') {
             steps {
                 // Run Selenium-side-runner and store the output
-                script {
-                    def output = sh(script: 'selenium-side-runner -c "goog:chromeOptions.args=[disable-infobars, headless]" BasicTest.side', returnStdout: true).trim()
-
-                    // Write the output to a file (e.g., test results)
-                    writeFile file: 'selenium_test_results.txt', text: output
-                }
+                sh 'selenium-side-runner -c "goog:chromeOptions.args=[headless]" BasicTest.side'
             }
         }
 
