@@ -1,6 +1,8 @@
 pipeline {
     agent { label 'selenium' }
-
+    environment {
+        PATH = "/usr/local/bin/:$PATH"
+    }
     stages {
         stage('Run Selenium Test') {
             steps {
