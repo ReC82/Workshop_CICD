@@ -6,7 +6,6 @@ pipeline {
     stages {
         stage('Run Selenium Test') {
             steps {
-                // Run Selenium-side-runner and store the output
                 sh '/usr/local/bin/selenium-side-runner -c "goog:chromeOptions.args=[headless,no-sandbox,remote-debugging-pipe] browserName=chrome" /home/jenkins/workingdir/BasicTest.side'
             }
         }
