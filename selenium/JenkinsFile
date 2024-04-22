@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'selenium' }
+    agent { label 'java' }
     environment {
         PATH = "/usr/local/bin/:$PATH"
     }
