@@ -1,0 +1,108 @@
+{
+  "id": "49eefb07-8ea6-44a2-80b6-896de6bc8e9d",
+  "version": "2.0",
+  "name": "LodyWood",
+  "url": "https://www.lodywood.be",
+  "tests": [{
+    "id": "7d2e8fb5-ae15-4af9-8ed3-1a7a0f51e539",
+    "name": "Lodytest",
+    "commands": [{
+      "id": "2639067e-2a22-4d4a-9913-3f9ca11c60f1",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2fb5c141-3364-4467-ad7d-ce57868ae51f",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "968x1020",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "486c0121-1521-47dc-8842-69d628c539d8",
+      "comment": "",
+      "command": "click",
+      "target": "css=rect:nth-child(3)",
+      "targets": [
+        ["css=rect:nth-child(3)", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "931d82af-9889-4754-9920-12601ec375ad",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Products",
+      "targets": [
+        ["linkText=Products", "linkText"],
+        ["css=#menu-main-menu-1 > .menu-item-789 > .ct-menu-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Products')]", "xpath:link"],
+        ["xpath=//ul[@id='menu-main-menu-1']/li/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'https://www.lodywood.be/products/')]", "xpath:href"],
+        ["xpath=//li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Products')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "9ea9b702-6814-4660-a3e5-716483b64ac5",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ct-header-search > .ct-icon",
+      "targets": [
+        ["css=.ct-header-search > .ct-icon", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "db075709-c0f1-456c-88c4-19c93842312a",
+      "comment": "",
+      "command": "type",
+      "target": "name=s",
+      "targets": [
+        ["name=s", "name"],
+        ["css=.modal-field", "css:finder"],
+        ["xpath=//input[@name='s']", "xpath:attributes"],
+        ["xpath=//div[@id='search-modal']/div[2]/form/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "lamp"
+    }, {
+      "id": "0b775d7e-dc7d-4764-b73a-dd5d7032b403",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "name=s",
+      "targets": [
+        ["name=s", "name"],
+        ["css=.modal-field", "css:finder"],
+        ["xpath=//input[@name='s']", "xpath:attributes"],
+        ["xpath=//div[@id='search-modal']/div[2]/form/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "3a2edd2b-cf36-4a4a-9f78-3d01287851bf",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Products",
+      "targets": [
+        ["linkText=Products", "linkText"],
+        ["css=.entry-title > a", "css:finder"],
+        ["xpath=(//a[contains(text(),'Products')])[3]", "xpath:link"],
+        ["xpath=//main[@id='main']/div/section/div[2]/article/h2/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, 'https://www.lodywood.be/products/')])[3]", "xpath:href"],
+        ["xpath=//h2/a", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "475828f6-7523-492e-8d20-e384ababe2c0",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["7d2e8fb5-ae15-4af9-8ed3-1a7a0f51e539"]
+  }],
+  "urls": ["https://www.lodywood.be/"],
+  "plugins": []
+}
