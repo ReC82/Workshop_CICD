@@ -59,6 +59,17 @@
     mode: "0644"
   become: true
 
+- name: Copy authorized_keys from rooty to jenkins
+  copy:
+    src: /home/rooty/.ssh/authorized_keys
+    dest: /home/jenkins/.ssh/authorized_keys
+    owner: jenkins
+    group: jenkins
+    mode: '0644'
+    force: true
+    backup: true
+  become: true
+
 - name: Ensure ownership of .ssh and authorized_keys
   file:
     path: /home/jenkins/.ssh
