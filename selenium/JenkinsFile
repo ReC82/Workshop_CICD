@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('test') {
             steps {
-                bash 'selenium-side-runner  -c "chromeOptions.args=[headless]" project.side'
+                shell 'selenium-side-runner -c "goog:chromeOptions.args=[disable-infobars, headless] BasicTest.side'
             }
         }
     }
