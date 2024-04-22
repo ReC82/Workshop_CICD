@@ -1,0 +1,17 @@
+{
+  "name": "selenium",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chromedriver": "^123.0.4",
+    "geckodriver": "^4.3.3",
+    "selenium-webdriver": "^4.19.0"
+  }
+}
