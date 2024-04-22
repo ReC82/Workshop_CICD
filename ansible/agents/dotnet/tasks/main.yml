@@ -14,3 +14,26 @@
   apt:
     name: dotnet-sdk-8.0
     state: present
+
+##############################
+#   install NodeJs and Npm
+##############################
+
+- name: Install Node.js and npm
+  apt:
+    name:
+      - nodejs
+      - npm
+    state: present
+  become: true
+
+##############################
+#   install selenium with Npm
+##############################
+
+- name: Install selenium-side-runner globally via npm
+  npm:
+    name: selenium-side-runner  # The name of the package
+    state: present  # Ensures the package is installed
+    global: true  # Installs the package globally
+  become: true  # Runs the task with elevated privileges
