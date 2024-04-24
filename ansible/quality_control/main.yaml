@@ -1,5 +1,5 @@
 - name: Playbook for Quality Control Server
-  hosts: Quality_Control
+  hosts: quality_control 
   become: true
   roles:
     - common
