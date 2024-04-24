@@ -13,8 +13,8 @@
   unarchive:
     src: "/tmp/sonarqube-9.9.0.65466.zip"
     dest: "/opt"
-    extra_opts: ["-d", "/opt"]
     remote_src: true
+    creates: "/opt/sonarqube-9.9.0.65466"
 
 - name: Move unzipped SonarQube to /opt/sonarqube
   command: mv /opt/sonarqube-9.9.0.65466 /opt/sonarqube

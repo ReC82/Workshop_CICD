@@ -16,12 +16,24 @@
     name: git
     state: present
 
+- name : Install Acl
+  apt:
+    name: acl
+    state: present
+
+- name : Install Python Required Lib (for sonarqube)
+  apt:
+    name: python3-psycopg2
+    state: present
 ##############################
 #   install ufw
 ##############################
 
-- name: Install ufw 
-  shell: apt-get install ufw -y 
+- name: Install ufw
+  apt:
+    name: ufw
+    state: present
+  become: true
 
 - name: Allow SSH connections on port 22
   shell: ufw allow 22/tcp comment 'Allow SSH'

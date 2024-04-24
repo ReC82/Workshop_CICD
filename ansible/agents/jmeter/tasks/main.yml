@@ -38,5 +38,5 @@
     - name: Append JMETER_HOME/bin to PATH in /etc/profile
       lineinfile:
         path: /etc/profile
-        line: 'export PATH=\$JMETER_HOME/bin:\$PATH'
+        line: "export PATH=$JMETER_HOME:$PATH"
         insertbefore: EOF
