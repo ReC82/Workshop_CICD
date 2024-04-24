@@ -1,0 +1,91 @@
+- name: Download SonarQube ZIP file
+  get_url:
+    url: "https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.9.0.65466.zip"
+    dest: "/tmp/sonarqube-9.9.0.65466.zip"
+
+- name: Ensure unzip is installed
+  apt:
+    name: unzip
+    state: present
+    update_cache: yes
+
+- name: Unzip SonarQube
+  unarchive:
+    src: "/tmp/sonarqube-9.9.0.65466.zip"
+    dest: "/opt"
+    extra_opts: ["-d", "/opt"]
+    remote_src: true
+
+- name: Move unzipped SonarQube to /opt/sonarqube
+  command: mv /opt/sonarqube-9.9.0.65466 /opt/sonarqube
+
+- name: Create 'sonar' group for SonarQube
+  group:
+    name: sonar
+    state: present
+
+- name: Create 'sonar' user with specified home directory and group
+  user:
+    name: sonar
+    comment: "user to run SonarQube"
+    home: "/opt/sonarqube"
+    group: sonar
+    state: present
+
+- name: Set password for the sonar system user
+  shell: echo "sonar:sonar" | chpasswd    
+
+- name: Change ownership of /opt/sonarqube to 'sonar' user and group
+  file:
+    path: "/opt/sonarqube"
+    owner: sonar
+    group: sonar
+    recurse: true
+
+#########################################
+# SONARQUBE CONFIGURATION
+#########################################
+
+- name: Ensure sonar.jdbc.username is set
+  lineinfile:
+    path: /opt/sonarqube/conf/sonar.properties 
+    regexp: '^#sonar.jdbc.username='
+    line: 'sonar.jdbc.username=sonar'
+    state: present
+    backrefs: yes  # Enable backreference substitutions
+
+- name: Ensure sonar.jdbc.password is set
+  lineinfile:
+    path: /opt/sonarqube/conf/sonar.properties
+    regexp: '^#sonar.jdbc.password='
+    line: 'sonar.jdbc.password=sonar'
+    state: present
+
+- name: Set the correct JDBC URL
+  lineinfile:
+    path: /opt/sonarqube/conf/sonar.properties
+    regexp: '^#sonar.jdbc.url='
+    line: 'sonar.jdbc.url=jdbc:postgresql://localhost:5432/sonarqube'
+    state: present
+
+- name: Copy SonarQube systemd service file
+  copy:
+    src: "sonarqube.service"
+    dest: "/etc/systemd/system/sonarqube.service"  
+    owner: root  
+    group: root 
+    mode: '0644'  
+
+- name: Reload systemd daemon
+  systemd:
+    daemon_reload: yes 
+
+- name: Start SonarQube service
+  systemd:
+    name: sonarqube
+    state: started
+
+- name: Enable SonarQube service at boot
+  systemd:
+    name: sonarqube
+    enabled: yes

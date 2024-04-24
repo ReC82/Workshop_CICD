@@ -1,0 +1,17 @@
+- name: Add limits for 'sonarqube' user in /etc/security/limits.conf
+  blockinfile:
+    path: /etc/security/limits.conf
+    insertbefore: EOF
+    block: |
+      sonarqube - nofile 65536
+      sonarqube - nproc 4096
+
+- name: Add vm.max_map_count to /etc/sysctl.conf
+  blockinfile:
+    path: /etc/sysctl.conf
+    insertbefore: EOF
+    block: | 
+      vm.max_map_count = 262144
+
+- name: Apply sysctl settings
+  command: sysctl -p  # Reload sysctl settings

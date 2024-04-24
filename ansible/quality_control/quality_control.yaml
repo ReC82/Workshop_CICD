@@ -1,0 +1,9 @@
+- name: Playbook for Quality Control Server
+  hosts: Quality_Control
+  become: yes
+  roles:
+    - common
+    - postgre
+    - adoptium
+    - kernel_tune
+    - sonarqube
