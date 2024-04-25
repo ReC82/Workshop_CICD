@@ -7,27 +7,26 @@ pipeline {
         RECIPIENTS = 'lloyd.malfliet@gmail.com' // Change to the appropriate recipient email addresses
         SENDER_EMAIL = 'jenkins@lodywood.be' // The sender's email address
     }
-        stage('Checkout') {
-            steps {
-                // Use SSH-based authentication with Jenkins credentials
-                checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: 'main']], // Specify the branch to checkout
-                    userRemoteConfigs: [[
-                        url: 'git@github.com:ReC82/Workshop_CICD.git', // GitHub repository with SSH URL
-                        credentialsId: 'github-ssh-key' // Reference the Jenkins SSH key credential
-                    ]],
-                    extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: '_FULL_DEPLOY/Azure']] // Checkout to subdirectory
-                ])
-            }
+    stage('Checkout') {
+        steps {
+            // Use SSH-based authentication with Jenkins credentials
+            checkout([
+                $class: 'GitSCM',
+                branches: [[name: 'main']], // Specify the branch to checkout
+                userRemoteConfigs: [[
+                    url: 'git@github.com:ReC82/Workshop_CICD.git', // GitHub repository with SSH URL
+                    credentialsId: 'github-ssh-key' // Reference the Jenkins SSH key credential
+                ]],
+                extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: '_FULL_DEPLOY/Azure']] // Checkout to subdirectory
+            ])
         }
+    }
 
-        stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('mysonar') { // Ensure this matches the configured SonarQube environment in Jenkins
-                    dir('_FULL_DEPLOY/Azure') {
-                        sh 'sonar-scanner' // Run the SonarQube scan
-                    }
+    stage('SonarQube Analysis') {
+        steps {
+            withSonarQubeEnv('mysonar') { // Ensure this matches the configured SonarQube environment in Jenkins
+                dir('_FULL_DEPLOY/Azure') {
+                    sh 'sonar-scanner' // Run the SonarQube scan
                 }
             }
         }
