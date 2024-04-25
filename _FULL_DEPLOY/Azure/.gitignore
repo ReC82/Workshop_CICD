@@ -1,6 +1,7 @@
 module_prod_azure_provider_subid.tf
 **/keys/*
 **/.terraform/*
+git_global_key*
 git.pem
 git.pub
 terraform.tfstate
