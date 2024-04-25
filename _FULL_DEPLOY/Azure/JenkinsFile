@@ -1,29 +1,31 @@
 pipeline {
     agent any
-    
+
     environment {
-        // Define environment variables for email settings
-        RECIPIENTS = 'lloyd.malfliet@gmail.com' // Email recipients
-        SENDER_EMAIL = 'jenkins@lodywood.be' // Sender's email address
+        // Email settings
+        RECIPIENTS = 'lloyd.malfliet@gmail.com' // Change to the appropriate email addresses
+        SENDER_EMAIL = 'jenkins@lodywood.be' // The sender's email address
     }
-    
+
     stages {
         stage('Checkout') {
             steps {
-                // Checkout the code from SCM
+                // Ensure correct checkout step
                 checkout scm
             }
         }
-        
+
         stage('SonarQube Analysis') {
             steps {
-                def scannerHome = tool 'JenkinsScan' 
-                withSonarQubeEnv('SonarQubeInstance') { 
-                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey='wscicd'"
+                script {
+                    def scannerHome = tool 'JenkinsScan' // Reference to Jenkins tool configuration
+                    withSonarQubeEnv('SonarQubeInstance') { // Your SonarQube instance
+                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey='wscicd'" // Set your project key
+                    }
                 }
             }
         }
-        
+
         stage('Quality Gate') {
             steps {
                 script {
@@ -35,13 +37,15 @@ pipeline {
             }
         }
     }
-    
+
     post {
         always {
+            // Send an email regardless of the build outcome
             emailext(
                 subject: "Jenkins Pipeline: ${currentBuild.fullDisplayName} - ${currentBuild.result}",
-                body: "Build Number: ${currentBuild.number}\nBuild Result: ${currentBuild.result}\nBuild URL: ${env.BUILD_URL}",
-                recipientProviders: [requestor(), developers(), upstreamCommitter()],
+                body: """Build Number: ${currentBuild.number}
+                        Build Result: ${currentBuild.result}
+                        Build URL: ${env.BUILD_URL}""",
                 to: env.RECIPIENTS,
                 from: env.SENDER_EMAIL
             )
