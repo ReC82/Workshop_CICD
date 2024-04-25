@@ -16,7 +16,7 @@ pipeline {
                     branches: [[name: 'main']], // Specify the branch to checkout
                     userRemoteConfigs: [[
                         url: 'git@github.com:ReC82/Workshop_CICD.git', // GitHub repository with SSH URL
-                        credentialsId: 'github-ssh-key' // Reference the Jenkins SSH key credential
+                        credentialsId: 'GitJenkins' // Reference the Jenkins SSH key credential
                     ]],
                     extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: '_FULL_DEPLOY/Azure']] // Checkout to subdirectory
                 ])
