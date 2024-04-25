@@ -10,7 +10,7 @@ node {
   stage('SonarQube Analysis') {
     def scannerHome = tool 'JenkinsScan';
     withSonarQubeEnv() {
-      sh "${scannerHome}/bin/sonar-scanner -X -Dsonar.projectKey='wscicd'"
+      sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey='wscicd'"
     }
   }
   stage("QualityGate") {
