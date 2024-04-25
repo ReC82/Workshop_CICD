@@ -13,4 +13,11 @@ node {
       sh "${scannerHome}/bin/sonar-scanner -X -Dsonar.projectKey='wscicd'"
     }
   }
+  stage("QualityGate") {
+    steps {
+        waitForQualityGate abortPipeline: true        
+    }
+
+  }
+
 }
