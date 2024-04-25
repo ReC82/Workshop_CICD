@@ -25,7 +25,7 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('sonar500') { 
+                withSonarQubeEnv('JenkinsScan') { 
                     dir('_FULL_DEPLOY/Azure') {
                         sh 'sonar-scanner' // Run the SonarQube scan
                     }
