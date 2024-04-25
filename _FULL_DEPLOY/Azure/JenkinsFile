@@ -25,7 +25,7 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('mysonar') { // Ensure this matches the configured SonarQube environment in Jenkins
+                withSonarQubeEnv('sonar500') { 
                     dir('_FULL_DEPLOY/Azure') {
                         sh 'sonar-scanner' // Run the SonarQube scan
                     }
