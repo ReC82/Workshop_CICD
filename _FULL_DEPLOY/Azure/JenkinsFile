@@ -17,8 +17,8 @@ pipeline {
         
         stage('SonarQube Analysis') {
             steps {
-                def scannerHome = tool 'JenkinsScan' // Ensure that 'JenkinsScan' is defined in Jenkins Global Tools
-                withSonarQubeEnv('SonarQubeInstance') { // Set your SonarQube instance name
+                def scannerHome = tool 'JenkinsScan' 
+                withSonarQubeEnv('SonarQubeInstance') { 
                     sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey='wscicd'"
                 }
             }
@@ -38,7 +38,6 @@ pipeline {
     
     post {
         always {
-            // Send email notification
             emailext(
                 subject: "Jenkins Pipeline: ${currentBuild.fullDisplayName} - ${currentBuild.result}",
                 body: "Build Number: ${currentBuild.number}\nBuild Result: ${currentBuild.result}\nBuild URL: ${env.BUILD_URL}",
