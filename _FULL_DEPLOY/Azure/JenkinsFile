@@ -1,4 +1,9 @@
 node {
+    environment {
+        // Define environment variables for email settings
+        RECIPIENTS = 'lloyd.malfliet@gmail.com' // Change to the appropriate recipient email addresses
+        SENDER_EMAIL = 'jenkins@lodywood.be' // The sender's email address
+    }    
   stage('SCM') {
     checkout scm
   }
