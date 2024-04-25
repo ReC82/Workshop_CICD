@@ -7,14 +7,18 @@ pipeline {
         RECIPIENTS = 'lloyd.malfliet@gmail.com' // Change to the appropriate recipient email addresses
         SENDER_EMAIL = 'jenkins@lodywood.be' // The sender's email address
     }
-    stages {
         stage('Checkout') {
             steps {
-                // Clone the repository and navigate to the subdirectory
-                git branch: 'main', url: 'https://github.com/ReC82/Workshop_CICD.git'
-                dir('_FULL_DEPLOY/Azure') {
-                    // Code to execute in this subdirectory
-                }
+                // Use SSH-based authentication with Jenkins credentials
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: 'main']], // Specify the branch to checkout
+                    userRemoteConfigs: [[
+                        url: 'git@github.com:ReC82/Workshop_CICD.git', // GitHub repository with SSH URL
+                        credentialsId: 'github-ssh-key' // Reference the Jenkins SSH key credential
+                    ]],
+                    extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: '_FULL_DEPLOY/Azure']] // Checkout to subdirectory
+                ])
             }
         }
 
