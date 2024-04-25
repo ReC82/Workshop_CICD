@@ -1,0 +1,68 @@
+pipeline {
+    agent {
+        label 'java' // Ensures the pipeline runs on agents with the 'java' label
+    }
+    environment {
+        // Define environment variables for email settings
+        RECIPIENTS = 'lloyd.malfliet@gmail.com' // Change to the appropriate recipient email addresses
+        SENDER_EMAIL = 'jenkins@lodywood.be' // The sender's email address
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                // Clone the repository and navigate to the subdirectory
+                git branch: 'main', url: 'https://github.com/ReC82/Workshop_CICD.git'
+                dir('_FULL_DEPLOY/Azure') {
+                    // Code to execute in this subdirectory
+                }
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('mysonar') { // Ensure this matches the configured SonarQube environment in Jenkins
+                    dir('_FULL_DEPLOY/Azure') {
+                        sh 'sonar-scanner' // Run the SonarQube scan
+                    }
+                }
+            }
+        }
+    }
+    post {
+        success {
+            // Send an email if the pipeline succeeds
+            emailext(
+                subject: "Jenkins Pipeline Success: ${currentBuild.fullDisplayName}",
+                body: """
+                Pipeline execution was successful.
+
+                - Build Number: ${currentBuild.number}
+                - Build URL: ${env.BUILD_URL}
+
+                Check the details for more information.
+                """,
+                to: RECIPIENTS,
+                replyTo: SENDER_EMAIL
+            )
+        }
+        failure {
+            // Send an email if the pipeline fails
+            emailext(
+                subject: "Jenkins Pipeline Failure: ${currentBuild.fullDisplayName}",
+                body: """
+                Pipeline execution failed.
+
+                - Build Number: ${currentBuild.number}
+                - Build URL: ${env.BUILD_URL}
+
+                Please check the logs for details.
+                """,
+                to: RECIPIENTS,
+                replyTo: SENDER_EMAIL
+            )
+        }
+        always {
+            echo 'Pipeline completed' // A simple post-pipeline message
+        }
+    }
+}
