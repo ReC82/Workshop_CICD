@@ -1,0 +1,14 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<repo plugin="forensics-api@2.4.0">
+  <fileStatistics class="list"/>
+  <latestCommitId></latestCommitId>
+  <statistics>
+    <addedLines>0</addedLines>
+    <deletedLines>0</deletedLines>
+    <authorCount>0</authorCount>
+    <commitCount>0</commitCount>
+    <filesCount>0</filesCount>
+  </statistics>
+  <totalLinesOfCode>0</totalLinesOfCode>
+  <totalChurn>0</totalChurn>
+</repo>

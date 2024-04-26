@@ -1,0 +1,55 @@
+  
+##############################
+#   install Postgre
+##############################
+- name: Install wget and ca-certificates
+  apt:
+    name: 
+      - wget
+      - ca-certificates
+    state: present
+
+- name: Add PostgreSQL APT Repository
+  shell: >
+    echo "deb http://apt.postgresql.org/pub/repos/apt
+    $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list
+  args:
+    executable: /bin/bash
+
+- name: Add PostgreSQL GPG Key
+  shell: wget -qO - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo tee /etc/apt/trusted.gpg.d/pgdg.asc
+
+- name: Install Postgre
+  apt:
+    name:
+      - postgresql
+      - postgresql-contrib
+    state: present
+  become: true
+  
+- name: Enable PostgreSQL
+  systemd:
+    name: postgresql  
+    enabled: true
+
+- name: Set password for the postgres system user (Debian/Ubuntu alternative)
+  shell: echo "postgres:postgres" | chpasswd
+
+- name: Create PostgreSQL user 'sonar'
+  become_user: postgres
+  postgresql_user:
+    name: sonar
+    password: sonar
+    encrypted: yes
+
+- name: Create 'sonarqube' database with owner 'sonar'
+  become_user: postgres
+  postgresql_db:
+    name: sonarqube
+    owner: sonar
+
+- name: Grant all privileges on 'sonarqube' database to 'sonar'
+  become_user: postgres
+  postgresql_query:
+    db: sonarqube
+    query: "GRANT ALL PRIVILEGES ON DATABASE sonarqube TO sonar"

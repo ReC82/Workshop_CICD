@@ -1,0 +1,51 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<build>
+  <actions>
+    <hudson.model.CauseAction>
+      <causeBag class="linked-hash-map">
+        <entry>
+          <hudson.model.Cause_-UserIdCause>
+            <userId>lloyd</userId>
+          </hudson.model.Cause_-UserIdCause>
+          <int>1</int>
+        </entry>
+      </causeBag>
+    </hudson.model.CauseAction>
+    <hudson.plugins.performance.actions.PerformanceBuildAction plugin="performance@957.v658a_7065b_92a_">
+      <build class="build" reference="../../.."/>
+      <parsers>
+        <hudson.plugins.performance.parsers.JMeterCsvParser>
+          <glob>/var/lib/jenkins/jobs/JMeterTest/builds/12/temp/result.jtl</glob>
+          <excludeResponseTime>false</excludeResponseTime>
+          <showTrendGraphs>true</showTrendGraphs>
+          <baselineBuild>0</baselineBuild>
+          <isNumberDateFormat>true</isNumberDateFormat>
+          <percentiles>0,50,90,95,100</percentiles>
+          <filterRegex></filterRegex>
+          <delimiter>,</delimiter>
+          <timestampIdx>0</timestampIdx>
+          <elapsedIdx>1</elapsedIdx>
+          <responseCodeIdx>3</responseCodeIdx>
+          <successIdx>7</successIdx>
+          <urlIdx>2</urlIdx>
+          <bytesIdx>9</bytesIdx>
+          <sentBytesIdx>10</sentBytesIdx>
+        </hudson.plugins.performance.parsers.JMeterCsvParser>
+      </parsers>
+    </hudson.plugins.performance.actions.PerformanceBuildAction>
+  </actions>
+  <queueId>21</queueId>
+  <timestamp>1713360280924</timestamp>
+  <startTime>1713360280933</startTime>
+  <result>SUCCESS</result>
+  <duration>14620</duration>
+  <charset>UTF-8</charset>
+  <keepLog>false</keepLog>
+  <builtOn></builtOn>
+  <workspace>/var/lib/jenkins/workspace/JMeterTest</workspace>
+  <hudsonVersion>2.440.2</hudsonVersion>
+  <scm class="hudson.scm.NullChangeLogParser"/>
+  <culprits class="java.util.Collections$UnmodifiableSet">
+    <c class="sorted-set"/>
+  </culprits>
+</build>

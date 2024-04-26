@@ -1,0 +1,28 @@
+Started by user [8mha:////4PTI3m1vR6yRJUxgOk5tLuXY4KUex85T9d0wCDBVlQsQAAAAlx+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzWEgZu/dLi1CL9nJz8yhQA8GIrucAAAAA=[0mLloyd
+Running as SYSTEM
+Building on the built-in node in workspace /var/lib/jenkins/workspace/JMeterTest
+[JMeterTest] $ /bin/sh -xe /tmp/jenkins7469518952052463402.sh
+The following environment variables were removed by 'Only Keep Specified Environment Variables': BUILD_DISPLAY_NAME, BUILD_URL, CI, EXECUTOR_NUMBER, HUDSON_HOME, HUDSON_URL, JENKINS_URL, JOB_DISPLAY_URL, JOB_URL, NODE_LABELS, NODE_NAME, RUN_ARTIFACTS_DISPLAY_URL, RUN_CHANGES_DISPLAY_URL, RUN_DISPLAY_URL, RUN_TESTS_DISPLAY_URL, WORKSPACE, WORKSPACE_TMP
++ /var/lib/apache-jmeter/bin/jmeter -n -t /vagrant/shared_folder/jmeter/lodywood.jmx -l /vagrant/shared_folder/jmeter/result.jtl
+WARN StatusConsoleListener The use of package scanning to locate plugins is deprecated and will be removed in a future release
+WARN StatusConsoleListener The use of package scanning to locate plugins is deprecated and will be removed in a future release
+WARN StatusConsoleListener The use of package scanning to locate plugins is deprecated and will be removed in a future release
+WARN StatusConsoleListener The use of package scanning to locate plugins is deprecated and will be removed in a future release
+Creating summariser <summary>
+Created the tree successfully using /vagrant/shared_folder/jmeter/lodywood.jmx
+Starting standalone test @ 2024 Apr 17 15:28:40 CEST (1713360520114)
+Waiting for possible Shutdown/StopTestNow/HeapDump/ThreadDump message on port 4445
+summary +   3012 in 00:00:20 =  152.5/s Avg:   864 Min:    37 Max:  4598 Err:    21 (0.70%) Active: 140 Started: 478 Finished: 338
+summary +    988 in 00:00:05 =  191.6/s Avg:   509 Min:    94 Max:  1777 Err:     0 (0.00%) Active: 0 Started: 500 Finished: 500
+summary =   4000 in 00:00:25 =  160.6/s Avg:   776 Min:    37 Max:  4598 Err:    21 (0.53%)
+Tidying up ...    @ 2024 Apr 17 15:29:05 CEST (1713360545180)
+... end of run
+Creating parser with percentiles:'0,50,90,95,100,' filterRegex:
+Performance: Recording JMeterCsv reports '/var/lib/jenkins/jobs/JMeterTest/builds/15/temp/result.jtl'
+Performance: JMeterCsv copying reports to master, files '[/var/lib/jenkins/jobs/JMeterTest/builds/15/temp/result.jtl]'
+Performance: JMeterCsv parsing local reports '[/var/lib/jenkins/jobs/JMeterTest/builds/15/performance-reports/JMeterCSV/result.jtl]'
+Performance: Parsing report file '/var/lib/jenkins/jobs/JMeterTest/builds/15/performance-reports/JMeterCSV/result.jtl' with filterRegex ''.
+Performance: No threshold configured for making the test unstable
+Performance: No threshold configured for making the test failure
+Performance: File result.jtl reported 0.25% of errors [SUCCESS]. Build status is: SUCCESS
+Finished: SUCCESS

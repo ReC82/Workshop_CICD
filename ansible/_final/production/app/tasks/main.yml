@@ -1,0 +1,27 @@
+ ##############################
+ #   udpate ubuntu
+ ##############################
+- name: "apt-get update -y"
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Set TimeZone
+  ansible.builtin.timezone:
+    name: Europe/Brussels
+
+##############################
+#   install ufw
+##############################
+
+- name: Install ufw 
+  shell: apt-get install ufw -y 
+
+- name: Allow SSH connections on port 22
+  shell: ufw allow 22/tcp comment 'Allow SSH'
+
+- name: Allow HTTP connections on port 80
+  shell: ufw allow 80/tcp comment 'Allow HTTP Web App'
+
+- name:  Enabled firewall ufw
+  shell: ufw --force enable  

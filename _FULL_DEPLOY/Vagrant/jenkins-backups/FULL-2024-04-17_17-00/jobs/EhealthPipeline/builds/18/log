@@ -1,0 +1,282 @@
+Started by user [8mha:////4PTI3m1vR6yRJUxgOk5tLuXY4KUex85T9d0wCDBVlQsQAAAAlx+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzWEgZu/dLi1CL9nJz8yhQA8GIrucAAAAA=[0mLloyd
+[8mha:////4OVgHJM+5kto6jjnXirviBnERxdu0fJQJ6D8bMjvi/YgAAAAoh+LCAAAAAAAAP9tjTEOwjAQBM8BClpKHuFItIiK1krDC0x8GCfWnbEdkooX8TX+gCESFVvtrLSa5wtWKcKBo5UdUu8otU4GP9jS5Mixv3geZcdn2TIl9igbHBs2eJyx4YwwR1SwULBGaj0nRzbDRnX6rmuvydanHMu2V1A5c4MHCFXMWcf8hSnC9jqYxPTz/BXAFEIGsfuclm8zQVqFvQAAAA==[0m[Pipeline] Start of Pipeline
+[8mha:////4JA2Om9dKGdy12Zhd0SXuKbijzVWd7waj9HUJ5tvrziNAAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+KOrAycohUghExsUZZOEFIQkgb/d8mKe3EibgadyBQiQlLlmxL1nu+oE4RjhQdby12HpP2vA+jK4lPFLtroIm3dOGaMFGwXNpJkrGnpUrKFhaxClYC1hZ1oOTRZdiIVt1VExS65pxj2Q4CKm8GeAAThZxVzN8yR9jeRpMIf5y/AJj7DGxXvP/86jduZBmjwAAAAA==[0m[Pipeline] node
+Running on [8mha:////4EIT98ry7JUUlHh7S9uwKf+2JB0WYcJflrb4aQd3V4H4AAAAqB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAy+EgZZ/eT83ILSktQifcf01LwSVSMXA0Mg4ZtYlpqnDwDUPh//0gAAAA==[0mAgent-01-Maven in /home/jenkins/workingdir/workspace/EhealthPipeline
+[8mha:////4OxNVcIsigb+2IIGtneUNwsI1lgMSerNX8RW+WJETtF6AAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+KOrAycoh0gA0xsUZZOEFIQkgb/d8mKe3EibgadyBQiQlLlmxL1nu+oE4RjhQdby12HpP2vA+jK4lPFLtroIm3dOGaMFGwXNpJkrGnpUrKFhaxClYC1hZ1oOTRZdiIVt1VExS65pxj2Q4CKm8GeAAThZxVzN8yR9jeRpMIf5y/AJj7DGxXvP/86jfoP95RwAAAAA==[0m[Pipeline] {
+[8mha:////4KZZ+88/6hlpy/AzPV29GUg89HTamabwkdNIHAnFoCHEAAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+KOrAycoh0gQkxsUZZOEFIQkgb/d8mKe3EibgadyBQiQlLlmxL1nu+oE4RjhQdby12HpP2vA+jK4lPFLtroIm3dOGaMFGwXNpJkrGnpUrKFhaxClYC1hZ1oOTRZdiIVt1VExS65pxj2Q4CKm8GeAAThZxVzN8yR9jeRpMIf5y/AJj7DGxXvP/86jc09154wAAAAA==[0m[Pipeline] stage
+[8mha:////4OWHAH+ERCPMNgrDgrHidrO4H6bxPCOI7a1LlWLDfsKJAAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+KOrAycoh0ggUxsUZZOEFIQkgb/d8mKe3EibgadyBQiQlLlmxL1nu+oE4RjhQdby12HpP2vA+jK4lPFLtroIm3dOGaMFGwXNpJkrGnpUrKFhaxClYC1hZ1oOTRZdiIVt1VExS65pxj2Q4CKm8GeAAThZxVzN8yR9jeRpMIf5y/AJj7DGxXvP/86jek7ggRwAAAAA==[0m[Pipeline] { (Declarative: Tool Install)
+[8mha:////4KN7gSqjyjN+quBlbZMlmpnIrp1HS8M1p8ne9BR+rnKHAAAAoh+LCAAAAAAAAP9tjTEOAiEURD9rLGwtPQTbaWGsbAmNJ0AWEZb8zwLrbuWJvJp3kLiJlZNMMm+a93rDOic4UbLcG+wdZu14DKOti0+U+lugiXu6ck2YKRguzSSpM+cFJRUDS1gDKwEbgzpQdmgLbIVXD9UGhba9lFS/o4DGdQM8gYlqLiqVL8wJdvexy4Q/z18BzLEA29ce4gfg7KmOvAAAAA==[0m[Pipeline] tool
+[8mha:////4IiVzPsA0LFC+BCtrwYPT1qT06Lzt1x8VsO8XMjY5dexAAAAoh+LCAAAAAAAAP9tjTEOAiEURD9rLGwtPQTbGRNjZUtoPAGyiLDkfxZYdytP5NW8g8RNrJxkknnTvNcb1jnBiZLl3mDvMGvHYxhtXXyi1N8CTdzTlWvCTMFwaSZJnTkvKKkYWMIaWAnYGNSBskNbYCu8eqg2KLTtpaT6HQU0rhvgCUxUc1GpfGFOsLuPXSb8ef4KYI4F2L72ED8v8DEJvAAAAA==[0m[Pipeline] envVarsForTool
+[8mha:////4ERj5ugg8WvjSAKWhZSHeVhgltX4prVm2aj7AdgAY9e8AAAAoh+LCAAAAAAAAP9tjTEOAiEURD9rLGwtPQTbmRhjZUtoPAGyiLDkfxZYdytP5NW8g8RNrJxkknnTvNcb1jnBiZLl3mDvMGvHYxhtXXyi1N8CTdzTlWvCTMFwaSZJnTkvKKkYWMIaWAnYGNSBskNbYCu8eqg2KLTtpaT6HQU0rhvgCUxUc1GpfGFOsLuPXSb8ef4KYI6xADvU7j/zqggXvAAAAA==[0m[Pipeline] }
+[8mha:////4H6JmNJJm3BXnukG44AQIAhHnvxo78etLDS3ai0QkkJUAAAAox+LCAAAAAAAAP9tjTESgjAQRT84FraWHiJoYeVY2WZoPEGEGAOZXUwWofJEXs07yMiMlb/67zXv9cYyRRw5OtVYaj2lyqsu9G56auDYXgMPquGLqpgSB6tKO5Rc29OMJYvFvCzHQmNlqQqcPDnBWjfmYYpgyBVniZM7aOS+vuOJTE9lMVG+MEZsbn2dmH6dvwGMXSfId1tBtv8AExtCpb0AAAA=[0m[Pipeline] // stage
+[8mha:////4Pn7luD8iO3iV28BbEz1IiKk+PNGnqBTGCokCqRBJ7pzAAAAph+LCAAAAAAAAP9tjTEOwjAQBC9BKWgpeYSjSHSIitZywwtMbIwT6y7YF5KKF/E1/oAhEhVb7ay0mucLqhThQNGJzmLvMbVeDGF0uYmJYn8JNImOzqIlTBSsUHZSZOxxQUVsYUlRwkrC2mIbKHl0DBvZ6buug0ZXnzjmbS+h9OYGDyhkNrOO/IU5wvY6mkT48/wVwDwwFDuGsmk+x+oNEzd2msEAAAA=[0m[Pipeline] withEnv
+[8mha:////4EP/DPUkZW7yxCE2k+fdYev4gvBto0gcN8+/pBIA8immAAAAph+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUZUVMrFEWThCaEJJG/7dJSjpxIq7GHWipxIQHy7ZkvdcbqhjgRMEwp7GzGFvLej+aObFMobt5yszRlbWEkbxmQmdBSp/XKihpWFWUsOGw1dh6ihZNgh138iFrL9HUlxTm7cihtGqAJxR8JicZ0rdMAfb3UUXCH+cvAKY+Qdk0ix2WZ/UBbwyqm8IAAAA=[0m[Pipeline] {
+[8mha:////4Bf6rnazL3l6hDM9Sf/H1f2ilkqzgNBwoHYpi2tz2eovAAAAph+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUwIiYukZZOEFoQkgb/V9+UtqJE3E17kBLJSY8WLYl673eUESGE7ETjcXWY6y96ELvpiQG4vYaaBANXURNGClYoeygyNhqqYqShUVZDisJa4t1oOjRJdjIRj90GTS68px42o4Scm/u8IRMTuSkOX3LyLC99SYS/jh/ATB2CfLdfrbD/Cw+y7kUycIAAAA=[0m[Pipeline] stage
+[8mha:////4O4WVV0hnvyFGE8t2v0ERjWz8Uti121TR07At9VIHxhVAAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUCDbE1DXKwglCE0La6P/yk9JOnIircQdaKjHhwbItWe/1hiIynIidaCy2HmPtRRd6NyUxELfXQINo6CJqwkjBCmUHRcZWS1WULCzKclhJWFusA0WPLsFGNvqhy6DRlefE03aUkHtzhydkciInzelbRobtrTeR8Mf5C4CxS5Dv9rMd5mfxAbNWnxXCAAAA[0m[Pipeline] { (Build)
+[8mha:////4NIxD0AzxAJG1N+JLVVShXCuGFKejJNmj36V0U945qvxAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiJKgQVVrLDS8wsTFOrDtjOyQVL+Jr/IFAJCq2WO1sM88XLFOEI0eLraHOUWocBt/baeHAsbt4HrDlMzZMib1BaQbJ2tQzSs4G5hQlLASsDDWekyObYS1adVeVV2SrU47TdxBQOn2DBxRiMmcV8xfGCJtrrxPTz/NXAGPIUG53n9qHN8W7Eii+AAAA[0m[Pipeline] tool
+[8mha:////4PfKTGXF5fMcD5QAo+G08ftLpDNOBpucsFLT8m9obHnIAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiJESDqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDhnK7+9Q+vAEG6D8DvgAAAA==[0m[Pipeline] envVarsForTool
+[8mha:////4Pavtin0mIjK93Ghh7Y9oMV+bCGYk15y3xcDlKw8AyXuAAAAqB+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUSEgMiKlrlIUThCaEtNH/5SelnTgRV+MOtFRiwoNlW7Le6w1FZDgRO9FYbD3G2osu9G5KYiBur4EG0dBF1ISRghXKDoqMrZaqKFlYlOWwkrC2WAeKHl2CjWz0Q5dBoyvPiaftKCH35g5PyORETprTt4wM21tvIuGP8xcAY5cg3+1nO8zP4gOeMTC6wgAAAA==[0m[Pipeline] withEnv
+[8mha:////4FZnIgTTKH/fmR3U9XwohOmj8UfinhRNQ0RkAx6QCKOaAAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUTCAhpq5RFk4QmhDSRv+Xn5R24kRcjTvQUokJD5ZtyXqvNxSR4UTsRGOx9RhrL7rQuymJgbi9BhpEQxdRE0YKVig7KDK2WqqiZGFRlsNKwtpiHSh6dAk2stEPXQaNrjwnnrajhNybOzwhkxM5aU7fMjJsb72JhD/OXwCMXYJ8t5/tMD+LD0rlhNLCAAAA[0m[Pipeline] {
+[8mha:////4Ff/TjmrmKNvfMVGIkrPtJ8ss0X7bJfuCYdlI1RACfgpAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiOhCiSmu54QUmNsaJdWdsh6TiRXyNPxCIRMUWq51t5vmCZYpw5GixNdQ5So3D4Hs7LRw4dhfPA7Z8xoYpsTcozSBZm3pGydnAnKKEhYCVocZzcmQzrEWr7qryimx1ynH6DgJKp2/wgEJM5qxi/sIYYXPtdWL6ef4KYAwZyu3uU/vwBr2eB0O+AAAA[0m[Pipeline] git
+The recommended git tool is: NONE
+No credentials specified
+Fetching changes from the remote Git repository
+Checking out Revision 1f5d7cb0b9c276af955817b8c7cc6b91b96b5eb1 (refs/remotes/origin/main)
+Commit message: "Update pom.xml"
+ > git rev-parse --resolve-git-dir /home/jenkins/workingdir/workspace/EhealthPipeline/.git # timeout=10
+ > git config remote.origin.url https://github.com/ReC82/EHealthAPI.git # timeout=10
+Fetching upstream changes from https://github.com/ReC82/EHealthAPI.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.34.1'
+ > git fetch --tags --force --progress -- https://github.com/ReC82/EHealthAPI.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 1f5d7cb0b9c276af955817b8c7cc6b91b96b5eb1 # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git branch -D main # timeout=10
+ > git checkout -b main 1f5d7cb0b9c276af955817b8c7cc6b91b96b5eb1 # timeout=10
+ > git rev-list --no-walk 1f5d7cb0b9c276af955817b8c7cc6b91b96b5eb1 # timeout=10
+[8mha:////4IQqF7JpyT73Ymrv0p+Anm252aL7PT267kfFMvXpDWeYAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOICVEgoFa3lhheYxBgn1l2wHZyKF/E1/oBFJCq2WO1sM683LIOHmr3BTlNvKTQWBzeavDCx76+OE3Z8wYYpsNModZLc6tOMkqOGOUUJCwErTY3jYMlEWItOPVTlFJnqHH3+jgJK297hCYXI5qh8/MLkYXMb28D08/wVwDREKHeHXPvt8AGtm4OQvgAAAA==[0m[Pipeline] sh
++ mvn -Dmaven.test.failure.ignore=true clean package -DskipTests=true
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Ehealth 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:3.3.2:clean (default-clean) @ Ehealth ---
+[INFO] Deleting /home/jenkins/workingdir/workspace/EhealthPipeline/target
+[INFO] 
+[INFO] --- maven-resources-plugin:3.3.1:resources (default-resources) @ Ehealth ---
+[INFO] skip non existing resourceDirectory /home/jenkins/workingdir/workspace/EhealthPipeline/src/main/resources
+[INFO] skip non existing resourceDirectory /home/jenkins/workingdir/workspace/EhealthPipeline/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.11.0:compile (default-compile) @ Ehealth ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 7 source files with javac [debug release 17] to target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:3.3.1:testResources (default-testResources) @ Ehealth ---
+[INFO] skip non existing resourceDirectory /home/jenkins/workingdir/workspace/EhealthPipeline/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.11.0:testCompile (default-testCompile) @ Ehealth ---
+[INFO] Changes detected - recompiling the module! :dependency
+[INFO] Compiling 1 source file with javac [debug release 17] to target/test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.1.2:test (default-test) @ Ehealth ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-war-plugin:3.2.3:war (default-war) @ Ehealth ---
+[INFO] Packaging webapp
+[INFO] Assembling webapp [Ehealth] in [/home/jenkins/workingdir/workspace/EhealthPipeline/target/Ehealth-0.0.1-SNAPSHOT]
+[INFO] Processing war project
+[INFO] Webapp assembled in [712 msecs]
+[INFO] Building war: /home/jenkins/workingdir/workspace/EhealthPipeline/target/Ehealth-0.0.1-SNAPSHOT.war
+[INFO] 
+[INFO] --- spring-boot-maven-plugin:3.2.2:repackage (repackage) @ Ehealth ---
+[INFO] Replacing main artifact /home/jenkins/workingdir/workspace/EhealthPipeline/target/Ehealth-0.0.1-SNAPSHOT.war with repackaged archive, adding nested dependencies in BOOT-INF/.
+[INFO] The original artifact has been renamed to /home/jenkins/workingdir/workspace/EhealthPipeline/target/Ehealth-0.0.1-SNAPSHOT.war.original
+[INFO] 
+[INFO] --- tomcat7-maven-plugin:2.0:exec-war-only (tomcat-run) @ Ehealth ---
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 11.470 s
+[INFO] Finished at: 2024-04-17T16:41:11+02:00
+[INFO] Final Memory: 53M/151M
+[INFO] ------------------------------------------------------------------------
+[8mha:////4DqUpVby/3czzlsCl076p2p5fsA/9RnEyq4JEDfjXkyRAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOKiUCEhqrRWGl5gYmOcWHfGdkgqXsTX+AMWkajYYrWzzbzesI4BThwM9poGS7Gz6N1o8sKJw3B1PGHPF+yYIjuNrZ5aVrpZsOWkYUlRwkrARlPnOFoyCbailw9ZOUmmOqeQv6OA0qo7PKEQ2ZxkSF+YA+xuo4pMP89fAczeJyj3da768AGz5oXivgAAAA==[0m[Pipeline] }
+[8mha:////4HSXO8vW0w3oibyEw4aPh1vRDpaaIFvmW6BY0MowXD33AAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPMIRaSgQVVorDS8w8WGcWHfGdkgqXsTX+AMWkajYYrWzzbzesI4BThyM6JEGS7GzwrvR5CUmDsPV8SR6voiOKbJD0eLUssZmwZYTwpKihJWEDVLnOFoyCbayVw9VOUWmOqeQv6OE0uo7PKGQ2ZxUSF+YA+xuo45MP89fAczeJyjrOtf+8AGMia70vgAAAA==[0m[Pipeline] // withEnv
+[8mha:////4HJz+0jy69JOE+7uayw8g3QTGg9evhSAe7AP2htdLfM6AAAApR+LCAAAAAAAAP9tjTsOwjAQRDdBFLSUHGIjPh1KRWu54QQmMcaJtRtsB6fiRFyNO2ARiYopRvOmea83LIOHmr3BTlNvKTQWBzeavDCx76+OE3Z8wYYpsNModZLc6tOMkqOGOUUJCwErTY3jYMlEWItOPVTlFJnqHH3+jgJK297hCYXI5qh8/MLkYXMb28D08/wVwDQMEcrdPtf28AGTC/umvgAAAA==[0m[Pipeline] }
+[8mha:////4IOwd14s9KqtCMCIEVJYovD1AxbdOXEcpJr5qxL9ntfIAAAApR+LCAAAAAAAAP9tjTsOwjAQRDdBFLSUHGIjPh1KRWu54QQmMcaJtRtsB6fiRFyNO2ARiYopRvOmea83LIOHmr3BTlNvKTQWBzeavDCx76+OE3Z8wYYpsNModZLc6tOMkqOGOUUJCwErTY3jYMlEWItOPVTlFJnqHH3+jgJK297hCYXI5qh8/MLkYXMb28D08/wVwDQMEcrdIdd2/wGIrpolvgAAAA==[0m[Pipeline] // stage
+[8mha:////4DkHHWAheATVVihNnmYG91qFFZRVmk0m9fBzbDMyoByFAAAAqB+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUVGJCTF2jLJwgJCGkjf4vSUo7cSKuxh0IVGLCg2Vbst7zBVUMcKRgWWewdxiVY4MfbU5sotBfPE2sozNThJG8YcJMgrRplyooGVhUlLDisDaoPEWHNsGGd/Iuay/R1qcU8nbgUDp9gwcUPJOTDOlb5gDb66gj4Y/zFwDzkKDcNdma/edZvQFLQKUuwgAAAA==[0m[Pipeline] stage
+[8mha:////4CsaUCijqldepsEWY3bupEuQN4pPMze5W711YJzQYC2PAAAAqB+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUQoIFMXWNsnCC0ISQNvq//KS0EyfiatyBlkpMeLBsS9Z7vaGIDCdiJxqLrcdYe9GF3k1JDMTtNdAgGrqImjBSsELZQZGx1VIVJQuLshxWEtYW60DRo0uwkY1+6DJodOU58bQdJeTe3OEJmZzISXP6lpFhe+tNJPxx/gJg7BLku/1sh/lZfACW9ZT2wgAAAA==[0m[Pipeline] { (Static Code Analysis)
+[8mha:////4NA/rhcsFlg28xGcfq260nBPW4wpwOtn8Hba0/uX1ASIAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiUUCBqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDhnK7+9Q+vAHUcXIBvgAAAA==[0m[Pipeline] tool
+[8mha:////4Pk3VWflN/qGi7+sf78YZ1tnAdj8lE2zE2n2QVZtHgCNAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiUSAkRJXWcsMLTGyME+vO2A5JxYv4Gn8gEImKLVY728zzBcsU4cjRYmuoc5Qah8H3dlo4cOwungds+YwNU2JvUJpBsjb1jJKzgTlFCQsBK0ON5+TIZliLVt1V5RXZ6pTj9B0ElE7f4AGFmMxZxfyFMcLm2uvE9PP8FcAYMpTb3af24Q0bbeqGvgAAAA==[0m[Pipeline] envVarsForTool
+[8mha:////4KFl+Tyouz/WrEsSdGC3xz27b4Qw8YKj9HejM/x2MORZAAAAqB+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUYkBCiKlrlIUThCaEtNH/5SelnTgRV+MOtFRiwoNlW7Le6w1FZDgRO9FYbD3G2osu9G5KYiBur4EG0dBF1ISRghXKDoqMrZaqKFlYlOWwkrC2WAeKHl2CjWz0Q5dBoyvPiaftKCH35g5PyORETprTt4wM21tvIuGP8xcAY5cg3+1nO8zP4gNCISCewgAAAA==[0m[Pipeline] withEnv
+[8mha:////4Nc6X3iywVtNfOkndC+LUM4201exe2udQfSf7WiMqwcuAAAAqB+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycogUwYRQJ9aoCycITQhJo/9LkpJOnIircQcClZjwYNmWrPd8QRU8NOQ1swp7g6EzbHCjzokl8v3FUWKWzqwjDOQUa1VqSarjXFuKCmYVJSw4LBV2joJBHWHFrbiL2gnU9Sn6vB04lEbe4AEFz+QofPyWycP6OspA+OP8BcA0RCi3+2y7zedZvQH4j6CMwgAAAA==[0m[Pipeline] {
+[8mha:////4GUPZgdhE1mxwCQGCGh58Jo8CEvrkwM0Xl+ozDwuuz9aAAAAox+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOICokRUaS03vMDExjix7oztkFS8iK/xBwKRqNhitbPNPF+wTBGOHC22hjpHqXEYfG+nhQPH7uJ5wJbP2DAl9galGSRrU88oORuYU5SwELAy1HhOjmyGtWjVXVVeka1OOU7fQUDp9A0eUIjJnFXMXxgjbK69Tkw/z18BjCFDud9+ahfewYmQ+b4AAAA=[0m[Pipeline] sh
++ mvn pmd:pmd
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Ehealth 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-pmd-plugin:3.21.2:pmd (default-cli) @ Ehealth ---
+[WARNING] Unable to locate Source XRef to link to - DISABLED
+[INFO] PMD version: 6.55.0
+[INFO] Rendering content with org.apache.maven.skins:maven-default-skin:jar:1.3 skin.
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 3.890 s
+[INFO] Finished at: 2024-04-17T16:41:17+02:00
+[INFO] Final Memory: 36M/88M
+[INFO] ------------------------------------------------------------------------
+[8mha:////4PRuTaifAIAsCfPLHx5a2f8TBxPEw8J4cqfyh4hlpFBKAAAAox+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOKCoERUaS03vMDExjix7oztkFS8iK/xBwKRqNhitbPNPF+wTBGOHC22hjpHqXEYfG+nhQPH7uJ5wJbP2DAl9galGSRrU88oORuYU5SwELAy1HhOjmyGtWjVXVVeka1OOU7fQUDp9A0eUIjJnFXMXxgjbK69Tkw/z18BjCFDud9+ahfeAtq90r4AAAA=[0m[Pipeline] archiveArtifacts
+Archiving artifacts
+[8mha:////4DJKF4b0Ee9DDQNRYaYPvfWQmoOmw3tEZC6Gf0p0fPP4AAAAox+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOKClBJR0VppeIFJjLFj3Tm2g1PxIr7GHwhEomKL1c4283zBOgY4ctBoFfWGYmvQu1HPCzOH/uo4o+ULtkyRncJG5YY7dVqw4aRgSVHCSsBGUes4GtIJtsLKu6ycJF2dU5i/g4DSdAM8oBCzOcmQvjAF2N3GLjL9PH8FMHmfoKzrT+3fvKbXNb4AAAA=[0m[Pipeline] }
+[8mha:////4B3lQqt+ZdniTQnjkIQrRcEoWOl4usC/lkt372U0A+gbAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiAQ1CqWgtN7zAJMY4se6C7eBUvIiv8QcsIlGxxWpnm3m9YRk81OwNdpp6S6GxOLjR5IWJfX91nLDjCzZMgZ1GqZPkVp9mlBw1zClKWAhYaWocB0smwlp06qEqp8hU5+jzdxRQ2vYOTyhENkfl4xcmD5vb2Aamn+evAKZhiFDu9rm2hw/hHxVIvgAAAA==[0m[Pipeline] // withEnv
+[8mha:////4Ld1rzxWUWC/qD8qGPY7R9EHflEQy4atSwmXB5yLPBmrAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIigaBBqWgtN7zAJMY4se6C7eBUvIiv8QcsIlGxxWpnm3m9YRk81OwNdpp6S6GxOLjR5IWJfX91nLDjCzZMgZ1GqZPkVp9mlBw1zClKWAhYaWocB0smwlp06qEqp8hU5+jzdxRQ2vYOTyhENkfl4xcmD5vb2Aamn+evAKZhiFDu9rm2hw/V0fYTvgAAAA==[0m[Pipeline] }
+[8mha:////4ImLlooMg1wPfbHJhvRp9MXOq2h/2W5+2S+y4XHAtzm8AAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIigaBBqWgtN7zAJMY4se6C7eBUvIiv8QcsIlGxxWpnm3m9YRk81OwNdpp6S6GxOLjR5IWJfX91nLDjCzZMgZ1GqZPkVp9mlBw1zClKWAhYaWocB0smwlp06qEqp8hU5+jzdxRQ2vYOTyhENkfl4xcmD5vb2Aamn+evAKZhiFDuDrm2+w/B8msMvgAAAA==[0m[Pipeline] // stage
+[8mha:////4IEFPMvgTX4Vja+gsB416ycDXWPexm7Ibh7/M7JmxeEuAAAAqB+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUwMCAOrFGXThBaEJIGv1fkpR04kRcjTsQqMSEB8u2ZL3nC6rgoSGvmVXYGwydYYMbdU4ske8vjhKzdGYdYSCnWKtSS1Id59pSVDCrKGHBYamwcxQM6ggrbsVd1E6grk/R5+3AoTTyBg8oeCZH4eO3TB7W11EGwh/nLwCmIUK52Wbb7T/P6g306hrFwgAAAA==[0m[Pipeline] stage
+[8mha:////4Pn9+gdJ4h8VyIFUmv0t9pQM5c1IOYirB1vqyj9yFBfrAAAAqB+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycoh0YAAJMXWNsnCC0ISQNvq//KS0EyfiatyBlkpMeLBsS9Z7vaGIDCdiJxqLrcdYe9GF3k1JDMTtNdAgGrqImjBSsELZQZGx1VIVJQuLshxWEtYW60DRo0uwkY1+6DJodOU58bQdJeTe3OEJmZzISXP6lpFhe+tNJPxx/gJg7BLku/1sh/lZfAD8aiCpwgAAAA==[0m[Pipeline] { (Push to Remote Repository)
+[8mha:////4Gw1WPokM+aWZuyYAfbPcSxwoo0dtecDBAfP83dm6aE1AAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOJS0IAQVVrLDS8wsTFOrDtjOyQVL+Jr/IFAJCq2WO1sM88XLFOEI0eLraHOUWocBt/baeHAsbt4HrDlMzZMib1BaQbJ2tQzSs4G5hQlLASsDDWekyObYS1adVeVV2SrU47TdxBQOn2DBxRiMmcV8xfGCJtrrxPTz/NXAGPIUG53n9qHN65NpgK+AAAA[0m[Pipeline] tool
+[8mha:////4O3zYFHX66Pn0fdbTk9+na/M0bDqhxn8S9TPVZq8rMuqAAAAph+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOKCBAUSSkVrueEFJjHGiXUXbAen4kV8jT9gEYmKLVY728zrDcvgoWZvsNPUWwqNxcGNJi9M7Pur44QdX7BhCuw0Sp0kt/o0o+SoYU5RwkLASlPjOFgyEdaiUw9VOUWmOkefv6OA0rZ3eEIhsjkqH78wedjcxjYw/Tx/BTANEcrdIdd+O3wAYuAr1r4AAAA=[0m[Pipeline] envVarsForTool
+[8mha:////4CR61SH0CAHASMdn8XC/2OkKXvMrLu/rIwZPJUvDJamKAAAAqB+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUCAYk1Ik16sIJQhNC0uj/kqSkEyfiatyBQCUmPFi2Jes9X1AFDw15zazC3mDoDBvcqHNiiXx/cZSYpTPrCAM5xVqVWpLqONeWooJZRQkLDkuFnaNgUEdYcSvuonYCdX2KPm8HDqWRN3hAwTM5Ch+/ZfKwvo4yEP44fwEwDRHK7T7bbvN5Vm988XDYwgAAAA==[0m[Pipeline] withEnv
+[8mha:////4P8xpO55wt+EeSMkDoqZcbWdxAXi1YfHWDe5sqsc9JfWAAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUIDbE1DXKwglCE0La6P/yk9JOnIircQdaKjHhwbItWe/1hiIynIidaCy2HmPtRRd6NyUxELfXQINo6CJqwkjBCmUHRcZWS1WULCzKclhJWFusA0WPLsFGNvqhy6DRlefE03aUkHtzhydkciInzelbRobtrTeR8Mf5C4CxS5AfdrPt52fxAdhUMVHCAAAA[0m[Pipeline] {
+[8mha:////4F+ThB78g/Ky70oH/kJIEZz5Fyt9z04fowuQRzVGIMU8AAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUAjbE1DXKwglCE0La6P/yk9JOnIircQdaKjHhwbItWe/1hiIynIidaCy2HmPtRRd6NyUxELfXQINo6CJqwkjBCmUHRcZWS1WULCzKclhJWFusA0WPLsFGNvqhy6DRlefE03aUkHtzhydkciInzelbRobtrTeR8Mf5C4CxS5AfdrPt52fxAXzhjwPCAAAA[0m[Pipeline] dir
+Running in /home/jenkins/workingdir/workspace/EhealthPipeline/target
+[8mha:////4ALvI7kByadr7UdfAAGPPVm7YHiQCU3lv4+gqSNVmyalAAAAph+LCAAAAAAAAP9tjTEOwjAUQ3+DOrAycoh0oBtiYo26cILQhJA0+r9NUtKJE3E17kBLJSY8WLYl673eUMYAJwqGO42dxdha3vvRzIlnCt3NU+aOrrwljOQ1b3RuSOnzWhtKGlYVDDYCthpbT9GiSbATTj5k5SWa6pLCvB0FMKsGeEIhZnKSIX3LFGB/H1Uk/HH+AmDqE7D6sFi9PMsPBA4E38IAAAA=[0m[Pipeline] {
+[8mha:////4Jk4aFfUraFVDsvvDuEWiWT2c0X7XTO6BUN/pe5fNC26AAAAph+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycoh0KRNiYo2ycILQhJA0+r9NUtKJE3E17kBLJSY8WLYl673eUMUAJwqGOY2dxdha1vvRzIllCt3NU2aOrqwljOQ1EzoLUvq8VkFJw6qihA2HrcbWU7RoEuy4kw9Ze4mmvqQwb0cOpVUDPKHgMznJkL5lCrC/jyoS/jh/ATD1CcqmWeywPKsPIshjPcIAAAA=[0m[Pipeline] withCredentials
+Masking supported pattern matches of $GIT_PASSWORD
+[8mha:////4P8FScGkaj4u66cLa7/7CA0MVZZjjtmxn5y0WQ6akpQgAAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycoh0ARbE1DXKwglCE0La6P/yk9JOnIircQdaKjHhwbItWe/1hiIynIidaCy2HmPtRRd6NyUxELfXQINo6CJqwkjBCmUHRcZWS1WULCzKclhJWFusA0WPLsFGNvqhy6DRlefE03aUkHtzhydkciInzelbRobtrTeR8Mf5C4CxS5Dv9rMd5mfxAUxleXrCAAAA[0m[Pipeline] {
+[8mha:////4LKZVPjNwvMklbzME27YMDd7paM2Pfvcv0D+VlwadcMQAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOLSICgQVVrLDS8wsTFOrDtjOyQVL+Jr/IFAJCq2WO1sM88XLFOEI0eLraHOUWocBt/baeHAsbt4HrDlMzZMib1BaQbJ2tQzSs4G5hQlLASsDDWekyObYS1adVeVV2SrU47TdxBQOn2DBxRiMmcV8xfGCJtrrxPTz/NXAGPIUG53n9qHN+EEkMO+AAAA[0m[Pipeline] sh
++ git config --global user.email lloyd.malfliet@gmail.com
+[8mha:////4F/nP8ScMRmDL1DZkkfLMMj74KfPw6lGznc6qhGIiAANAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOLSIISEqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDhnK7+9Q+vAEuGAhEvgAAAA==[0m[Pipeline] sh
++ git config --global user.name ReC82
+[8mha:////4Ibg4NdBIf+ZqGsNu5rjpqwM73ZJCwucM3fY9GunBhD2AAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOLSICSEqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDhnK7+9Q+vAFvKRNdvgAAAA==[0m[Pipeline] sh
++ git init
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: is subject to change. To configure the initial branch name to use in all
+hint: of your new repositories, which will suppress this warning, call:
+hint: 
+hint: 	git config --global init.defaultBranch <name>
+hint: 
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint: 
+hint: 	git branch -m <name>
+Initialized empty Git repository in /home/jenkins/workingdir/workspace/EhealthPipeline/target/.git/
+[8mha:////4DAGLw68L/qmiXfNvwUaEow331YoKNyPEACWlOyeic6bAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOJCATQoFa3lhheYxBgn1l2wHZyKF/E1/oBFJCq2WO1sM683LIOHmr3BTlNvKTQWBzeavDCx76+OE3Z8wYYpsNModZLc6tOMkqOGOUUJCwErTY3jYMlEWItOPVTlFJnqHH3+jgJK297hCYXI5qh8/MLkYXMb28D08/wVwDREKHeHXPvt8AER+BONvgAAAA==[0m[Pipeline] sh
++ git add .
+[8mha:////4A7eepdp6rA8WSH0M7fzYaMZfTxSGpMXKZtBrsEEw6V5AAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiJKBBqWgtN7zAJMY4se6C7eBUvIiv8QcsIlGxxWpnm3m9YRk81OwNdpp6S6GxOLjR5IWJfX91nLDjCzZMgZ1GqZPkVp9mlBw1zClKWAhYaWocB0smwlp06qEqp8hU5+jzdxRQ2vYOTyhENkfl4xcmD5vb2Aamn+evAKYhQrk75Npvhw9QyQiUvgAAAA==[0m[Pipeline] sh
++ git commit -m Add built package
+[master (root-commit) 8b6cbf5] Add built package
+ 106 files changed, 561 insertions(+)
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT.war
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT.war.original
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/classes/com/example/demo/Clinic.class
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/classes/com/example/demo/ClinicController.class
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/classes/com/example/demo/EhealthApplication.class
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/classes/com/example/demo/User.class
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/classes/com/example/demo/UserController.class
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/classes/com/example/demo/clinicRepository.class
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/classes/com/example/demo/userRepository.class
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/HikariCP-5.0.1.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/angus-activation-2.0.1.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/antlr4-runtime-4.13.0.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/aspectjweaver-1.9.21.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/byte-buddy-1.14.11.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/classmate-1.6.0.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/hibernate-commons-annotations-6.0.6.Final.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/hibernate-core-6.4.1.Final.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/istack-commons-runtime-4.1.2.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/jackson-annotations-2.15.3.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/jackson-core-2.15.3.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/jackson-databind-2.15.3.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/jackson-datatype-jdk8-2.15.3.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/jackson-datatype-jsr310-2.15.3.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/jackson-module-parameter-names-2.15.3.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/jakarta.activation-api-2.1.2.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/jakarta.annotation-api-2.1.1.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/jakarta.inject-api-2.0.1.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/jakarta.persistence-api-3.1.0.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/jakarta.transaction-api-2.0.1.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/jakarta.xml.bind-api-4.0.1.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/jandex-3.1.2.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/jaxb-core-4.0.4.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/jaxb-runtime-4.0.4.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/jboss-logging-3.5.3.Final.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/jul-to-slf4j-2.0.11.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/log4j-api-2.21.1.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/log4j-to-slf4j-2.21.1.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/logback-classic-1.4.14.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/logback-core-1.4.14.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/micrometer-commons-1.12.2.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/micrometer-observation-1.12.2.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/mysql-connector-j-8.3.0.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/slf4j-api-2.0.11.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/snakeyaml-2.2.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/spring-aop-6.1.3.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/spring-aspects-6.1.3.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/spring-beans-6.1.3.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/spring-boot-3.2.2.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/spring-boot-autoconfigure-3.2.2.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/spring-boot-starter-3.2.2.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/spring-boot-starter-aop-3.2.2.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/spring-boot-starter-data-jpa-3.2.2.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/spring-boot-starter-jdbc-3.2.2.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/spring-boot-starter-json-3.2.2.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/spring-boot-starter-logging-3.2.2.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/spring-boot-starter-tomcat-3.2.2.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/spring-boot-starter-web-3.2.2.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/spring-context-6.1.3.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/spring-core-6.1.3.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/spring-data-commons-3.2.2.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/spring-data-jpa-3.2.2.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/spring-expression-6.1.3.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/spring-jcl-6.1.3.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/spring-jdbc-6.1.3.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/spring-orm-6.1.3.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/spring-tx-6.1.3.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/spring-web-6.1.3.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/spring-webmvc-6.1.3.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/tomcat-embed-core-10.1.18.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/tomcat-embed-el-10.1.18.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/tomcat-embed-websocket-10.1.18.jar
+ create mode 100644 Ehealth-0.0.1-SNAPSHOT/WEB-INF/lib/txw2-4.0.4.jar
+ create mode 100644 classes/com/example/demo/Clinic.class
+ create mode 100644 classes/com/example/demo/ClinicController.class
+ create mode 100644 classes/com/example/demo/EhealthApplication.class
+ create mode 100644 classes/com/example/demo/User.class
+ create mode 100644 classes/com/example/demo/UserController.class
+ create mode 100644 classes/com/example/demo/clinicRepository.class
+ create mode 100644 classes/com/example/demo/userRepository.class
+ create mode 100644 maven-archiver/pom.properties
+ create mode 100644 maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+ create mode 100644 maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+ create mode 100644 maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst
+ create mode 100644 maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst
+ create mode 100644 pmd.xml
+ create mode 100644 pmd/rulesets/001-maven-pmd-plugin-default.xml
+ create mode 100644 site/css/maven-base.css
+ create mode 100644 site/css/maven-theme.css
+ create mode 100644 site/css/print.css
+ create mode 100644 site/css/site.css
+ create mode 100644 site/images/collapsed.gif
+ create mode 100644 site/images/expanded.gif
+ create mode 100644 site/images/external.png
+ create mode 100644 site/images/icon_error_sml.gif
+ create mode 100644 site/images/icon_info_sml.gif
+ create mode 100644 site/images/icon_success_sml.gif
+ create mode 100644 site/images/icon_warning_sml.gif
+ create mode 100644 site/images/logos/build-by-maven-black.png
+ create mode 100644 site/images/logos/build-by-maven-white.png
+ create mode 100644 site/images/logos/maven-feather.png
+ create mode 100644 site/images/newwindow.png
+ create mode 100644 site/pmd.html
+ create mode 100644 test-classes/com/example/demo/EhealthApplicationTests.class
+ create mode 100644 war-exec.manifest
+ create mode 100644 war-exec.properties
+ create mode 100644 webapp.jar
+[8mha:////4K0P2J0wtZ04CrB8vSvmv/CR3RmdtWzfP1NlI9Nh6nWAAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiIaBBqWgtN7zAJMY4se6C7eBUvIiv8QcsIlGxxWpnm3m9YRk81OwNdpp6S6GxOLjR5IWJfX91nLDjCzZMgZ1GqZPkVp9mlBw1zClKWAhYaWocB0smwlp06qEqp8hU5+jzdxRQ2vYOTyhENkfl4xcmD5vb2Aamn+evAKYhQrk75Npvhw+TmiW/vgAAAA==[0m[Pipeline] sh
++ git branch -M main
+[8mha:////4BsPtVmwLp00nCFxPQfNisyzOFmpex53Ss+L9V9F47iSAAAApR+LCAAAAAAAAP9tjTsOwjAQRDdBFLSUHGJT8GlQKlrLDScwiTFOrN1gOzgVJ+Jq3AGLSFRMMZo3zXu9YRk81OwNdpp6S6GxOLjR5IWJfX91nLDjCzZMgZ1GqZPkVp9mlBw1zClKWAhYaWocB0smwlp06qEqp8hU5+jzdxRQ2vYOTyhENkfl4xcmD5vb2Aamn+evAKYhQrk75Npvhw/Sqz6mvgAAAA==[0m[Pipeline] sh
++ git push https://github.com/ReC82/ArtefactRepo.git main
+fatal: could not read Username for 'https://github.com': No such device or address
+[8mha:////4BdnjgEO5QPyGSFdl7XR5fDBpTtvMG9pJ0W3wW7S0jnYAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOLSBBpEldZKwwtMbIwT687YDknFi/gaf8AiEhVbrHa2mdcb1jHAiYPBXtNgKXYWvRtNXjhxGK6OJ+z5gh1TZKex1VPLSjcLtpw0LClKWAnYaOocR0smwVb08iErJ8lU5xTydxRQWnWHJxQim5MM6QtzgN1tVJHp5/krgNn7BOW+zlUfPsyQIO2+AAAA[0m[Pipeline] }
+[8mha:////4BIrpY8GpCEvh6bXEwMBhHeOcEEY9T4VFx1+OFfn96xdAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPMJpSIWoaC03vMAkh3Fi3Rnbwal4EV/jD1hEomKL1c4283rDOgY4cjBiQBotxc4K7yZTlsgcxqvjLAa+iI4pskOhMCvu8bSg4oSwpKphJWGD1DmOlkyCrRz0QzdOk2nOKZTvIKG2/R2eUMliTjqkL8wBdrepj0w/z18BzN4nqNu21L79ANMSdb++AAAA[0m[Pipeline] // withCredentials
+[8mha:////4CajqRZgGcjO2f6MT+2QeXqnTvTpgRtWJAq//uYuLH+cAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOLSBBpEldZKwwtMbIwT687YDknFi/gaf8AiEhVbrHa2mdcb1jHAiYPBXtNgKXYWvRtNXjhxGK6OJ+z5gh1TZKex1VPLSjcLtpw0LClKWAnYaOocR0smwVb08iErJ8lU5xTydxRQWnWHJxQim5MM6QtzgN1tVJHp5/krgNn7BOX+kKuuP+tQ5k6+AAAA[0m[Pipeline] }
+[8mha:////4PbVmGw/cKbzxNj0VY+m2bNzWRKUhx3jooU6GPLpQPL7AAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOJSAKJAqWgtN7zAJMY4se6C7eBUvIiv8QcsIlGxxWpnm3m9YRk81OwNdpp6S6GxOLjR5IWJfX91nLDjCzZMgZ1GqZPkVp9mlBw1zClKWAhYaWocB0smwlp06qEqp8hU5+jzdxRQ2vYOTyhENkfl4xcmD5vb2Aamn+evAKZhiFDuD7l22w/tFt4bvgAAAA==[0m[Pipeline] // dir
+[8mha:////4GTWwMJZPGICWtQ4bEWZoqQwfz9+gCtVlABJ9Q/ABqArAAAAph+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiIZCQUCpayw0vMIkxTqy7YDs4FS/ia/wBi0hUbLHa2WZeb1gGDzV7g52m3lJoLA5uNHlhYt9fHSfs+IINU2CnUeokudWnGSVHDXOKEhYCVpoax8GSibAWnXqoyiky1Tn6/B0FlLa9wxMKkc1R+fiFycPmNraB6ef5K4BpGCKU+0Ou3fYDrpSPnb4AAAA=[0m[Pipeline] }
+[8mha:////4CJULNKL2zMByL6q4JkLxfNYx1FkbXutMlmKVMm6bbg/AAAAph+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiJCgQSkVrueEFJjHGiXUXbAen4kV8jT9gEYmKLVY728zrDcvgoWZvsNPUWwqNxcGNJi9M7Pur44QdX7BhCuw0Sp0kt/o0o+SoYU5RwkLASlPjOFgyEdaiUw9VOUWmOkefv6OA0rZ3eEIhsjkqH78wedjcxjYw/Tx/BTANQ4Ryf8i1234AsRbaz74AAAA=[0m[Pipeline] // withEnv
+[8mha:////4NTauidzSGkGizzmNrMlhJtcjqKaU/kK2TDodeT+zCqGAAAAph+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOKChISQUCpayw0vMIkxTqy7YDs4FS/ia/wBi0hUbLHa2WZeb1gGDzV7g52m3lJoLA5uNHlhYt9fHSfs+IINU2CnUeokudWnGSVHDXOKEhYCVpoax8GSibAWnXqoyiky1Tn6/B0FlLa9wxMKkc1R+fiFycPmNraB6ef5K4BpGCKU+22u3eEDh3Og774AAAA=[0m[Pipeline] }
+[8mha:////4BoxbvTTGu4v9pyw1D3iVz6fvw1zJhgGaX2BzaLzycsjAAAAph+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIihAQFSkVrueEFJjHGiXUXbAen4kV8jT9gEYmKLVY728zrDcvgoWZvsNPUWwqNxcGNJi9M7Pur44QdX7BhCuw0Sp0kt/o0o+SoYU5RwkLASlPjOFgyEdaiUw9VOUWmOkefv6OA0rZ3eEIhsjkqH78wedjcxjYw/Tx/BTANQ4Ryv821O3wAs71DtL4AAAA=[0m[Pipeline] // stage
+[8mha:////4GG09scn0yn9MOk0UgN5nfOPyr/5aeUuw4iRtOQExgJcAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPMIRKWgQVVorDS8w8WGcWHfGdkgqXsTX+AMWkajYYrWzzbzesI4BThyM6JEGS7GzwrvR5CUmDsPV8SR6voiOKbJD0eLUssZmwZYTwpKihJWEDVLnOFoyCbayVw9VOUWmOqeQv6OE0uo7PKGQ2ZxUSF+YA+xuo45MP89fAczeJygPda59/QEQWYtwvgAAAA==[0m[Pipeline] }
+[8mha:////4OBn+bEJoeUM50vPHJlubzfDgEZpGWOnlhZUNDA/f0MUAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOKiCIkGUaW10vACExvjxLoztkNS8SK+xh+wiETFFqudbeb1hnUMcOJgsNc0WIqdRe9GkxdOHIar4wl7vmDHFNlpbPXUstLNgi0nDUuKElYCNpo6x9GSSbAVvXzIykky1TmF/B0FlFbd4QmFyOYkQ/rCHGB3G1Vk+nn+CmD2PkF52Oeq6w8P294ivgAAAA==[0m[Pipeline] // withEnv
+[8mha:////4BdHBYMV0LPoVuzmHowgBrstOdvHqV/AjCKIbni1YhlyAAAAox+LCAAAAAAAAP9tjTESgjAQRT84FraWHiI0jI1jZZuh8QQRYgxkdjFZhMoTeTXvICMzVv7qv9e81xvrFHHk6FRrqfOUaq/6MLj5qZFjdw08qpYvqmZKHKyq7FhxY08LViwWy7IcK42NpTpw8uQEW92ahymCIVecJc7uoJH75o4nMj2XxUT5whSxuw1NYvp1/gYw9b0g35eCrPwA/b3AOr0AAAA=[0m[Pipeline] }
+[8mha:////4HqmpBwYyFmm2ZLeO0Bz2ogxWuZ9wiWkWnwMhUxFE9jDAAAAox+LCAAAAAAAAP9tjTEOwjAQBDdBFLSUPMIpEDSIitZKwwtMYowT6y7YF5KKF/E1/kBEJCq22plmXm8sU8SRo1ONpdZTqrzqQu+mpwaO7TXwoBq+qIopcbCqtEPJtT3NWLJYzMtyLDRWlqrAyZMTrHVjHqYIhlxxlji5g0bu6zueyPRUFhPlC2PE5tbXienX+RvA2HWCfL8TZNsP7gHEmb0AAAA=[0m[Pipeline] // node
+[8mha:////4Da34/8O+/l+57teA/B9/2o4cTvUn2kgY3SwhVVw3vZoAAAAox+LCAAAAAAAAP9tjbEOgjAURS8YB1dHP6IkDizGybVh8Qsq1Fpo3sP2IUx+kb/mP0gkcfJO95zlvN5Yp4gjR6daS52nVHvVh8HNT40cu2vgUbV8UTVT4mBVZceKG3tasGKxWJblWGlsLNWBkycn2OrWPEwRDLniLHF2B43cN3c8kem5LCbKF6aI3W1oEtOv8zeAqe8FeVkKsv0HqEtjqb0AAAA=[0m[Pipeline] End of Pipeline
+ERROR: script returned exit code 128
+Finished: FAILURE

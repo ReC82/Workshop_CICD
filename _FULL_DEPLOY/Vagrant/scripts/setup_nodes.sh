@@ -1,0 +1,1 @@
+sudo echo "10.0.1.11 ehealth_db" >> /etc/hosts

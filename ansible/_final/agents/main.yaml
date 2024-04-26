@@ -1,0 +1,15 @@
+- name: Playbook for all agents
+  hosts: all
+  become: yes
+  roles:
+    - common
+- name: Playbook for deploying java tools
+  hosts: agents-java
+  become: yes
+  roles:
+    - maven
+- name: Playbook for deploying dotnet tools
+  hosts: agents-dotnet
+  become: yes
+  roles:
+    - dotnet

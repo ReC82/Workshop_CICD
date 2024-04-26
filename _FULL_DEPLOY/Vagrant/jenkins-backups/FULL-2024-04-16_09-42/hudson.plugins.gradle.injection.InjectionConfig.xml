@@ -1,0 +1,16 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<hudson.plugins.gradle.injection.InjectionConfig plugin="gradle@2.11">
+  <enabled>false</enabled>
+  <allowUntrusted>false</allowUntrusted>
+  <gradleCaptureTaskInputFiles>true</gradleCaptureTaskInputFiles>
+  <injectMavenExtension>false</injectMavenExtension>
+  <injectCcudExtension>false</injectCcudExtension>
+  <mavenCaptureGoalInputFiles>true</mavenCaptureGoalInputFiles>
+  <enforceUrl>false</enforceUrl>
+  <checkForBuildAgentErrors>false</checkForBuildAgentErrors>
+  <parsedVcsRepositoryFilter>
+    <vcsRepositoryFilter></vcsRepositoryFilter>
+    <inclusion class="empty-list"/>
+    <exclusion class="empty-list"/>
+  </parsedVcsRepositoryFilter>
+</hudson.plugins.gradle.injection.InjectionConfig>

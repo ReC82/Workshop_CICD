@@ -13,6 +13,7 @@ output "webapp_ip" {
     value = azurerm_public_ip.pubip_node_web.ip_address
 }
 
+
 output "vnet_name" {
   value = azurerm_virtual_network.vnets.name
 }

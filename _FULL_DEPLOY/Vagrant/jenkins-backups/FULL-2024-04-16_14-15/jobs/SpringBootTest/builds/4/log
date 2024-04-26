@@ -1,0 +1,117 @@
+Started by user [8mha:////4Eya6VsuvxOgUeheHq9wjjFTc/qk2jCgMFhiraA5SW9QAAAAlx+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzWEgZu/dLi1CL9nJz8yhQA8GIrucAAAAA=[0mLloyd
+Running as SYSTEM
+Building remotely on [8mha:////4NVrA94dRq4Zj424B+KSJoEcfYAfqb9RGFOs/1AlkO/YAAAAnR+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAwOoBn6yfm5BaUlqUX6jumpeSW6BoYAtLNxwMcAAAA=[0mAgent-01 (Java) in workspace /home/jenkins/jenkins-agent/workspace/SpringBootTest
+The recommended git tool is: NONE
+No credentials specified
+Cloning the remote Git repository
+Cloning repository https://github.com/flashvayne/chatgpt-spring-boot-starter.git
+ > git init /home/jenkins/jenkins-agent/workspace/SpringBootTest # timeout=10
+Fetching upstream changes from https://github.com/flashvayne/chatgpt-spring-boot-starter.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.7.4'
+ > git fetch --tags --progress https://github.com/flashvayne/chatgpt-spring-boot-starter.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/flashvayne/chatgpt-spring-boot-starter.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+Avoid second fetch
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+Checking out Revision b61093834a3cb854e39a368ff3b32ba2e5505cf2 (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f b61093834a3cb854e39a368ff3b32ba2e5505cf2 # timeout=10
+Commit message: "Update README.md"
+ > git rev-list --no-walk b61093834a3cb854e39a368ff3b32ba2e5505cf2 # timeout=10
+[SpringBootTest] $ mvn clean install findbugs:findbugs
+---------------------------------------------------
+constituent[0]: file:/usr/share/maven/lib/plexus-component-annotations.jar
+constituent[1]: file:/usr/share/maven/lib/commons-lang.jar
+constituent[2]: file:/usr/share/maven/lib/eclipse-aether-transport-wagon.jar
+constituent[3]: file:/usr/share/maven/lib/commons-cli.jar
+constituent[4]: file:/usr/share/maven/lib/plexus-utils.jar
+constituent[5]: file:/usr/share/maven/lib/wagon-provider-api.jar
+constituent[6]: file:/usr/share/maven/lib/maven-plugin-api-3.x.jar
+constituent[7]: file:/usr/share/maven/lib/cdi-api.jar
+constituent[8]: file:/usr/share/maven/lib/maven-model-builder-3.x.jar
+constituent[9]: file:/usr/share/maven/lib/aopalliance.jar
+constituent[10]: file:/usr/share/maven/lib/eclipse-aether-impl.jar
+constituent[11]: file:/usr/share/maven/lib/eclipse-aether-connector-basic.jar
+constituent[12]: file:/usr/share/maven/lib/javax.inject.jar
+constituent[13]: file:/usr/share/maven/lib/jsoup.jar
+constituent[14]: file:/usr/share/maven/lib/maven-core-3.x.jar
+constituent[15]: file:/usr/share/maven/lib/wagon-http-shared.jar
+constituent[16]: file:/usr/share/maven/lib/eclipse-aether-api.jar
+constituent[17]: file:/usr/share/maven/lib/slf4j-api.jar
+constituent[18]: file:/usr/share/maven/lib/commons-lang3.jar
+constituent[19]: file:/usr/share/maven/lib/sisu-inject.jar
+constituent[20]: file:/usr/share/maven/lib/plexus-cipher.jar
+constituent[21]: file:/usr/share/maven/lib/eclipse-aether-util.jar
+constituent[22]: file:/usr/share/maven/lib/plexus-sec-dispatcher.jar
+constituent[23]: file:/usr/share/maven/lib/guava.jar
+constituent[24]: file:/usr/share/maven/lib/eclipse-aether-spi.jar
+constituent[25]: file:/usr/share/maven/lib/guice.jar
+constituent[26]: file:/usr/share/maven/lib/plexus-interpolation.jar
+constituent[27]: file:/usr/share/maven/lib/maven-artifact-3.x.jar
+constituent[28]: file:/usr/share/maven/lib/sisu-plexus.jar
+constituent[29]: file:/usr/share/maven/lib/maven-model-3.x.jar
+constituent[30]: file:/usr/share/maven/lib/maven-settings-3.x.jar
+constituent[31]: file:/usr/share/maven/lib/wagon-file.jar
+constituent[32]: file:/usr/share/maven/lib/maven-builder-support-3.x.jar
+constituent[33]: file:/usr/share/maven/lib/maven-aether-provider-3.x.jar
+constituent[34]: file:/usr/share/maven/lib/commons-io.jar
+constituent[35]: file:/usr/share/maven/lib/maven-repository-metadata-3.x.jar
+constituent[36]: file:/usr/share/maven/lib/wagon-http-shaded.jar
+constituent[37]: file:/usr/share/maven/lib/maven-compat-3.x.jar
+constituent[38]: file:/usr/share/maven/lib/maven-settings-builder-3.x.jar
+constituent[39]: file:/usr/share/maven/lib/maven-embedder-3.x.jar
+constituent[40]: file:/usr/share/maven/lib/slf4j-simple.jar
+constituent[41]: file:/usr/share/maven/conf/logging/
+---------------------------------------------------
+Exception in thread "main" com.google.common.util.concurrent.ExecutionError: java.lang.NoClassDefFoundError: Could not initialize class com.google.inject.internal.cglib.core.$ReflectUtils
+	at com.google.common.cache.LocalCache$Segment.get(LocalCache.java:2203)
+	at com.google.common.cache.LocalCache.get(LocalCache.java:3951)
+	at com.google.common.cache.LocalCache.getOrLoad(LocalCache.java:3955)
+	at com.google.common.cache.LocalCache$LocalLoadingCache.get(LocalCache.java:4870)
+	at com.google.common.cache.LocalCache$LocalLoadingCache.getUnchecked(LocalCache.java:4876)
+	at com.google.inject.internal.FailableCache.get(FailableCache.java:48)
+	at com.google.inject.internal.ConstructorInjectorStore.get(ConstructorInjectorStore.java:50)
+	at com.google.inject.internal.ConstructorBindingImpl.initialize(ConstructorBindingImpl.java:137)
+	at com.google.inject.internal.InjectorImpl.initializeBinding(InjectorImpl.java:533)
+	at com.google.inject.internal.AbstractBindingProcessor$Processor$1.run(AbstractBindingProcessor.java:160)
+	at com.google.inject.internal.ProcessedBindingData.initializeBindings(ProcessedBindingData.java:44)
+	at com.google.inject.internal.InternalInjectorCreator.initializeStatically(InternalInjectorCreator.java:123)
+	at com.google.inject.internal.InternalInjectorCreator.build(InternalInjectorCreator.java:107)
+	at com.google.inject.Guice.createInjector(Guice.java:99)
+	at com.google.inject.Guice.createInjector(Guice.java:73)
+	at com.google.inject.Guice.createInjector(Guice.java:62)
+	at org.codehaus.plexus.DefaultPlexusContainer.addPlexusInjector(DefaultPlexusContainer.java:481)
+	at org.codehaus.plexus.DefaultPlexusContainer.<init>(DefaultPlexusContainer.java:206)
+	at org.apache.maven.cli.MavenCli.container(MavenCli.java:545)
+	at org.apache.maven.cli.MavenCli.doMain(MavenCli.java:281)
+	at org.apache.maven.cli.MavenCli.main(MavenCli.java:199)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.codehaus.plexus.classworlds.launcher.Launcher.launchEnhanced(Launcher.java:289)
+	at org.codehaus.plexus.classworlds.launcher.Launcher.launch(Launcher.java:229)
+	at org.codehaus.plexus.classworlds.launcher.Launcher.mainWithExitCode(Launcher.java:415)
+	at org.codehaus.plexus.classworlds.launcher.Launcher.main(Launcher.java:356)
+Caused by: java.lang.NoClassDefFoundError: Could not initialize class com.google.inject.internal.cglib.core.$ReflectUtils
+	at com.google.inject.internal.cglib.reflect.$FastClass$Generator.getProtectionDomain(FastClass.java:73)
+	at com.google.inject.internal.cglib.core.$AbstractClassGenerator.create(AbstractClassGenerator.java:206)
+	at com.google.inject.internal.cglib.reflect.$FastClass$Generator.create(FastClass.java:65)
+	at com.google.inject.internal.BytecodeGen.newFastClass(BytecodeGen.java:204)
+	at com.google.inject.internal.DefaultConstructionProxyFactory.create(DefaultConstructionProxyFactory.java:55)
+	at com.google.inject.internal.ProxyFactory.create(ProxyFactory.java:159)
+	at com.google.inject.internal.ConstructorInjectorStore.createConstructor(ConstructorInjectorStore.java:90)
+	at com.google.inject.internal.ConstructorInjectorStore.access$000(ConstructorInjectorStore.java:29)
+	at com.google.inject.internal.ConstructorInjectorStore$1.create(ConstructorInjectorStore.java:37)
+	at com.google.inject.internal.ConstructorInjectorStore$1.create(ConstructorInjectorStore.java:33)
+	at com.google.inject.internal.FailableCache$1.load(FailableCache.java:37)
+	at com.google.common.cache.LocalCache$LoadingValueReference.loadFuture(LocalCache.java:3540)
+	at com.google.common.cache.LocalCache$Segment.loadSync(LocalCache.java:2321)
+	at com.google.common.cache.LocalCache$Segment.lockedGetOrLoad(LocalCache.java:2284)
+	at com.google.common.cache.LocalCache$Segment.get(LocalCache.java:2199)
+	... 28 more
+Build step 'Invoke top-level Maven targets' marked build as failure
+[FindBugs] Skipping execution of recorder since overall result is 'FAILURE'
+Sending e-mails to: lloyd.malfliet@gmail.com
+Finished: FAILURE

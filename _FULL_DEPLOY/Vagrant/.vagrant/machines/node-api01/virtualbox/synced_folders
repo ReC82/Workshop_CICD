@@ -1,0 +1,1 @@
+{"virtualbox":{"/home/vagrant/shared":{"guestpath":"/home/vagrant/shared","hostpath":"E:/Projects/Workshop_CICD/_FULL_DEPLOY/Vagrant/shared_folder","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"E:/Projects/Workshop_CICD/_FULL_DEPLOY/Vagrant","disabled":false,"__vagrantfile":true}}}

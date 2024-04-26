@@ -1,0 +1,94 @@
+
+ ##############################
+ #   udpate ubuntu
+ ##############################
+- name: "apt-get update -y"
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Set TimeZone
+  ansible.builtin.timezone:
+    name: Europe/Brussels
+
+##############################
+#   install java runtinme
+##############################
+- name: Install Java JRE
+  apt:
+    name: default-jre
+    state: present
+
+- name: Install git
+  apt:
+    name: git
+    state: present
+
+- name: Create a new user
+  user:
+    name: jenkins
+    shell: /bin/bash
+    create_home: yes
+    password: "{{ 'jenkins' | password_hash('sha512') }}"
+  become: true
+
+- name: Create working directory for Jenkins
+  file:
+    path: /home/jenkins/workingdir
+    state: directory
+    owner: jenkins
+    group: jenkins
+    mode: "0755"
+  become: true
+
+- name: Ensure .ssh folder exists
+  file:
+    path: /home/jenkins/.ssh
+    state: directory
+    owner: jenkins
+    group: jenkins
+    mode: "0700"
+  become: true
+
+- name: Ensure authorized_keys file exists
+  file:
+    path: /home/jenkins/.ssh/authorized_keys
+    state: touch
+    owner: jenkins
+    group: jenkins
+    mode: "0644"
+  become: true
+
+- name: Copy authorized_keys from rooty to jenkins
+  copy:
+    src: /home/rooty/.ssh/authorized_keys
+    dest: /home/jenkins/.ssh/authorized_keys
+    owner: jenkins
+    group: jenkins
+    mode: '0644'
+    force: true
+    backup: true
+    remote_src: yes
+  become: true
+
+- name: Ensure ownership of .ssh and authorized_keys
+  file:
+    path: /home/jenkins/.ssh
+    owner: jenkins
+    group: jenkins
+    recurse: true
+  become: true
+
+
+##############################
+#   install ufw
+##############################
+
+- name: Install ufw 
+  shell: apt-get install ufw -y 
+
+- name: Allow SSH connections on port 22
+  shell: ufw allow 22/tcp comment 'Allow SSH'
+
+- name:  Enabled firewall ufw
+  shell: ufw --force enable  

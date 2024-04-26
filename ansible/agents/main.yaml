@@ -3,13 +3,13 @@
   become: yes
   roles:
     - common
-- name: Playbook for deploying agents01 tools
-  hosts: TheAgent-0
+- name: Playbook for deploying java tools
+  hosts: agents-java
   become: yes
   roles:
     - maven
-- name: Playbook for deploying agents02 tools
-  hosts: TheAgent-1
+- name: Playbook for deploying dotnet tools
+  hosts: agents-dotnet
   become: yes
   roles:
     - dotnet

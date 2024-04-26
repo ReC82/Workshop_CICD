@@ -1,0 +1,57 @@
+ ##############################
+ #   udpate ubuntu
+ ##############################
+- name: "apt-get update -y"
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Set TimeZone
+  ansible.builtin.timezone:
+    name: Europe/Brussels
+
+##############################
+#   install java runtinme
+##############################
+- name: Install Java JRE
+  apt:
+    name: default-jre
+    state: present
+
+##############################
+#   Prepare API environment
+##############################
+- name: Create the finale api directory
+  file:
+    path: /var/www/api/
+    state: directory
+- name: Create the Api service
+  become: true
+  template:
+    src: ehealth_api.service.j2
+    dest: /etc/systemd/system/ehealth_api.service
+- name: Reload systemd to read the new service file
+  become: true
+  systemd:
+    daemon_reload: yes
+- name: Enable and start ehealth service
+  systemd:
+    name: ehealth_api
+    enabled: yes
+    state: started    
+
+##############################
+#   install ufw
+##############################
+
+- name: Install ufw 
+  shell: apt-get install ufw -y 
+
+- name: Allow SSH connections on port 22
+  shell: ufw allow 22/tcp comment 'Allow SSH'
+
+- name: Allow HTTP connections on port 80
+  shell: ufw allow 80/tcp comment 'Allow HTTP API'
+
+- name:  Enabled firewall ufw
+  shell: ufw --force enable  

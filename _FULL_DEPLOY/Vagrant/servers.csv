@@ -1,0 +1,6 @@
+server_hostname,server_ip,env,server_function,server_box,ssh_port,http_port
+node-web01,10.0.1.10,PROD,NODE,ubuntu/jammy64,2210,81
+node-db01,10.0.1.11,PROD,NODE,ubuntu/jammy64,2211,0
+node-api01,10.0.1.12,PROD,NODE,ubuntu/jammy64,2212,0
+agent-01,10.0.50.150,PROD,AGENT,ubuntu/jammy64,2550,0
+controller,10.0.50.100,CONTROL,CONTROL,ubuntu/jammy64,2500,8888

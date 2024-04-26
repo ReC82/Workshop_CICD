@@ -28,6 +28,35 @@ variable "nodes_configuration" {
   }))
 }
 
+variable "vm_configuration" {
+  type = map(object({
+    category_name       = string
+    subnet_address_prefix = string
+    function            = string
+    count               = number
+  }))
+  default = {
+    web = {
+      category_name       = "Web Servers"
+      subnet_address_prefix = "10.0.1.0/24"
+      function            = "web-server"
+      count               = 1
+    }
+    database = {
+      category_name       = "Database Servers"
+      subnet_address_prefix = "10.0.2.0/24"
+      function            = "database-server"
+      count               = 1
+    }
+    api = {
+      category_name       = "API Servers"
+      subnet_address_prefix = "10.0.3.0/24"
+      function            = "api-server"
+      count               = 2
+    }
+  }
+}
+
 variable "controller_ip" {
   description = "IP From the controller"
 }

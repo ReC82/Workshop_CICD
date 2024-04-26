@@ -1,0 +1,13 @@
+[Unit]
+Description=Ehealth Web Application
+After=network.target
+
+[Service]
+User=root
+WorkingDirectory=/var/www/api
+ExecStart=/var/www/api -jar ehealth_api.jar
+SuccessExitStatus=143
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

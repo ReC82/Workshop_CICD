@@ -1,0 +1,11 @@
+Started by user [8mha:////4PTI3m1vR6yRJUxgOk5tLuXY4KUex85T9d0wCDBVlQsQAAAAlx+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzWEgZu/dLi1CL9nJz8yhQA8GIrucAAAAA=[0mLloyd
+Running as SYSTEM
+Building on the built-in node in workspace /var/lib/jenkins/workspace/JMeterTest
+[JMeterTest] $ /bin/sh -xe /tmp/jenkins15307148228342732035.sh
+The following environment variables were removed by 'Only Keep Specified Environment Variables': BUILD_DISPLAY_NAME, BUILD_URL, CI, EXECUTOR_NUMBER, HUDSON_HOME, HUDSON_URL, JENKINS_URL, JOB_DISPLAY_URL, JOB_URL, NODE_LABELS, NODE_NAME, RUN_ARTIFACTS_DISPLAY_URL, RUN_CHANGES_DISPLAY_URL, RUN_DISPLAY_URL, RUN_TESTS_DISPLAY_URL, WORKSPACE, WORKSPACE_TMP
++ source /etc/profile
+/tmp/jenkins15307148228342732035.sh: 2: source: not found
+Build step 'Execute shell' marked build as failure
+Creating parser with percentiles:'0,50,90,95,100,' filterRegex:
+Cannot detect file type because of error: Failed to copy /vagrant/shared_folder/jmeter/result.jtl to /var/lib/jenkins/jobs/JMeterTest/builds/6/temp/result.jtl
+Finished: FAILURE

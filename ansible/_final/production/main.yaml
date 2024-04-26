@@ -1,0 +1,18 @@
+
+- name: Playbook for WebApplication
+  hosts: node-web
+  become: yes
+  roles:
+    - app
+
+- name: Playbook for Databases
+  hosts: agents-dotnet
+  become: yes
+  roles:
+    - db
+
+- name: Playbook for API
+  hosts: agents-dotnet
+  become: yes
+  roles:
+    - api

@@ -21,6 +21,7 @@ output "private_ips_agents" {
 output "webapp_public_ip_prod" {
   value = module.prod_modules.webapp_ip
 }
+
 /*
 output "test" {
   value = module.prod_modules.all_nics_ids

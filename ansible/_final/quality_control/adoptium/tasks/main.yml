@@ -1,0 +1,28 @@
+- name: Ensure apt keyrings directory exists
+  file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+
+- name: Download Adoptium GPG Key
+  get_url:
+    url: "https://packages.adoptium.net/artifactory/api/gpg/key/public"
+    dest: "/etc/apt/keyrings/adoptium.asc"
+
+- name: Add AdoptOpenJDK APT Repository
+  shell: >
+    echo "deb [signed-by=/etc/apt/keyrings/adoptium.asc]
+    https://packages.adoptium.net/artifactory/deb
+    $(awk -F= '/^VERSION_CODENAME/{print $2}' /etc/os-release) main"
+    | tee /etc/apt/sources.list.d/adoptium.list
+  args:
+    executable: /bin/bash
+
+- name: Update APT Package Cache
+  apt:
+    update_cache: yes
+
+- name: Install Java Temurin
+  apt:
+    name: temurin-17-jdk
+    state: present

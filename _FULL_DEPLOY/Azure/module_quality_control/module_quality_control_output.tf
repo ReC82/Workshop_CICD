@@ -6,6 +6,13 @@ output "quality_controller_dns" {
   value = azurerm_public_ip.pubip_quality_control.fqdn
 }
 
-output "quality_controller_priv_addrr" {
+output "private_ip_addresses" {
   value = azurerm_network_interface.nic_quality_control.private_ip_address
 }
+
+/*
+If multiple 
+output "private_ip_addresses" {
+  value = join(";", [for idx, nic in azurerm_network_interface.nic_quality_control: nic.ip_configuration[0].private_ip_address])
+}
+*/

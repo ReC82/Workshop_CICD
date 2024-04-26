@@ -18,9 +18,9 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 script {
-                    def scannerHome = tool 'JenkinsScan' // Reference to Jenkins tool configuration
-                    withSonarQubeEnv('mysonar') { // Your SonarQube instance
-                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey='wscicd'" // Set your project key
+                    def scannerHome = tool 'JenkinsScan'
+                    withSonarQubeEnv('mysonar') { 
+                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey='wscicd'" 
                     }
                 }
             }

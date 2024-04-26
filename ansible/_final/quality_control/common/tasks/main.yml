@@ -1,0 +1,45 @@
+
+ ##############################
+ #   udpate ubuntu
+ ##############################
+- name: "apt-get update -y"
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Set TimeZone
+  ansible.builtin.timezone:
+    name: Europe/Brussels
+
+- name: Install git
+  apt:
+    name: git
+    state: present
+
+- name : Install Acl
+  apt:
+    name: acl
+    state: present
+
+- name : Install Python Required Lib (for sonarqube)
+  apt:
+    name: python3-psycopg2
+    state: present
+##############################
+#   install ufw
+##############################
+
+- name: Install ufw
+  apt:
+    name: ufw
+    state: present
+  become: true
+
+- name: Allow SSH connections on port 22
+  shell: ufw allow 22/tcp comment 'Allow SSH'
+
+- name: Allow SSH connections on port 9000
+  shell: ufw allow 9000/tcp comment 'Allow SonarQube Web'
+
+- name:  Enabled firewall ufw
+  shell: ufw --force enable  
