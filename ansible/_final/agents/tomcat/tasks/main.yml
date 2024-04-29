@@ -1,0 +1,7 @@
+##############################
+#   install java compiler
+##############################
+- name: Install java sdk
+  apt:
+    name: default-jdk # Check the version
+    state: present
