@@ -53,3 +53,20 @@
   postgresql_query:
     db: sonarqube
     query: "GRANT ALL PRIVILEGES ON DATABASE sonarqube TO sonar"
+
+# Prepare Backup
+
+- name: Ensure the .pgpass file exists
+  file:
+    path: "{{ ansible_env.HOME }}/.pgpass"
+    state: touch
+    mode: '0600'
+
+- name: Write PostgreSQL connection information to .pgpass
+  lineinfile:
+    path: "{{ ansible_env.HOME }}/.pgpass"
+    line: "{{ item }}"
+    create: yes
+    state: present
+  with_items:
+    - "localhost:5432:sonarqube:sonar:sonar"
