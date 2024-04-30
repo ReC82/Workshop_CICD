@@ -9,9 +9,13 @@
       - ca-certificates
     state: present
 
+- name: Get distribution codename
+  command: lsb_release -cs
+  register: distro_codename
+
 - name: Add PostgreSQL APT Repository
   apt_repository:
-    repo: "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main"
+    repo: "deb http://apt.postgresql.org/pub/repos/apt {{ distro_codename.stdout }}-pgdg main"
     state: present
     filename: pgdg.list    
 
