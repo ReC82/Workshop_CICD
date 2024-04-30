@@ -22,6 +22,11 @@
     dest: /tmp/Release.key
     mode: '0644'
 
+- name: Ensure /tmp/Release.gpg is removed
+  file:
+    path: /tmp/Release.gpg
+    state: absent
+
 - name: Convert GPG key to binary format
   command: gpg --dearmor -o /tmp/Release.gpg /tmp/Release.key
 
