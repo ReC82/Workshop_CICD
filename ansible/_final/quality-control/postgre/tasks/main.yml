@@ -10,14 +10,25 @@
     state: present
 
 - name: Add PostgreSQL APT Repository
-  shell: >
-    echo "deb http://apt.postgresql.org/pub/repos/apt
-    $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list
-  args:
-    executable: /bin/bash
+  apt_repository:
+    repo: "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main"
+    state: present
+    filename: pgdg.list    
 
-- name: Add PostgreSQL GPG Key
-  shell: wget -qO - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo tee /etc/apt/trusted.gpg.d/pgdg.asc
+- name: Download the PostgreSQL GPG key
+  get_url:
+    url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+    dest: /tmp/pgdg.asc
+    mode: '0644'
+
+- name: Move the key to apt's trusted key directory
+  copy:
+    src: /tmp/pgdg.asc
+    dest: /etc/apt/trusted.gpg.d/pgdg.asc
+    owner: root
+    group: root
+    mode: '0644'
+    remote_src: true
 
 - name: Install Postgre
   apt:

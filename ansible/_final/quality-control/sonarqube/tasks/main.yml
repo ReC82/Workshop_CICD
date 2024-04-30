@@ -16,21 +16,13 @@
     remote_src: true
     creates: "/opt/sonarqube-9.9.0.65466"
 
-- name: Check if /opt/sonarqube exists
-  stat:
+- name: Ensure /opt/sonarqube is removed
+  file:
     path: /opt/sonarqube
-  register: sonarqube_stat
-
-- name: Check if /opt/sonarqube is empty
-  command: find /opt/sonarqube -mindepth 1 -print -quit
-  register: check_sonarqube_source
-  failed_when: False   
+    state: absent
 
 - name: Move unzipped SonarQube to /opt/sonarqube
   command: mv /opt/sonarqube-9.9.0.65466 /opt/sonarqube
-  when:
-  - sonarqube_stat
-  - check_sonarqube_source
 
 - name: Create 'sonar' group for SonarQube
   group:
