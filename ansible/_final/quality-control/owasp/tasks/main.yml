@@ -12,15 +12,36 @@
 
 - name: Add OWASP ZAP APT repository
   apt_repository:
-    repo: 'deb http://download.opensuse.org/repositories/home:/cabelo/xUbuntu_22.10/ /'
+    repo: 'deb http://download.opensuse.org/repositories/home:/cabelo/xUbuntu_22.04/ /'
     state: present
     filename: 'home_cabelo'
 
-- name: Add OWASP ZAP GPG key
-  apt_key:
-    url: 'https://download.opensuse.org/repositories/home:cabelo/xUbuntu_22.10/Release.key'
-    state: present
-    keyring: '/etc/apt/trusted.gpg.d/home_cabelo.gpg'
+- name: Download the OpenSUSE GPG key
+  get_url:
+    url: https://download.opensuse.org/repositories/home:cabelo/xUbuntu_22.04/Release.key
+    dest: /tmp/Release.key
+    mode: '0644'
+
+- name: Convert GPG key to binary format
+  command: gpg --dearmor -o /tmp/Release.gpg /tmp/Release.key
+
+- name: Move the key to apt's trusted key directory
+  copy:
+    src: /tmp/Release.gpg
+    dest: /etc/apt/trusted.gpg.d/home_cabelo.gpg
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Clean up temporary files
+  file:
+    path: /tmp/Release.key
+    state: absent
+
+- name: Clean up temporary GPG files
+  file:
+    path: /tmp/Release.gpg
+    state: absent
 
 - name: Update APT cache
   apt:
