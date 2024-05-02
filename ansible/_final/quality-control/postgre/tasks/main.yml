@@ -9,30 +9,20 @@
       - ca-certificates
     state: present
 
-- name: Get distribution codename
-  command: lsb_release -cs
-  register: distro_codename
+- name: Add PostgreSQL repository to sources list
+  shell: >
+    echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list
+  args:
+    executable: /bin/bash
 
-- name: Add PostgreSQL APT Repository
-  apt_repository:
-    repo: "deb http://apt.postgresql.org/pub/repos/apt {{ distro_codename.stdout }}-pgdg main"
-    state: present
-    filename: pgdg.list    
+- name: Add PostgreSQL GPG key to trusted keys
+  shell: |
+    wget -qO - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo tee /etc/apt/trusted.gpg.d/pgdg.asc
 
-- name: Download the PostgreSQL GPG key
-  get_url:
-    url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
-    dest: /tmp/pgdg.asc
-    mode: '0644'
-
-- name: Move the key to apt's trusted key directory
-  copy:
-    src: /tmp/pgdg.asc
-    dest: /etc/apt/trusted.gpg.d/pgdg.asc
-    owner: root
-    group: root
-    mode: '0644'
-    remote_src: true
+- name: "apt-get update -y"
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
 
 - name: Install Postgre
   apt:
