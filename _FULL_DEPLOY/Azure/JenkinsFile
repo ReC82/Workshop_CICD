@@ -1,16 +1,15 @@
 pipeline {
-    agent any
+    agent none
 
     environment {
-        // Email settings
-        RECIPIENTS = 'lloyd.malfliet@gmail.com' // Change to the appropriate email addresses
-        SENDER_EMAIL = 'jenkins@lodywood.be' // The sender's email address
+        RECIPIENTS = 'lloyd.malfliet@gmail.com'
+        SENDER_EMAIL = 'jenkins@lodywood.be'
     }
 
     stages {
+        agent { label 'java' }        
         stage('Checkout') {
             steps {
-                // Ensure correct checkout step
                 checkout scm
             }
         }
@@ -40,7 +39,6 @@ pipeline {
 
     post {
         always {
-            // Send an email regardless of the build outcome
             emailext(
                 subject: "Jenkins Pipeline: ${currentBuild.fullDisplayName} - ${currentBuild.result}",
                 body: """Build Number: ${currentBuild.number}
