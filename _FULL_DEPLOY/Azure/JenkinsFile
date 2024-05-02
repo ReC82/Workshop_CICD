@@ -7,14 +7,16 @@ pipeline {
     }
 
     stages {
-        agent { label 'java' }        
+                
         stage('Checkout') {
+            agent { label 'java' }
             steps {
                 checkout scm
             }
         }
 
         stage('SonarQube Analysis') {
+            agent { label 'java' }
             steps {
                 script {
                     def scannerHome = tool 'JenkinsScan'
