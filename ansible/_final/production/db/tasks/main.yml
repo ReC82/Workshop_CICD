@@ -11,6 +11,21 @@
     name: Europe/Brussels
 
 ##############################
+#  Configure API
+##############################
+
+- name: Install Nginx
+  apt:
+    name: nginx
+    state: latest
+
+- name: Edit nginx default conf
+  template:
+    src: morelessapi_nginx.conf.j2
+    dest: /etc/nginx/sites-enabled/default
+    force: yes
+
+##############################
 #   install ufw
 ##############################
 
