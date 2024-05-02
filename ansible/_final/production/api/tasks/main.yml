@@ -28,15 +28,15 @@
 - name: Create the Api service
   become: true
   template:
-    src: ehealth_api.service.j2
-    dest: /etc/systemd/system/ehealth_api.service
+    src: moreless_api.service.j2
+    dest: /etc/systemd/system/moreless_api.service
 - name: Reload systemd to read the new service file
   become: true
   systemd:
     daemon_reload: yes
-- name: Enable and start ehealth service
+- name: Enable and start moreless service
   systemd:
-    name: ehealth_api
+    name: moreless_api
     enabled: yes
     state: started    
 

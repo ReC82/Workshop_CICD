@@ -6,13 +6,8 @@
     - app
 
 - name: Playbook for Databases
-  hosts: agents-dotnet
+  hosts: node-db
   become: yes
   roles:
     - db
-
-- name: Playbook for API
-  hosts: agents-dotnet
-  become: yes
-  roles:
     - api

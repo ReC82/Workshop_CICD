@@ -1,11 +1,11 @@
 [Unit]
-Description=Ehealth Web Application
+Description=Moreless Api
 After=network.target
 
 [Service]
 User=root
 WorkingDirectory=/var/www/api
-ExecStart=/var/www/api -jar ehealth_api.jar
+ExecStart=/var/www/api -jar moreless_api.jar
 SuccessExitStatus=143
 Restart=on-failure
 
