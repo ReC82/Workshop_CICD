@@ -10,12 +10,6 @@
 # Install ZAP (Owasp)
 ################################
 
-- name: Add OWASP ZAP APT repository
-  apt_repository:
-    repo: 'deb http://download.opensuse.org/repositories/home:/cabelo/xUbuntu_22.04/ /'
-    state: present
-    filename: 'home_cabelo'
-
 - name: Download the OpenSUSE GPG key
   get_url:
     url: https://download.opensuse.org/repositories/home:cabelo/xUbuntu_22.04/Release.key
@@ -48,6 +42,12 @@
   file:
     path: /tmp/Release.gpg
     state: absent
+    
+- name: Add OWASP ZAP APT repository
+  apt_repository:
+    repo: 'deb http://download.opensuse.org/repositories/home:/cabelo/xUbuntu_22.04/ /'
+    state: present
+    filename: 'home_cabelo'
 
 - name: Update APT cache
   apt:
