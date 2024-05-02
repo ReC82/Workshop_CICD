@@ -8,6 +8,7 @@
   become: yes
   roles:
     - maven
+    - adoptium
 - name: Playbook for deploying dotnet tools
   hosts: agents-dotnet
   become: yes
