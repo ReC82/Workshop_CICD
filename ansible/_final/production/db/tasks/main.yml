@@ -25,6 +25,12 @@
     dest: /etc/nginx/sites-enabled/default
     force: yes
 
+# tmp net tools
+- name: Install Net tools
+  apt:
+    name: net-tools
+    state: present
+
 ##############################
 #   install ufw
 ##############################
@@ -37,6 +43,9 @@
 
 - name: Allow HTTP connections on port 3306
   shell: ufw allow 3306/tcp comment 'Allow Mysql'
+
+- name: Allow HTTP connections on port 80
+  shell: ufw allow 80/tcp comment 'Allow Web for Api'  
 
 - name:  Enabled firewall ufw
   shell: ufw --force enable  
