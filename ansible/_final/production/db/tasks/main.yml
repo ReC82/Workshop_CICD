@@ -25,6 +25,15 @@
     dest: /etc/nginx/sites-enabled/default
     force: yes
 
+- name: Create /var/html/api 
+  file:
+    path: /var/html/api
+    state: directory  
+    owner: www-data   
+    group: www-data   
+    mode: '0755'   
+
+
 # tmp net tools
 - name: Install Net tools
   apt:
