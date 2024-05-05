@@ -7,6 +7,12 @@
     state: latest
   notify: Restart MySQL
 
+# Install PyMySQL for Python 3
+- name: Install PyMySQL (Python 3)
+  apt:
+    name: python3-pymysql
+    state: present
+
 ##############################
 #   Secure MySQL Installation
 ##############################
