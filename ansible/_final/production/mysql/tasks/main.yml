@@ -32,9 +32,11 @@
 - name: Create MySQL User with Specific Privileges
   mysql_user:
     name: api_user
-    password: secure_password  # Change to a secure password
-    priv: "api_db.*:ALL"  # All privileges on the specified database
-    state: present  # Ensure the user exists
+    password: api_user  # User's password
+    login_user: root  # Root user
+    login_password: root  # Root user's password
+    priv: "api_db.*:ALL"  # Privileges for the user
+    state: present
 
 - name: Create MySQL Database
   mysql_db:
