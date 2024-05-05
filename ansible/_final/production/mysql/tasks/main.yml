@@ -1,63 +1,34 @@
-##############################
-#   Install MySQL Server
-##############################
-- name: Install MySQL Server
-  apt:
-    name: mysql-server
-    state: latest
-  notify: Restart MySQL
-
-# Ensure MySQL Python library is installed for Ansible
-- name: Install PyMySQL (Python 3)
-  apt:
-    name: python3-pymysql
+- name: Installing Mysql  and dependencies
+  package:
+    name: "{{item}}"
     state: present
-
-##############################
-#   Secure MySQL Installation
-##############################
-- name: Secure MySQL Installation
-  command: "mysql_secure_installation"
-  args:
-    stdin: |
-      y  # Set root password (change as needed)
-      d3h2dz9x
-      y  # Remove anonymous users
-      y  # Disallow root login remotely
-      y  # Remove test database
-      y  # Reload privilege tables
-
-##############################
-#   Create MySQL User and Database
-##############################
-- name: Create MySQL Database
-  mysql_db:
-    name: api_db  # Name of the database
-    state: present  # Ensure it exists
-
-- name: Create MySQL User with Specific Privileges
-  mysql_user:
-    name: api_user
-    password: api_user  # User's password
-    login_user: root  # MySQL root user
-    login_password: d3h2dz9x  # MySQL root password
-    priv: "api_db.*:ALL"  # All privileges on the created database
-    state: present  # Ensure the user exists
-
-##############################
-#   Configure UFW (Firewall)
-##############################
-- name: Allow MySQL connections on port 3306
-  ufw:
-    rule: allow
-    port: 3306
-    proto: tcp
-    comment: "Allow MySQL"
-
-##############################
-#   Restart MySQL Service
-##############################
-- name: Restart MySQL
+    update_cache: yes
+  loop:
+    - mysql-server
+    - mysql-client 
+    - python3-mysqldb
+    - libmysqlclient-dev
+- name: start and enable mysql service
   service:
     name: mysql
-    state: restarted
+    state: started
+    enabled: yes
+- name: creating mysql user (medium_post)
+  mysql_user:
+    name: "{{db_user}}"
+    password: "{{db_pass}}"
+    priv: '*.*:ALL'
+    host: '%'
+    state: present
+- name: creating medium_db
+  mysql_db:
+    name: "{{db_name}}"
+    state: present
+- name: Enable remote login to mysql
+  lineinfile:
+      path: /etc/mysql/mysql.conf.d/mysqld.cnf
+      regexp: '^bind-address'
+      line: 'bind-address = 0.0.0.0'
+      backup: yes
+  notify:
+      - Restart mysql

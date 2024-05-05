@@ -33,13 +33,6 @@
     group: www-data   
     mode: '0755'   
 
-
-# tmp net tools
-- name: Install Net tools
-  apt:
-    name: net-tools
-    state: present
-
 ##############################
 #   install ufw
 ##############################
