@@ -5,20 +5,7 @@
   apt:
     name: mysql-server
     state: latest
-  notify: Restart MySQL  # Notify to restart MySQL after installation
-
-##############################
-#   Secure MySQL Installation (Optional)
-##############################
-- name: Secure MySQL Installation
-  command: "mysql_secure_installation"
-  args:
-    stdin: |
-      n  # Set root password (optional, if needed)
-      y  # Remove anonymous users
-      y  # Disallow root login remotely
-      y  # Remove test database
-      y  # Reload privilege tables
+  notify: Restart MySQL  # Notify to restart MySQL if needed
 
 ##############################
 #   Ensure MySQL is Running
@@ -27,4 +14,15 @@
   service:
     name: mysql
     state: started
-  notify: Restart MySQL  # Restart MySQL if needed
+
+- name: Create a MySQL Database
+  mysql_db:
+    name: moreless  # Name of the new database
+    state: present  # Ensure the database is created
+
+- name: Create a MySQL User
+  mysql_user:
+    name: api_user  # Name of the new user
+    password: api_user  # User's password
+    priv: "moreless.*:ALL"  # All privileges on the specified database
+    state: present  # Ensure the user exists
