@@ -21,7 +21,7 @@
     name: api_user
     password: api_user  # User's password
     login_user: root  # Root user
-    login_password: root  # Root user's password
+    login_password: # Root user's password
     priv: "api_db.*:ALL"  # Privileges for the user
     state: present
 
