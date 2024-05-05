@@ -14,5 +14,6 @@
   hosts: node-db
   become: yes
   roles:
-    - db
+    - nginx
+    - mysql
     - api
