@@ -5,7 +5,7 @@ After=network.target
 [Service]
 User=root
 WorkingDirectory=/var/www/api
-ExecStart=/var/www/api -jar moreless_api.jar
+ExecStart=/usr/bin/java -jar /var/www/api/moreless_api.jar
 SuccessExitStatus=143
 Restart=on-failure
 

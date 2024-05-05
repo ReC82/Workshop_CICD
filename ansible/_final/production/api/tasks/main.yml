@@ -15,7 +15,9 @@
 ##############################
 - name: Install Java JRE
   apt:
-    name: default-jre
+    name: 
+    - default-jre
+    - openjdk-17-jdk
     state: present
 
 ##############################
