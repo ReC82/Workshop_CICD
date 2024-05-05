@@ -57,3 +57,25 @@
   apt:
     name: owasp-zap
     state: present
+
+##############################
+#   Install OWASP ZAP from Script
+##############################
+- name: Download OWASP ZAP Installer Script
+  get_url:
+    url: 'https://github.com/zaproxy/zaproxy/releases/download/v2.14.0/ZAP_2_14_0_unix.sh'
+    dest: '/tmp/ZAP_2_14_0_unix.sh'
+    mode: '0755'
+
+- name: Execute OWASP ZAP Installer Script
+  shell: '/tmp/ZAP_2_14_0_unix.sh -q'  # '-q' for quiet mode, avoids GUI
+  args:
+    creates: '/usr/share/zaproxy'  # Prevents reinstallation if it's already installed
+
+##############################
+#   Clean Up Temporary Files
+##############################
+- name: Remove OWASP ZAP Installer Script
+  file:
+    path: '/tmp/ZAP_2_14_0_unix.sh'
+    state: absent    
