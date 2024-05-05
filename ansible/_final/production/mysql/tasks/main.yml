@@ -25,7 +25,7 @@
       args:
         stdin: |
           y  # Set root password (change as needed)
-          root_password
+          d3h2dz9x
           y  # Remove anonymous users
           y  # Disallow root login remotely
           y  # Remove test database
@@ -42,9 +42,9 @@
     - name: Create MySQL User with Specific Privileges
       mysql_user:
         name: api_user
-        password: api_user_password  # User's password
+        password: api_user  # User's password
         login_user: root  # MySQL root user
-        login_password: root_password  # MySQL root password
+        login_password: d3h2dz9x  # MySQL root password
         priv: "api_db.*:ALL"  # All privileges on the created database
         state: present  # Ensure the user exists
 
