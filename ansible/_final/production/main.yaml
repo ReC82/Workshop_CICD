@@ -17,5 +17,5 @@
   become: yes
   roles:
     - nginx
-    - mysql
+    #- mysql
     - api
