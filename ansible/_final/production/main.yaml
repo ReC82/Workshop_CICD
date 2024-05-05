@@ -8,7 +8,9 @@
   hosts: node-web
   become: yes
   roles:
-    - app
+    - nginx
+    - api
+  # - app
 
 - name: Playbook for Databases
   hosts: node-db
