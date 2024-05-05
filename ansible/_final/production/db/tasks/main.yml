@@ -25,9 +25,9 @@
     dest: /etc/nginx/sites-enabled/default
     force: yes
 
-- name: Create /var/html/api 
+- name: Create /var/www/api 
   file:
-    path: /var/html/api
+    path: /var/www/api
     state: directory  
     owner: www-data   
     group: www-data   

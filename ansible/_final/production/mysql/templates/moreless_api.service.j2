@@ -1,0 +1,13 @@
+[Unit]
+Description=Moreless Api
+After=network.target
+
+[Service]
+User=root
+WorkingDirectory=/var/www/api
+ExecStart=/var/www/api -jar moreless_api.jar
+SuccessExitStatus=143
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

@@ -44,3 +44,12 @@
     group: jenkins
     mode: "0644"
   become: true
+
+
+######################
+# Install debug tools
+######################
+- name: Install Net tools
+  apt:
+    name: net-tools
+    state: present
