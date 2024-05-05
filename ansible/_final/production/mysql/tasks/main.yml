@@ -14,19 +14,6 @@
     state: present
 
 ##############################
-#   Secure MySQL Installation
-##############################
-- name: Secure MySQL Installation
-  command: "mysql_secure_installation"
-  args:
-    stdin: |
-      n  # Don't set a new root password (use existing)
-      y  # Remove anonymous users
-      y  # Disallow root login remotely
-      y  # Remove test database
-      y  # Reload privilege tables
-
-##############################
 #   Configure MySQL User
 ##############################
 - name: Create MySQL User with Specific Privileges
@@ -42,6 +29,19 @@
   mysql_db:
     name: api_db  # Name of the database
     state: present  # Ensure the database exists
+
+##############################
+#   Secure MySQL Installation
+##############################
+- name: Secure MySQL Installation
+  command: "mysql_secure_installation"
+  args:
+    stdin: |
+      n  # Don't set a new root password (use existing)
+      y  # Remove anonymous users
+      y  # Disallow root login remotely
+      y  # Remove test database
+      y  # Reload privilege tables    
 
 ##############################
 #   UFW Configuration
