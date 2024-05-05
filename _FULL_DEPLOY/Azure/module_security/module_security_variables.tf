@@ -3,11 +3,13 @@ variable "base_directory" {
 }
 
 variable "private_key_filename" {
-  default = "infrakey.pem"
 }
 
 variable "public_key_filename" {
-  default = "infrakey.pub"
+}
+
+variable "keyname" {
+  type = string
 }
 
 variable "create_new" {

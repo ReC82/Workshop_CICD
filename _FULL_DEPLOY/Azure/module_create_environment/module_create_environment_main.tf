@@ -43,8 +43,10 @@ resource "azurerm_network_interface" "nics" {
       name                          = "nic_${var.environment_name}_${each.key}_config_${ip_configuration.key}"
       subnet_id                     = azurerm_subnet.subnets_dynamic[each.key].id
       private_ip_address_allocation = "Dynamic"
+      public_ip_address_id = each.key == "web" ? azurerm_public_ip.pubip_node_web.id : null
     }
   }
+  depends_on = [ azurerm_public_ip.pubip_node_web ]
 }
 
 
@@ -145,7 +147,7 @@ resource "azurerm_network_security_group" "prod_security_group_nodes" {
   }
 
   tags = {
-    env = "Production"
+    env = "${var.environment_name}"
   }
 }
 # Association

@@ -1,9 +1,12 @@
 #!/bin/bash
+set -x
+exec > >(tee -a /tmp/control_provision_output.log) 2>&1
+
 # 1 # 
 sudo wget -O /usr/share/keyrings/jenkins-keyring.asc https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
 sudo echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/" | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
 sudo apt-get -y update
-sudo apt-get -y install ansible dos2unix git openjdk-17-jdk
+sudo apt-get -y install ansible dos2unix git openjdk-17-jdk jq
 sudo apt-get -y install jenkins
 
 # 2 bis #
@@ -24,7 +27,7 @@ sudo ssh-keyscan -H "github.com" >> ~/.ssh/known_hosts
 sudo ssh-keyscan -H "github.com" >> /var/lib/jenkins/.ssh/known_hosts
 
 # 3 #
-Create Jenkins SSH Folder
+# Create Jenkins SSH Folder
 jenkins_ssh_folder="/var/lib/jenkins/.ssh"
 sudo -u jenkins mkdir -p $jenkins_ssh_folder
 sudo -u jenkins bash -c "ssh-keyscan \"github.com\" >> known_hosts"

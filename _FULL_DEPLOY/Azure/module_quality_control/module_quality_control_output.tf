@@ -10,6 +10,13 @@ output "private_ip_addresses" {
   value = azurerm_network_interface.nic_quality_control.private_ip_address
 }
 
+output "quality_private_ips" {
+  value = {
+    for ni in [azurerm_network_interface.nic_quality_control]:
+      ni.name => ni.private_ip_address
+  }
+}
+
 /*
 If multiple 
 output "private_ip_addresses" {

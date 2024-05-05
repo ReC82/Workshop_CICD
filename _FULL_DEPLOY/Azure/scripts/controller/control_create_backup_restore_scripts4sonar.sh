@@ -52,67 +52,33 @@ ssh-add "$GIT_KEY_LOCATION"
 ### BACKUP SCRIPT CONTENT ###
 BACKUP_SCRIPT_CONTENT=$(cat <<EOF
 #!/bin/bash
+#
+# Backup a Postgresql database into a daily file.
+#
 
-# Exit if any command fails
-set -e
+BACKUP_DIR=/pg_backup
+DAYS_TO_KEEP=14
+FILE_SUFFIX=_pg_backup.sql
+DATABASE=
+USER=postgres
 
-# Ensure SSH agent is running
-if [ -z "$SSH_AGENT_PID" ]; then
-  eval "\$(ssh-agent -s)"  # Start SSH agent if not already running
-fi
+FILE=`date +"%Y%m%d%H%M"`${FILE_SUFFIX}
 
+OUTPUT_FILE=${BACKUP_DIR}/${FILE}
 
-# Check if SSH key exists and ensure permissions
-if [ ! -f "$GIT_KEY_LOCATION" ]; then
-  echo "SSH key not found at $GIT_KEY_LOCATION"
-  exit 1
-fi
-chmod 600 "$GIT_KEY_LOCATION"
-ssh-add "$GIT_KEY_LOCATION"
+# do the database backup (dump)
+# use this command for a database server on localhost. add other options if need be.
+pg_dump -U ${USER} ${DATABASE} -F p -f ${OUTPUT_FILE}
 
-rm -rf  $GITHUB_REPO
+# gzip the mysql database dump file
+gzip $OUTPUT_FILE
 
-# Check if repository exists before cloning
-if [ ! -d "$GITHUB_REPO" ]; then
-  echo "Repository not found. Cloning GitHub repository..."
-  if ! git clone "git@github.com:$USERNAME/$GITHUB_REPO.git"; then
-    echo "Failed to clone GitHub repository"
-    exit 2
-  fi
-else
-  echo "Repository already exists. Skipping clone."
-fi
+# show the user the result
+echo "${OUTPUT_FILE}.gz was created:"
+ls -l ${OUTPUT_FILE}.gz
 
-cd "$GITHUB_REPO"
-
-# List of important Jenkins files and directories to copy
-
-# Copy Jenkins files to GitHub repository
-echo "Copying Jenkins files to repository..."
-for item in ${BACKUP_RESTORE_CONTENTS[@]}; do
-  if [ -e "\$item" ]; then
-    echo "copying \$item "
-    cp -r "$DIR_TO_BACKUP\$item" .
-  else
-    echo "Warning: $item not found"
-  fi
-done
-
-cp ${DIR_TO_BACKUP}*.xml .
-
-# Add, commit, and push changes to GitHub
-echo "Committing changes to GitHub..."
-git config user.name "ReC82"
-git config user.email "lloyd.malfliet@gmail.com"  # Set to your Jenkins-related email
-git add .
-git commit -m "Jenkins backup $(date +%Y-%m-%d)"
-if ! git push origin "main"; then
-  echo "Failed to push to GitHub"
-  exit 3
-fi
-
-echo "Backup and push to GitHub completed successfully."
-EOF
+# prune old backups
+find $BACKUP_DIR -maxdepth 1 -mtime +$DAYS_TO_KEEP -name "*${FILE_SUFFIX}.gz" -exec rm -rf '{}' ';'
 )
 
 ### RESTORE SCRIPT CONTENT ###

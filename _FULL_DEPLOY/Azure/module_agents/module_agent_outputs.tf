@@ -8,3 +8,10 @@ output "private_ip_addresses_mapping" {
     "${"TheAgent-${idx}"},${nic.ip_configuration[0].private_ip_address}"
   ])
 }
+
+output "agents_private_ips" {
+  value = {
+    for ni in azurerm_network_interface.nic_agents :
+      ni.name => ni.private_ip_address
+  }
+}

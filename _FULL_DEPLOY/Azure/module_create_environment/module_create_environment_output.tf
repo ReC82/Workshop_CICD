@@ -9,6 +9,13 @@ output "private_ip_addresses_mapping" {
   ])
 }
 
+output "prod_private_ips" {
+  value = {
+    for ni in azurerm_network_interface.nics :
+      ni.name => ni.private_ip_address
+  }
+}
+
 output "webapp_ip" {
     value = azurerm_public_ip.pubip_node_web.ip_address
 }

@@ -9,13 +9,25 @@ fi
 # Variables
 allips="$1"
 jenkins_ssh_folder="/var/lib/jenkins/.ssh"
-known_hosts_file="$jenkins_ssh_folder/known_hosts"
+jenkins_known_hosts_file="$jenkins_ssh_folder/known_hosts"
 
 # Function to add SSH keys to known_hosts
 add_ssh_keys() {
     local ip="$1"
     echo "Processing IP address: $ip"
 
+    temp_known_hosts="/tmp/known_hosts_temp"
+<< ////
+    if ! ssh-keyscan -H "$ip" > "$temp_known_hosts"; then
+        echo "Failed to scan SSH key for $ip" 
+        exit 98
+    fi
+
+    if ! sudo cat "$temp_known_hosts" >> /etc/ssh/ssh_known_hosts; then
+        echo "Failed to add SSH key for $ip to the global known_hosts file" 
+        exit 99 
+    fi
+////
     # Add SSH key to the user's known_hosts
     if ! ssh-keyscan -H "$ip" >> /home/rooty/.ssh/known_hosts; then
         echo "Failed to add SSH key for $ip to the user's known_hosts file"
@@ -29,7 +41,7 @@ add_ssh_keys() {
     fi    
 
     # Add SSH key to Jenkins' known_hosts
-    if ! sudo -u jenkins bash -c "ssh-keyscan -H \"$ip\" >> \"$known_hosts_file\""; then
+    if ! sudo -u jenkins bash -c "ssh-keyscan -H \"$ip\" >> \"$jenkins_known_hosts_file\""; then
         echo "Failed to add SSH key for $ip to Jenkins VarLibPath' known_hosts file"
         exit 102
     fi
