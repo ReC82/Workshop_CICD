@@ -3,9 +3,3 @@
   become: true
   roles:
     - common
-    - postgre
-    - adoptium
-    - kernel_tune
-    - sonarqube
-    - jmeter
-    - owasp
