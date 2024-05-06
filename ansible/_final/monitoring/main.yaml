@@ -1,5 +1,5 @@
 - name: Playbook for Quality Control Server
-  hosts: quality-control 
+  hosts: monitoring 
   become: true
   roles:
     - common
