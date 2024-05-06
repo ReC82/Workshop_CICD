@@ -1,0 +1,18 @@
+nagios_version: "4.5.2" 
+nagios_src_url: "https://github.com/NagiosEnterprises/nagioscore/releases/download/nagios-{{ nagios_version }}/nagios-{{ nagios_version }}.tar.gz"
+nagios_src_dir: "/tmp/nagios-{{ nagios_version }}"
+
+nagios_plugins_version: "2.4.10" 
+nagios_plugins_url: "https://nagios-plugins.org/download/nagios-plugins-{{ nagios_plugins_version }}.tar.gz"
+nagios_plugins_src_dir: "/tmp/nagios-plugins-{{ nagios_plugins_version }}"
+nagios_user: "nagios"
+nagios_group: "nagios"
+htpasswd_user: "nagiosadmin"
+htpasswd_file: "/usr/local/nagios/etc/htpasswd.users"
+
+apache_nagios_conf_path: "/etc/apache2/sites-available/nagios.conf"
+nagios_sample_conf_path: "/usr/local/nagios/etc/sample-config/httpd.conf"
+nagios_sites_enabled: "/etc/apache2/sites-enabled/"
+nagios_cfg_path: "/usr/local/nagios/etc/nagios.cfg"
+nagios_cfg_dir: "/usr/local/nagios/etc/servers"
+nagios_localhost_cfg_path: "/usr/local/nagios/etc/servers/localhost.cfg"

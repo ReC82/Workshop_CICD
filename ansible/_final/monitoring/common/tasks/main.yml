@@ -1,0 +1,207 @@
+
+ ##############################
+ #   udpate ubuntu
+ ##############################
+- name: "apt-get update -y"
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Set TimeZone
+  ansible.builtin.timezone:
+    name: Europe/Brussels
+
+###############################
+# NAGIOS DEPEDENCIES
+###############################
+- name: Install packages
+  apt:
+    name:
+      - autoconf
+      - gcc
+      - libc6
+      - make
+      - wget
+      - unzip
+      - apache2
+      - apache2-utils
+      - php
+      - libgd-dev
+      - libmcrypt-dev
+      - libssl-dev
+      - bc
+      - gawk
+      - dc
+      - build-essential
+      - snmp
+      - libnet-snmp-perl
+      - gettext
+    state: present
+
+#################################
+# CREATE NAGIOS USER / GROUP
+#################################
+
+- name: Create 'nagios' user
+  user:
+    name: nagios
+    shell: /bin/bash
+    createhome: yes
+
+- name: Create 'nagcmd' group
+  group:
+    name: nagcmd
+
+- name: Add 'nagios' user to 'nagcmd' group
+  user:
+    name: nagios
+    groups: nagcmd
+    append: yes
+
+- name: Add 'www-data' user to 'nagcmd' group
+  user:
+    name: www-data
+    groups: nagcmd
+    append: yes
+
+##################################
+# DOWNLOAD NAGIOS SOURCE
+##################################
+
+- name: Download Nagios Core source code
+  get_url:
+    url: "{{ nagios_src_url }}"
+    dest: "/tmp/nagios-{{ nagios_version }}.tar.gz"
+    validate_certs: yes 
+
+##################################
+# NAGIOS EXTRACTION
+##################################
+- name: Extract Nagios Core source code
+  unarchive:
+    src: "/tmp/nagios-{{ nagios_version }}.tar.gz"
+    dest: "/tmp"
+    remote_src: yes 
+    creates: "{{ nagios_src_dir }}"
+
+#####################################
+# COMPILE AND INSTALL
+#####################################
+
+- name: Compile and install Nagios Core
+  shell:
+    cmd: |
+      cd {{ nagios_src_dir }}
+      ./configure --with-httpd-conf=/etc/apache2/sites-enabled
+      make all
+      make install
+      make install-init
+      make install-commandmode
+      make install-config
+  args:
+    creates: "/usr/local/nagios/bin/nagios"     
+
+- name: Install additional SSL libraries
+  apt:
+    name: libssl-dev
+    state: present
+  when: installed_packages.changed
+
+  #############################################
+  # NAGIOS PLUGINS
+  #############################################
+
+- name: Download Nagios Plugins source code
+  get_url:
+    url: "{{ nagios_plugins_url }}"
+    dest: "/tmp/nagios-plugins-{{ nagios_plugins_version }}.tar.gz"
+    validate_certs: yes
+
+- name: Extract Nagios Plugins source code
+  unarchive:
+    src: "/tmp/nagios-plugins-{{ nagios_plugins_version }}.tar.gz"
+    dest: "/tmp"
+    remote_src: yes
+    creates: "{{ nagios_plugins_src_dir }}"
+
+- name: Compile and install Nagios Plugins
+  shell:
+    cmd: |
+      cd {{ nagios_plugins_src_dir }}
+      ./configure --with-nagios-user={{ nagios_user }} --with-nagios-group={{ nagios_group }}
+      make
+      make install
+  args:
+    creates: "/usr/local/nagios/libexec/check_disk"
+
+- name: Create htpasswd file for Nagios web interface
+  command:
+    cmd: "htpasswd -c {{ htpasswd_file }} {{ htpasswd_user }}"
+  register: htpasswd_creation
+  ignore_errors: true
+
+- name: Set permissions on htpasswd file
+  file:
+    path: "{{ htpasswd_file }}"
+    owner: "{{ nagios_user }}"
+    group: "{{ nagios_group }}"
+    mode: '0640'
+
+########################################
+# NAGIOS AND APACHE
+########################################
+
+- name: Copy Nagios Apache configuration
+  copy:
+    src: "{{ nagios_sample_conf_path }}"
+    dest: "{{ apache_nagios_conf_path }}"
+  notify: Restart Apache
+
+- name: Create symbolic link to enable Nagios site
+  file:
+    src: "{{ apache_nagios_conf_path }}"
+    dest: "{{ nagios_sites_enabled }}/nagios.conf"
+    state: link
+  notify: Restart Apache
+
+- name: Enable Apache modules for Nagios
+  command:
+    cmd: "a2enmod rewrite cgi"
+  notify: Restart Apache
+
+- name: Modify nagios.cfg to enable additional configurations
+  lineinfile:
+    path: "{{ nagios_cfg_path }}"
+    regexp: "^#cfg_dir=/usr/local/nagios/etc/servers"
+    line: "cfg_dir={{ nagios_cfg_dir }}"
+    state: present
+
+- name: Create directory for Nagios server configurations
+  file:
+    path: "{{ nagios_cfg_dir }}"
+    state: directory
+
+- name: Create a sample host configuration for Nagios
+  copy:
+    dest: "{{ nagios_localhost_cfg_path }}"
+    content: |
+      define host {
+        use             linux-server
+        host_name       localhost
+        alias           localhost
+        address         127.0.0.1
+      }
+  notify: Verify Nagios Configuration
+
+- name: Verify Nagios configuration
+  command:
+    cmd: "/usr/local/nagios/bin/nagios -v {{ nagios_cfg_path }}"
+  register: nagios_verification
+  failed_when: nagios_verification.rc != 0  # Fail if command returns non-zero status
+
+- name: Restart Nagios if configuration is valid
+  service:
+    name: nagios
+    state: restarted
+  when: nagios_verification.rc == 0  # Only restart if verification passed
+  notify: Restart Apache
