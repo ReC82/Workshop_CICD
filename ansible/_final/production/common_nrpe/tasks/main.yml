@@ -53,17 +53,19 @@
     ./configure && make && make install
   args:
     chdir: ~/Downloads/nagios-plugins-2.4.10
-  # Notify this task if it fails due to a compilation error
   register: compilation_result
   failed_when: compilation_result.rc != 0
 
-- name: Create Nagios user and group
+- name: Create Nagios group
+  group:
+    name: nagios
+    state: present
+
+- name: Create Nagios user and add to Nagios group
   user:
     name: nagios
     groups: nagios
     append: yes
-  group:
-    name: nagios
 
 - name: Change ownership of Nagios directory
   file:
