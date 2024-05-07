@@ -105,7 +105,6 @@
   apt:
     name: libssl-dev
     state: present
-  when: installed_packages.changed
 
   #############################################
   # NAGIOS PLUGINS
@@ -134,27 +133,25 @@
   args:
     creates: "/usr/local/nagios/libexec/check_disk"
 
-- name: Create htpasswd file for Nagios web interface
+- name: Create htpasswd entry for Nagios web interface
   command:
-    cmd: "htpasswd -c {{ htpasswd_file }} {{ htpasswd_user }}"
-  register: htpasswd_creation
-  ignore_errors: true
+    cmd: "htpasswd -b -c {{ htpasswd_file }} {{ htpasswd_user }} {{ htpasswd_password }}"
 
 - name: Set permissions on htpasswd file
   file:
     path: "{{ htpasswd_file }}"
     owner: "{{ nagios_user }}"
     group: "{{ nagios_group }}"
-    mode: '0640'
+    mode: '0644'
 
 ########################################
 # NAGIOS AND APACHE
 ########################################
 
-- name: Copy Nagios Apache configuration
-  copy:
-    src: "{{ nagios_sample_conf_path }}"
-    dest: "{{ apache_nagios_conf_path }}"
+- name: Copy Nagios Apache configuration from template
+  template:
+    src: nagios_apache_config.j2
+    dest: /etc/apache2/sites-available/nagios.conf
   notify: Restart Apache
 
 - name: Create symbolic link to enable Nagios site
@@ -181,23 +178,10 @@
     path: "{{ nagios_cfg_dir }}"
     state: directory
 
-- name: Create a sample host configuration for Nagios
-  copy:
-    dest: "{{ nagios_localhost_cfg_path }}"
-    content: |
-      define host {
-        use             linux-server
-        host_name       localhost
-        alias           localhost
-        address         127.0.0.1
-      }
-  notify: Verify Nagios Configuration
-
 - name: Verify Nagios configuration
   command:
     cmd: "/usr/local/nagios/bin/nagios -v {{ nagios_cfg_path }}"
-  register: nagios_verification
-  failed_when: nagios_verification.rc != 0  # Fail if command returns non-zero status
+  failed_when: nagios_verification.rc != 0
 
 - name: Restart Nagios if configuration is valid
   service:

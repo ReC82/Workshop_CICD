@@ -1,0 +1,116 @@
+
+ ##############################
+ #   udpate ubuntu
+ ##############################
+- name: "apt-get update -y"
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Set TimeZone
+  ansible.builtin.timezone:
+    name: Europe/Brussels
+
+###############################
+# NAGIOS DEPEDENCIES
+###############################
+- name: Install packages
+  apt:
+    name:
+      - libssl-dev
+      - build-essential
+    state: present
+
+##################################
+# NAGIOS DOWNLOAD & COMPILE CLIENT
+##################################
+
+- name: Create the Downloads directory if it doesn't exist
+  file:
+    path: ~/Downloads
+    state: directory
+
+- name: Change to the Downloads directory
+  command: cd ~/Downloads
+  args:
+    chdir: ~
+
+- name: Download the Nagios Plugins tarball
+  get_url:
+    url: https://nagios-plugins.org/download/nagios-plugins-2.4.10.tar.gz
+    dest: ~/Downloads/nagios-plugins-2.4.10.tar.gz
+
+- name: Extract the Nagios Plugins tarball
+  unarchive:
+    src: ~/Downloads/nagios-plugins-2.4.10.tar.gz
+    dest: ~/Downloads
+    remote_src: yes
+    extra_opts:
+      - --strip-components=1
+
+- name: Compile and install the Nagios Plugins
+  command: |
+    ./configure && make && make install
+  args:
+    chdir: ~/Downloads/nagios-plugins-2.4.10
+  # Notify this task if it fails due to a compilation error
+  register: compilation_result
+  failed_when: compilation_result.rc != 0
+
+- name: Create Nagios user and group
+  user:
+    name: nagios
+    groups: nagios
+    append: yes
+  group:
+    name: nagios
+
+- name: Change ownership of Nagios directory
+  file:
+    path: /usr/local/nagios
+    owner: nagios
+    group: nagios
+    state: directory
+
+- name: Change ownership of Nagios libexec directory recursively
+  file:
+    path: /usr/local/nagios/libexec
+    owner: nagios
+    group: nagios
+    state: directory
+    recurse: yes
+
+- name: Download the NRPE tarball
+  get_url:
+    url: "https://github.com/NagiosEnterprises/nrpe/releases/download/nrpe-{{ nrpe_version }}/nrpe-{{ nrpe_version }}.tar.gz"
+    dest: "~/Downloads/nrpe-{{ nrpe_version }}.tar.gz"
+
+- name: Extract the NRPE tarball
+  unarchive:
+    src: "~/Downloads/nrpe-{{ nrpe_version }}.tar.gz"
+    dest: "~/Downloads/nrpe-{{ nrpe_version }}"
+    remote_src: yes
+    extra_opts:
+      - --strip-components=1
+
+- name: Compile and install NRPE
+  command: |
+    ./configure &&
+    make all &&
+    sudo make install-groups-users &&
+    sudo make install &&
+    sudo make install-inetd &&
+    sudo make install-init
+  args:
+    chdir: "~/Downloads/nrpe-{{ nrpe_version }}"
+
+- name: Enable and start the NRPE service
+  systemd:
+    name: nrpe
+    enabled: yes
+    state: started
+
+- name: Ensure net-tools is installed (for testing NRPE)
+  apt:
+    name: net-tools
+    state: present
