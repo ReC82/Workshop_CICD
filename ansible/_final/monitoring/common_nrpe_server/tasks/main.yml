@@ -1,6 +1,11 @@
 ##################################
 # NRPE DOWNLOAD & INSTALLATION
 ##################################
+- name: Create the Downloads directory if it doesn't exist
+  file:
+    path: "{{ download_dir }}"
+    state: directory
+
 - name: Download the NRPE tarball
   get_url:
     url: "https://github.com/NagiosEnterprises/nrpe/releases/download/nrpe-{{ nrpe_version }}/nrpe-{{ nrpe_version }}.tar.gz"
