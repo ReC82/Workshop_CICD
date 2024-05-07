@@ -27,19 +27,4 @@
   args:
     chdir: "{{ download_dir }}/nrpe-{{ nrpe_version }}"
 
-- name: Create /etc/nrpe directory
-  file:
-    path: /usr/local/nagios/etc
-    state: directory
 
-- name: Ensure allowed_hosts line is in the file
-  lineinfile:
-    path: /usr/local/nagios/etc/nrpe.cfg
-    line: "allowed_hosts=127.0.0.1,10.1.6.4"
-    create: yes 
-
-- name: Enable and start the NRPE service
-  systemd:
-    name: nrpe
-    enabled: yes
-    state: started
