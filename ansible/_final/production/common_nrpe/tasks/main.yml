@@ -27,23 +27,18 @@
 
 - name: Create the Downloads directory if it doesn't exist
   file:
-    path: ~/Downloads
+    path: "{{ download_dir }}"
     state: directory
-
-- name: Change to the Downloads directory
-  command: cd ~/Downloads
-  args:
-    chdir: ~
 
 - name: Download the Nagios Plugins tarball
   get_url:
-    url: https://nagios-plugins.org/download/nagios-plugins-2.4.10.tar.gz
-    dest: ~/Downloads/nagios-plugins-2.4.10.tar.gz
+    url: "https://nagios-plugins.org/download/nagios-plugins-2.4.10.tar.gz"
+    dest: "{{ download_dir }}/nagios-plugins-2.4.10.tar.gz"
 
 - name: Extract the Nagios Plugins tarball
   unarchive:
-    src: ~/Downloads/nagios-plugins-2.4.10.tar.gz
-    dest: ~/Downloads
+    src: "{{ download_dir }}/nagios-plugins-2.4.10.tar.gz"
+    dest: "{{ download_dir }}"
     remote_src: yes
     extra_opts:
       - --strip-components=1
@@ -52,7 +47,7 @@
   command: |
     ./configure && make && make install
   args:
-    chdir: ~/Downloads/nagios-plugins-2.4.10
+    chdir: "{{ download_dir }}/nagios-plugins-2.4.10"
   register: compilation_result
   failed_when: compilation_result.rc != 0
 
@@ -82,15 +77,18 @@
     state: directory
     recurse: yes
 
+##################################
+# NRPE DOWNLOAD & INSTALLATION
+##################################
 - name: Download the NRPE tarball
   get_url:
     url: "https://github.com/NagiosEnterprises/nrpe/releases/download/nrpe-{{ nrpe_version }}/nrpe-{{ nrpe_version }}.tar.gz"
-    dest: "~/Downloads/nrpe-{{ nrpe_version }}.tar.gz"
+    dest: "{{ download_dir }}/nrpe-{{ nrpe_version }}.tar.gz"
 
 - name: Extract the NRPE tarball
   unarchive:
-    src: "~/Downloads/nrpe-{{ nrpe_version }}.tar.gz"
-    dest: "~/Downloads/nrpe-{{ nrpe_version }}"
+    src: "{{ download_dir }}/nrpe-{{ nrpe_version }}.tar.gz"
+    dest: "{{ download_dir }}/nrpe-{{ nrpe_version }}"
     remote_src: yes
     extra_opts:
       - --strip-components=1
@@ -104,7 +102,7 @@
     sudo make install-inetd &&
     sudo make install-init
   args:
-    chdir: "~/Downloads/nrpe-{{ nrpe_version }}"
+    chdir: "{{ download_dir }}/nrpe-{{ nrpe_version }}"
 
 - name: Enable and start the NRPE service
   systemd:
