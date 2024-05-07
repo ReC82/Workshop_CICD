@@ -90,5 +90,8 @@
 - name: Allow SSH connections on port 22
   shell: ufw allow 22/tcp comment 'Allow SSH'
 
+- name: Allow SSH connections on port 5666
+  shell: ufw allow 5666/tcp comment 'Allow NagiosNrpe'
+
 - name:  Enabled firewall ufw
   shell: ufw --force enable  
