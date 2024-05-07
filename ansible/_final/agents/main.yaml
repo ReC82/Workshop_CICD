@@ -3,6 +3,7 @@
   become: yes
   roles:
     - common
+    - common_nrpe
 - name: Playbook for deploying java tools
   hosts: agents-java
   become: yes

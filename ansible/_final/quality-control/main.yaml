@@ -3,6 +3,7 @@
   become: true
   roles:
     - common
+    - common_nrpe
     - postgre
     - adoptium
     - kernel_tune
