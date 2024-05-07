@@ -54,8 +54,6 @@
       make install
   args:
     chdir: "{{ download_dir }}/nagios-plugins-2.4.10"
-  register: compilation_result
-  failed_when: compilation_result.rc != 0
 
 - name: Create Nagios group
   group:

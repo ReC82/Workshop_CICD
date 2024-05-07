@@ -181,11 +181,9 @@
 - name: Verify Nagios configuration
   command:
     cmd: "/usr/local/nagios/bin/nagios -v {{ nagios_cfg_path }}"
-  failed_when: nagios_verification.rc != 0
 
 - name: Restart Nagios if configuration is valid
   service:
     name: nagios
     state: restarted
-  when: nagios_verification.rc == 0  # Only restart if verification passed
   notify: Restart Apache
