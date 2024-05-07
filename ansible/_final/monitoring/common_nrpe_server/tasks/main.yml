@@ -3,7 +3,8 @@
 ##################################
 - name: Download the NRPE tarball
   get_url:
-    url: "https://github.com/NagiosEnterprises/nrpe/releases/download/{{ nrpe_version }}/nrpe-{{ nrpe_version }}.tar.gz"
+    url: "https://github.com/NagiosEnterprises/nrpe/releases/download/nrpe-{{ nrpe_version }}/nrpe-{{ nrpe_version }}.tar.gz"
+    #https://github.com/NagiosEnterprises/nrpe/releases/download/nrpe-4.1.0/nrpe-4.1.0.tar.gz
     dest: "{{ download_dir }}/nrpe-{{ nrpe_version }}.tar.gz"
 
 - name: Extract the NRPE tarball
