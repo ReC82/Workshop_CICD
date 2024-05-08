@@ -1,3 +1,15 @@
+ ##############################
+ #   udpate ubuntu
+ ##############################
+- name: "apt-get update -y"
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Set TimeZone
+  ansible.builtin.timezone:
+    name: Europe/Brussels
+
 ###############################
 # NAGIOS DEPEDENCIES
 ###############################
@@ -9,6 +21,61 @@
       - unzip
       - tar
     state: present
+
+##################################
+# NAGIOS DOWNLOAD & COMPILE CLIENT
+##################################
+
+- name: Create the Downloads directory if it doesn't exist
+  file:
+    path: "{{ download_dir }}"
+    state: directory
+
+- name: Download the Nagios Plugins tarball
+  get_url:
+    url: "https://nagios-plugins.org/download/nagios-plugins-2.4.10.tar.gz"
+    dest: "{{ download_dir }}/nagios-plugins-2.4.10.tar.gz"
+
+- name: Extract the Nagios Plugins tarball
+  unarchive:
+    src: "{{ download_dir }}/nagios-plugins-2.4.10.tar.gz"
+    dest: "{{ download_dir }}"
+    remote_src: yes
+
+- name: Compile and install the Nagios Plugins
+  shell:
+    cmd: |
+      ./configure
+      make
+      make install
+  args:
+    chdir: "{{ download_dir }}/nagios-plugins-2.4.10"
+
+- name: Create Nagios group
+  group:
+    name: nagios
+    state: present
+
+- name: Create Nagios user and add to Nagios group
+  user:
+    name: nagios
+    groups: nagios
+    append: yes
+
+- name: Change ownership of Nagios directory
+  file:
+    path: /usr/local/nagios
+    owner: nagios
+    group: nagios
+    state: directory
+
+- name: Change ownership of Nagios libexec directory recursively
+  file:
+    path: /usr/local/nagios/libexec
+    owner: nagios
+    group: nagios
+    state: directory
+    recurse: yes
 
 ##################################
 # NRPE DOWNLOAD & INSTALLATION

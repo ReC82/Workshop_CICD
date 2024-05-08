@@ -97,7 +97,7 @@
 
 - name: Create the Postgresql backup script
   template:
-    src: "backup_script.j2"
+    src: "sonarqube_backup.j2"
     dest: "/opt/sonarqube/backup/sonarqube_backup.sh"
     owner: sonar
     group: sonar

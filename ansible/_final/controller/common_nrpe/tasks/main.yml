@@ -1,3 +1,15 @@
+ ##############################
+ #   udpate ubuntu
+ ##############################
+- name: "apt-get update -y"
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Set TimeZone
+  ansible.builtin.timezone:
+    name: Europe/Brussels
+
 ###############################
 # NAGIOS DEPEDENCIES
 ###############################
@@ -29,21 +41,15 @@
     src: "{{ download_dir }}/nagios-plugins-2.4.10.tar.gz"
     dest: "{{ download_dir }}"
     remote_src: yes
-    creates: "{{ download_dir }}/nagios_source"
-    extra_opts:
-      - --strip-components=1
 
 - name: Compile and install the Nagios Plugins
   shell:
     cmd: |
-      cd {{ download_dir }}/nagios_source
       ./configure
       make
       make install
   args:
     chdir: "{{ download_dir }}/nagios-plugins-2.4.10"
-  register: compilation_result
-  failed_when: compilation_result.rc != 0
 
 - name: Create Nagios group
   group:
