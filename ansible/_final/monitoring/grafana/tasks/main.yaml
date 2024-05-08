@@ -16,6 +16,11 @@
     url: "https://apt.grafana.com/gpg.key"
     dest: "/tmp/grafana.gpg"
 
+- name: Remove existing Grafana GPG key
+  file:
+    path: "/etc/apt/keyrings/grafana.gpg"
+    state: absent
+
 - name: Add Grafana GPG key to the keyring
   command: gpg --dearmor -o /etc/apt/keyrings/grafana.gpg /tmp/grafana.gpg
 
