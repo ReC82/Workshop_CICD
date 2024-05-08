@@ -1,5 +1,4 @@
-handlers:
-  - name: restart nginx
-    systemd:
-      name: nginx
-      state: restarted
+- name: restart nginx
+  systemd:
+    name: nginx
+    state: restarted
