@@ -3,17 +3,19 @@
     name: nginx
     state: present
 
-- name: Configure Nginx to run on port 8666
+- name: Remove all redundant listen directives for port 8666
   lineinfile:
     path: /etc/nginx/sites-available/default
-    regexp: '^(\s*)listen\s+.*default_server.*;'
-    line: 'listen 8666 default_server;'
+    regexp: '^\\s*listen\\s+8666\\s+default_server.*'
+    state: absent
 
-- name: Configure Nginx to listen on IPv6
-  lineinfile:
-    path: /etc/nginx/sites-available/default
-    regexp: '^(\s*)listen\s+\[::\].*default_server.*;'
-    line: 'listen [::]:8666 default_server;'
+- name: Apply the desired Nginx configuration template
+  template:
+    src: "nginx_desired_template.j2"
+    dest: "/etc/nginx/sites-available/default"
+    owner: root
+    group: root
+    mode: '0644'
 
 - name: Add Prometheus group
   group:
@@ -134,5 +136,3 @@
     name: nginx
     state: started
     enabled: yes
-
-

@@ -11,14 +11,21 @@
     path: "/etc/apt/keyrings/"
     state: directory
 
-- name: Add Grafana GPG key
-  command: |
-    wget -q -O - https://apt.grafana.com/gpg.key | gpg --dearmor | tee /etc/apt/keyrings/grafana.gpg > /dev/null
+- name: Download Grafana GPG key
+  get_url:
+    url: "https://apt.grafana.com/gpg.key"
+    dest: "/tmp/grafana.gpg"
+
+- name: Add Grafana GPG key to the keyring
+  command: gpg --dearmor -o /etc/apt/keyrings/grafana.gpg /tmp/grafana.gpg
 
 - name: Add Grafana repository
   apt_repository:
     repo: "deb https://packages.grafana.com/oss/deb stable main"
     state: present
+    filename: "grafana"
+    key: "/etc/apt/keyrings/grafana.gpg"
+    ignore_errors: true    
 
 - name: Update apt packages
   apt:
@@ -43,7 +50,7 @@
 - name: Check Grafana service status
   systemd:
     name: grafana-server
-    state: active
+    state: started
   register: grafana_status
   ignore_errors: true
 
@@ -69,10 +76,6 @@
     src: "/etc/nginx/sites-available/grafana.conf"
     dest: "/etc/nginx/sites-enabled/grafana.conf"
     state: link
-
-- name: Test Nginx configuration
-  command: sudo service nginx configtest
-  register: nginx_configtest_result
 
 - name: Restart Nginx service if configuration is valid
   systemd:

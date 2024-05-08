@@ -2,7 +2,7 @@
   hosts: monitoring 
   become: true
   roles:
-    - common
+    - nagios
     - common_nrpe_server
     - prometheus
     - grafana
