@@ -4,3 +4,4 @@
   roles:
     - common
     - common_nrpe_server
+    - prometheus
