@@ -41,14 +41,10 @@
     src: "{{ download_dir }}/nagios-plugins-2.4.10.tar.gz"
     dest: "{{ download_dir }}"
     remote_src: yes
-    creates: "{{ download_dir }}/nagios_source"
-    extra_opts:
-      - --strip-components=1
 
 - name: Compile and install the Nagios Plugins
   shell:
     cmd: |
-      cd {{ download_dir }}/nagios_source
       ./configure
       make
       make install
