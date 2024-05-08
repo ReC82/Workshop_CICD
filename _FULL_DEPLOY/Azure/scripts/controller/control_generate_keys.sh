@@ -75,6 +75,7 @@ KNOWN_HOSTS_CONTENT="$(cat $KNOWN_HOSTS_FILE_PATH)"
 #sudo touch /etc/ssh/ssh_known_hosts
 #sudo chmod 666 /etc/ssh/ssh_known_hosts
 
+my_ip=$(hostname -I | awk '{print $1}')
 
 for arg in "$@"; do
 
@@ -87,19 +88,19 @@ for arg in "$@"; do
   key_filename="$(echo "$arg" | jq -r '.keyname').pem"
   EXTRACTED_IPS=$(echo "$arg" | jq -r 'to_entries | map(select(.key | startswith("nic_"))) | .[] | .value')
   
-  my_ip=$(hostname -I | awk '{print $1}')
 
   for ip in $EXTRACTED_IPS; do
 
-    if [[ "$ip" == "$server_ip" ]]; then
+    if [[ "$ip" == "$my_ip" ]]; then
         echo "Skipping operation for IP ${ip}, matches server IP (${my_ip})"
         continue
     fi
 
     # FOR EACH IP
     echo "ADD ${ip} to global and root known_hosts"
-    sudo ssh-keyscan -H "${ip}" >> /root/.ssh/known_hosts
-    sudo ssh-keyscan -H "${ip}" >> /etc/ssh/ssh_known_hosts
+    #sudo su root bash -c "ls -ahl /root/.ssh/known_hosts"
+    sudo su root bash -c "ssh-keyscan -H ${ip} >> /root/.ssh/known_hosts"
+    sudo su root bash -c "ssh-keyscan -H ${ip} >> /etc/ssh/ssh_known_hosts"
     
     # Help to identify IPS
     echo "IP : ${ip} - KeyName : ${key_filename}"

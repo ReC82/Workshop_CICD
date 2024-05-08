@@ -29,7 +29,7 @@ module "quality_security" {
   source               = "./module_security"
   private_key_filename = "qc.pem"
   public_key_filename  = "qc.pub"
-  keyname              = "global"
+  keyname              = "quality"
   create_new           = true
 }
 
@@ -57,6 +57,15 @@ module "agents_access_security" {
   private_key_filename = "agents_key.pem"
   public_key_filename  = "agents_key.pub"
   keyname              = "agents"
+  create_new           = true
+}
+
+# Monitoring
+module "monitoring_security" {
+  source               = "./module_security"
+  private_key_filename = "monitoring_key.pem"
+  public_key_filename  = "monitoring_key.pub"
+  keyname              = "monitoring"
   create_new           = true
 }
 
@@ -98,6 +107,26 @@ module "quality_control_modules" {
     module.control_security,
     module.control_modules,
     module.quality_security
+  ]
+}
+
+# MONITORING
+module "monitoring_modules" {
+  source                 = "./module_monitoring"
+  root_user_name         = var.root_user_name
+  root_user_password     = var.root_user_password
+  group_location         = var.group_location
+  group_name             = var.group_name
+  monitoring_vnet_name   = module.control_modules.control_vnet_name
+  root_user_public_key   = module.monitoring_security.public_key_content
+  root_user_private_key  = module.monitoring_security.private_key_content
+  git_private_key        = pathexpand("git.pem")
+  git_global_private_key = pathexpand("git_global_key")
+  depends_on = [
+    azurerm_resource_group.EhealthResourceGroup,
+    module.control_security,
+    module.control_modules,
+    module.monitoring_security
   ]
 }
 
@@ -178,62 +207,6 @@ module "control_provision" {
   ]
 }
 
-# CONTROLLER : add quality control private key => control_add_quality_control_key.sh
-module "control_add_qc_private_key" {
-  count       = 1
-  source      = "./module_provisionner"
-  destination = module.control_modules.controller_ip
-  script_args = ["\"${module.control_security.private_key_content}\""]
-  script      = pathexpand("./scripts/controller/control_add_quality_control_key.sh")
-  username    = var.root_user_name
-  private_key = module.control_security.private_key_content
-  description = "Add Quality Key To Control"
-  depends_on = [
-    module.control_modules,
-    module.control_security,
-    module.control_provision,
-    module.quality_control_modules,
-    module.agents_creation,
-    module.agents_access_security
-  ]
-}
-
-# CONTROLLER : add agents private key to controller => control_add_agents_key.sh
-module "control_add_agents_private_key" {
-  count       = 1
-  source      = "./module_provisionner"
-  destination = module.control_modules.controller_ip
-  script_args = ["\"${module.agents_access_security.private_key_content}\""]
-  script      = pathexpand("./scripts/controller/control_add_agents_key.sh")
-  username    = var.root_user_name
-  private_key = module.control_security.private_key_content
-  description = "Add Agents Key To Control"
-  depends_on = [
-    module.control_modules,
-    module.control_security,
-    module.agents_creation,
-    module.agents_access_security
-  ]
-}
-
-# CONTROLLER : add production private key to controller => control_add_production_key.sh
-module "control_add_prod_private_key" {
-  count       = 1
-  source      = "./module_provisionner"
-  destination = module.control_modules.controller_ip
-  script_args = ["\"${module.production_security.private_key_content}\""]
-  script      = pathexpand("./scripts/controller/control_add_production_key.sh")
-  username    = var.root_user_name
-  private_key = module.control_security.private_key_content
-  description = "Add Production Key To Control"
-  depends_on = [
-    module.control_modules,
-    module.control_security,
-    module.prod_modules,
-    module.production_security
-  ]
-}
-
 # CONTROLLER : create Jenkins Backup Files => control_create_backup_restore_scripts.sh
 module "create_jenkins_backup_restore_scripts" {
   count       = 1
@@ -262,7 +235,8 @@ module "control_generate_keys" {
     "'${jsonencode(merge(module.control_security.security_map, module.control_modules.control_private_ips))}'",
     "'${jsonencode(merge(module.production_security.security_map, module.prod_modules.prod_private_ips))}'",
     "'${jsonencode(merge(module.agents_access_security.security_map, module.agents_creation.agents_private_ips))}'",
-    "'${jsonencode(merge(module.quality_security.security_map, module.quality_control_modules.quality_private_ips))}'"
+    "'${jsonencode(merge(module.quality_security.security_map, module.quality_control_modules.quality_private_ips))}'",
+    "'${jsonencode(merge(module.monitoring_security.security_map, module.monitoring_modules.monitoring_private_ips))}'"
   ]
   script      = pathexpand("./scripts/controller/control_generate_keys.sh")
   username    = var.root_user_name
@@ -308,72 +282,6 @@ module "peering_prod_control" {
   depends_on = [
     module.control_modules,
     module.prod_modules
-  ]
-}
-
-###############################################
-# ADD CONTROLLER TRUSTED IPS
-###############################################
-
-# PRODUCTION IPs
-module "control_add_prod_ips_to_known_hosts" {
-  count       = 1
-  source      = "./module_provisionner"
-  destination = module.control_modules.controller_ip
-  script_args = ["\"${module.prod_modules.private_ip_addresses}\""]
-  script      = pathexpand("./scripts/controller/control_add_trusted_ips.sh")
-  username    = var.root_user_name
-  private_key = module.control_security.private_key_content
-  description = "Add Prod Module IPS to control known_host file"
-  depends_on = [
-    module.control_modules,
-    module.control_provision,
-    module.control_security,
-    module.prod_modules,
-    module.peering_control_prod,
-    module.peering_prod_control
-  ]
-}
-
-# QUALITY CONTROL IPs
-module "control_add_qc_ips_to_known_hosts" {
-  count       = 1
-  source      = "./module_provisionner"
-  destination = module.control_modules.controller_ip
-  script_args = ["\"${module.quality_control_modules.private_ip_addresses}\""]
-  script      = pathexpand("./scripts/controller/control_add_trusted_ips.sh")
-  username    = var.root_user_name
-  private_key = module.control_security.private_key_content
-  description = "Add QC IP to control known_host file"
-  depends_on = [
-    module.control_modules,
-    module.control_provision,
-    module.control_security,
-    module.quality_control_modules,
-    module.prod_modules,
-    module.peering_control_prod,
-    module.peering_prod_control
-  ]
-}
-
-# AGENTS IPs
-module "control_add_agents_ips_to_known_hosts" {
-  count       = 1
-  source      = "./module_provisionner"
-  destination = module.control_modules.controller_ip
-  script_args = ["\"${module.agents_creation.private_ip_addresses}\""]
-  script      = pathexpand("./scripts/controller/control_add_trusted_ips.sh")
-  username    = var.root_user_name
-  private_key = module.control_security.private_key_content
-
-  description = "Add Agents Module IPS to control known_host file"
-  depends_on = [
-    module.control_modules,
-    module.control_security,
-    module.agents_creation,
-    module.control_provision,
-    module.peering_control_prod,
-    module.peering_prod_control
   ]
 }
 
@@ -465,6 +373,24 @@ module "generate_qc_inventory_file" {
   ]
 }
 
+# MONITORING
+module "generate_monitoring_inventory_file" {
+  count       = 1
+  source      = "./module_provisionner"
+  destination = module.control_modules.controller_ip
+  script_args = ["\"monitoring\" \"${module.monitoring_modules.private_ip_addresses}\" \"monitoring\""]
+  script      = pathexpand("./scripts/controller/control_build_inventory_files.sh")
+  username    = var.root_user_name
+  private_key = module.control_security.private_key_content
+  description = "Create Monitoring Inv"
+  depends_on = [
+    module.control_modules,
+    module.control_security,
+    module.agents_creation,
+    module.agents_access_security
+  ]
+}
+
 #######################################
 ########   CLONE ANSIBLE  #############
 #######################################
@@ -494,15 +420,13 @@ module "start_ansible_on_agents" {
   count       = 1
   source      = "./module_provisionner"
   destination = module.control_modules.controller_ip
-  script_args = ["\"agents\"", "agent.pem"]
+  script_args = ["\"agents\"", "agents.pem"]
   script      = pathexpand("./scripts/controller/control_ansible_play.sh")
   username    = var.root_user_name
   private_key = module.control_security.private_key_content
   description = "Create Agents Inventory"
   depends_on = [
     module.control_modules,
-    module.control_add_agents_ips_to_known_hosts,
-    module.control_add_agents_private_key,
     module.control_git_clone_ansible_files,
     module.control_security,
     module.agents_creation,
@@ -517,16 +441,13 @@ module "start_ansible_on_qc" {
   count       = 1
   source      = "./module_provisionner"
   destination = module.control_modules.controller_ip
-  script_args = ["\"quality-control\"", "qc.pem"]
+  script_args = ["\"quality-control\"", "quality.pem"]
   script      = pathexpand("./scripts/controller/control_ansible_play.sh")
   username    = var.root_user_name
   private_key = module.control_security.private_key_content
   description = "Start Ansible on Quality Control"
   depends_on = [
     module.control_modules,
-    module.control_add_agents_ips_to_known_hosts,
-    module.control_add_qc_ips_to_known_hosts,
-    module.control_add_qc_private_key,
     module.control_git_clone_ansible_files,
     module.control_security,
     module.agents_creation,
@@ -541,22 +462,38 @@ module "start_ansible_on_production" {
   count       = 1
   source      = "./module_provisionner"
   destination = module.control_modules.controller_ip
-  script_args = ["\"production\"", "prod.pem"]
+  script_args = ["\"production\"", "production.pem"]
   script      = pathexpand("./scripts/controller/control_ansible_play.sh")
   username    = var.root_user_name
   private_key = module.control_security.private_key_content
   description = "Start Ansible On Production"
   depends_on = [
     module.control_modules,
-    module.control_add_agents_ips_to_known_hosts,
-    module.control_add_qc_ips_to_known_hosts,
-    module.control_add_qc_private_key,
-    module.control_add_prod_ips_to_known_hosts,
     module.control_git_clone_ansible_files,
     module.control_security,
     module.agents_creation,
     module.agents_access_security,
-    module.control_add_prod_private_key,
+    module.generate_production_inventory_file,
+    module.control_generate_keys
+  ]
+}
+
+# Monitoring
+module "start_ansible_on_monitoring" {
+  count       = 1
+  source      = "./module_provisionner"
+  destination = module.control_modules.controller_ip
+  script_args = ["\"monitoring\"", "monitoring.pem"]
+  script      = pathexpand("./scripts/controller/control_ansible_play.sh")
+  username    = var.root_user_name
+  private_key = module.control_security.private_key_content
+  description = "Start Ansible On Monitoring"
+  depends_on = [
+    module.control_modules,
+    module.control_git_clone_ansible_files,
+    module.control_security,
+    module.agents_creation,
+    module.agents_access_security,
     module.generate_production_inventory_file,
     module.control_generate_keys
   ]
