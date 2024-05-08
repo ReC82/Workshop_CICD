@@ -6,11 +6,14 @@
 - name: Configure Nginx to run on port 8666
   lineinfile:
     path: /etc/nginx/sites-available/default
-    regexp: '^(\s*)listen\s+80\s*;'
-    line: 'listen 8666;'
-    state: present
-  notify:
-    - restart nginx
+    regexp: '^(\s*)listen\s+.*default_server.*;'
+    line: 'listen 8666 default_server;'
+
+- name: Configure Nginx to listen on IPv6
+  lineinfile:
+    path: /etc/nginx/sites-available/default
+    regexp: '^(\s*)listen\s+\[::\].*default_server.*;'
+    line: 'listen [::]:8666 default_server;'
 
 - name: Add Prometheus group
   group:
@@ -65,15 +68,23 @@
     remote_src: yes
 
 - name: Move Prometheus binaries to /usr/local/bin/
-  command: |
-    mv /tmp/prometheus/prometheus-2.52.0-rc.1.linux-amd64/prometheus /usr/local/bin/
-    mv /tmp/prometheus/promtool /usr/local/bin/
+  command: mv /tmp/prometheus/prometheus-2.52.0-rc.1.linux-amd64/prometheus /usr/local/bin/
 
-- name: Move Prometheus config files
-  command: |
-    mv /tmp/prometheus/prometheus-2.52.0-rc.1.linux-amd64/prometheus.yml /etc/prometheus/prometheus.yml
-    mv /tmp/prometheus/prometheus-2.52.0-rc.1.linux-amd64/consoles /etc/prometheus/
-    mv /tmp/prometheus/prometheus-2.52.0-rc.1.linux-amd64/console_libraries /etc/prometheus/
+- name: Move Promtool binary to /usr/local/bin/
+  command: mv /tmp/prometheus/prometheus-2.52.0-rc.1.linux-amd64/promtool /usr/local/bin/
+
+- name: Move Prometheus main configuration file
+  command: mv /tmp/prometheus/prometheus-2.52.0-rc.1.linux-amd64/prometheus.yml /etc/prometheus/prometheus.yml
+  ignore_errors: true
+
+- name: Move Prometheus consoles directory
+  command: mv /tmp/prometheus/prometheus-2.52.0-rc.1.linux-amd64/consoles /etc/prometheus/
+  ignore_errors: true
+
+- name: Move Prometheus console libraries directory
+  command: mv /tmp/prometheus/prometheus-2.52.0-rc.1.linux-amd64/console_libraries /etc/prometheus/
+  ignore_errors: true
+
 
 - name: Create Prometheus systemd service
   copy:

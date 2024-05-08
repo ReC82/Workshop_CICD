@@ -5,3 +5,4 @@
     - common
     - common_nrpe_server
     - prometheus
+    - grafana

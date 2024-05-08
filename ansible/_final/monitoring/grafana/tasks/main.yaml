@@ -1,0 +1,82 @@
+- name: Install required packages
+  apt:
+    name:
+      - gnupg2
+      - curl
+      - software-properties-common
+    state: present
+
+- name: Create keyrings directory for Grafana GPG key
+  file:
+    path: "/etc/apt/keyrings/"
+    state: directory
+
+- name: Add Grafana GPG key
+  command: |
+    wget -q -O - https://apt.grafana.com/gpg.key | gpg --dearmor | tee /etc/apt/keyrings/grafana.gpg > /dev/null
+
+- name: Add Grafana repository
+  apt_repository:
+    repo: "deb https://packages.grafana.com/oss/deb stable main"
+    state: present
+
+- name: Update apt packages
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Install Grafana
+  apt:
+    name: grafana
+    state: present
+
+- name: Start Grafana service
+  systemd:
+    name: grafana-server
+    state: started
+
+- name: Enable Grafana service to start on boot
+  systemd:
+    name: grafana-server
+    enabled: yes
+
+- name: Check Grafana service status
+  systemd:
+    name: grafana-server
+    state: active
+  register: grafana_status
+  ignore_errors: true
+
+- name: Create Nginx configuration for Grafana
+  copy:
+    dest: "/etc/nginx/sites-available/grafana.conf"
+    content: |
+      server {
+        listen 8666;
+        server_name localhost;
+
+        location / {
+          proxy_pass http://localhost:3000/;
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+        }
+      }
+
+- name: Enable the Grafana Nginx configuration
+  file:
+    src: "/etc/nginx/sites-available/grafana.conf"
+    dest: "/etc/nginx/sites-enabled/grafana.conf"
+    state: link
+
+- name: Test Nginx configuration
+  command: sudo service nginx configtest
+  register: nginx_configtest_result
+
+- name: Restart Nginx service if configuration is valid
+  systemd:
+    name: nginx
+    state: restarted
+  when: "'syntax is ok' in nginx_configtest_result.stdout"
+
