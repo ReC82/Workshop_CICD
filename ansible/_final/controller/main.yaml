@@ -1,0 +1,5 @@
+- name: Playbook for Controller
+  hosts: controller 
+  become: true
+  roles:
+    - common_nrpe

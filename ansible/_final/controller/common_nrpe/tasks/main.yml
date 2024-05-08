@@ -1,0 +1,128 @@
+ ##############################
+ #   udpate ubuntu
+ ##############################
+- name: "apt-get update -y"
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Set TimeZone
+  ansible.builtin.timezone:
+    name: Europe/Brussels
+
+###############################
+# NAGIOS DEPEDENCIES
+###############################
+- name: Install packages
+  apt:
+    name:
+      - libssl-dev
+      - build-essential
+      - unzip
+      - tar
+    state: present
+
+##################################
+# NAGIOS DOWNLOAD & COMPILE CLIENT
+##################################
+
+- name: Create the Downloads directory if it doesn't exist
+  file:
+    path: "{{ download_dir }}"
+    state: directory
+
+- name: Download the Nagios Plugins tarball
+  get_url:
+    url: "https://nagios-plugins.org/download/nagios-plugins-2.4.10.tar.gz"
+    dest: "{{ download_dir }}/nagios-plugins-2.4.10.tar.gz"
+
+- name: Extract the Nagios Plugins tarball
+  unarchive:
+    src: "{{ download_dir }}/nagios-plugins-2.4.10.tar.gz"
+    dest: "{{ download_dir }}"
+    remote_src: yes
+    creates: "{{ download_dir }}/nagios_source"
+    extra_opts:
+      - --strip-components=1
+
+- name: Compile and install the Nagios Plugins
+  shell:
+    cmd: |
+      cd {{ download_dir }}/nagios_source
+      ./configure
+      make
+      make install
+  args:
+    chdir: "{{ download_dir }}/nagios-plugins-2.4.10"
+  register: compilation_result
+  failed_when: compilation_result.rc != 0
+
+- name: Create Nagios group
+  group:
+    name: nagios
+    state: present
+
+- name: Create Nagios user and add to Nagios group
+  user:
+    name: nagios
+    groups: nagios
+    append: yes
+
+- name: Change ownership of Nagios directory
+  file:
+    path: /usr/local/nagios
+    owner: nagios
+    group: nagios
+    state: directory
+
+- name: Change ownership of Nagios libexec directory recursively
+  file:
+    path: /usr/local/nagios/libexec
+    owner: nagios
+    group: nagios
+    state: directory
+    recurse: yes
+
+##################################
+# NRPE DOWNLOAD & INSTALLATION
+##################################
+- name: Download the NRPE tarball
+  get_url:
+    url: "https://github.com/NagiosEnterprises/nrpe/releases/download/nrpe-{{ nrpe_version }}/nrpe-{{ nrpe_version }}.tar.gz"
+    dest: "{{ download_dir }}/nrpe-{{ nrpe_version }}.tar.gz"
+
+- name: Extract the NRPE tarball
+  unarchive:
+    src: "{{ download_dir }}/nrpe-{{ nrpe_version }}.tar.gz"
+    dest: "{{ download_dir }}"
+    remote_src: yes
+
+- name: Compile and install NRPE
+  shell:
+    cmd: |
+      ./configure &&
+      make all &&
+      sudo make install-groups-users &&
+      sudo make install &&
+      sudo make install-inetd &&
+      sudo make install-init
+  args:
+    chdir: "{{ download_dir }}/nrpe-{{ nrpe_version }}"
+
+- name: Create /etc/nrpe directory
+  file:
+    path: /usr/local/nagios/etc
+    state: directory
+
+- name: Ensure allowed_hosts line is in the file
+  lineinfile:
+    path: /usr/local/nagios/etc/nrpe.cfg
+    line: "allowed_hosts=127.0.0.1,10.1.6.4"
+    create: yes 
+
+- name: Enable and start the NRPE service
+  systemd:
+    name: nrpe
+    enabled: yes
+    state: started
+
