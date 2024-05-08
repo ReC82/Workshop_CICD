@@ -94,3 +94,11 @@
   systemd:
     name: sonarqube
     enabled: yes
+
+- name: Create the Postgresql backup script
+  template:
+    src: "backup_script.j2"
+    dest: "/opt/sonarqube/backup/sonarqube_backup.sh"
+    owner: sonar
+    group: sonar
+    mode: '0755'    

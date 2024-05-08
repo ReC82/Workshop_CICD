@@ -1,0 +1,33 @@
+#!/bin/bash
+#
+# Backup a Postgresql database into a daily file.
+#
+
+BACKUP_DIR={{ backup_dir | default("/opt/sonarqube/backup") }}
+DAYS_TO_KEEP={{ days_to_keep | default(14) }}
+FILE_SUFFIX={{ file_suffix | default("_pg_backup.sql") }}
+DATABASE={{ database | default("sonarqube") }}
+USER={{ user | default("sonar") }}
+
+FILE={{ database }}_$(date +"%Y%m%d%H%M")${FILE_SUFFIX}
+
+OUTPUT_FILE=${BACKUP_DIR}/${FILE}
+
+# Ensure backup directory exists
+mkdir -p ${BACKUP_DIR}
+
+# Perform the database backup
+pg_dump -c ${DATABASE} > ${OUTPUT_FILE}
+
+# Optional: Restore Command
+# psql -U {{ user }} {{ database }} < {{ file_suffix }}
+
+# Optionally compress the backup
+# gzip $OUTPUT_FILE
+
+# Show the backup file details
+echo "${OUTPUT_FILE} was created:"
+ls -l ${OUTPUT_FILE}
+
+# Prune old backups
+find ${BACKUP_DIR} -maxdepth 1 -mtime +${DAYS_TO_KEEP} -name "*${FILE_SUFFIX}" -exec rm -rf '{}' ';'

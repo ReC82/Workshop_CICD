@@ -1,0 +1,5 @@
+backup_dir: "/opt/sonarqube/backup"
+days_to_keep: 14
+file_suffix: "_pg_backup.sql"
+database: "sonarqube"
+user: "sonar"

@@ -85,5 +85,4 @@
   systemd:
     name: nginx
     state: restarted
-  when: "'syntax is ok' in nginx_configtest_result.stdout"
 
