@@ -26,7 +26,7 @@
 
 - name: Add Grafana repository with signed-by
   apt_repository:
-    repo: "deb [signed-by=/etc/apt/keyrings/grafana.gpg] https://apt.grafana.com/oss/deb stable main"
+    repo: "deb [signed-by=/etc/apt/keyrings/grafana.gpg] https://apt.grafana.com stable main"
     state: present
     filename: "grafana"
   ignore_errors: true   
