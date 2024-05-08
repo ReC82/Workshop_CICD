@@ -1,136 +1,127 @@
----
-- name: Install and Configure Nginx and Prometheus
-  hosts: all
-  become: yes
-  tasks:
-    - name: Install Nginx
-      apt:
-        name: nginx
-        state: present
+- name: Install Nginx
+  apt:
+    name: nginx
+    state: present
 
-    - name: Configure Nginx to run on port 8666
-      lineinfile:
-        path: /etc/nginx/sites-available/default
-        regexp: '^(\s*)listen\s+80\s*;'
-        line: 'listen 8666;'
-        state: present
-      notify:
-        - restart nginx
+- name: Configure Nginx to run on port 8666
+  lineinfile:
+    path: /etc/nginx/sites-available/default
+    regexp: '^(\s*)listen\s+80\s*;'
+    line: 'listen 8666;'
+    state: present
+  notify:
+    - restart nginx
 
-    - name: Add Prometheus group
-      group:
-        name: prometheus
-        state: present
+- name: Add Prometheus group
+  group:
+    name: prometheus
+    state: present
 
-    - name: Add Prometheus system user
-      user:
-        name: prometheus
-        shell: /sbin/nologin
-        system: yes
-        group: prometheus
+- name: Add Prometheus system user
+  user:
+    name: prometheus
+    shell: /sbin/nologin
+    system: yes
+    group: prometheus
 
-    - name: Create Prometheus directories
-      file:
-        path: "/var/lib/prometheus"
-        state: directory
-        owner: prometheus
-        group: prometheus
+- name: Create Prometheus directories
+  file:
+    path: "/var/lib/prometheus"
+    state: directory
+    owner: prometheus
+    group: prometheus
 
-    - name: Create Prometheus config directories
-      loop:
-        - rules
-        - rules.d
-        - files_sd
-      file:
-        path: "/etc/prometheus/{{ item }}"
-        state: directory
-        owner: prometheus
-        group: prometheus
-        mode: '0775'
+- name: Create Prometheus config directories
+  loop:
+    - rules
+    - rules.d
+    - files_sd
+  file:
+    path: "/etc/prometheus/{{ item }}"
+    state: directory
+    owner: prometheus
+    group: prometheus
+    mode: '0775'
 
-    - name: Install Curl
-      apt:
-        name: curl
-        state: present
+- name: Install Curl
+  apt:
+    name: curl
+    state: present
 
-    - name: Create /tmp/prometheus directory
-      file:
-        path: "/tmp/prometheus"
-        state: directory
+- name: Create /tmp/prometheus directory
+  file:
+    path: "/tmp/prometheus"
+    state: directory
 
-    - name: Download Prometheus
-      get_url:
-        url: "https://github.com/prometheus/prometheus/releases/download/v2.52.0-rc.1/prometheus-2.52.0-rc.1.linux-amd64.tar.gz"
-        dest: "/tmp/prometheus/prometheus-2.52.0-rc.1.linux-amd64.tar.gz"
+- name: Download Prometheus
+  get_url:
+    url: "https://github.com/prometheus/prometheus/releases/download/v2.52.0-rc.1/prometheus-2.52.0-rc.1.linux-amd64.tar.gz"
+    dest: "/tmp/prometheus/prometheus-2.52.0-rc.1.linux-amd64.tar.gz"
 
-    - name: Extract Prometheus
-      unarchive:
-        src: "/tmp/prometheus/prometheus-2.52.0-rc.1.linux-amd64.tar.gz"
-        dest: "/tmp/prometheus"
-        remote_src: yes
+- name: Extract Prometheus
+  unarchive:
+    src: "/tmp/prometheus/prometheus-2.52.0-rc.1.linux-amd64.tar.gz"
+    dest: "/tmp/prometheus"
+    remote_src: yes
 
-    - name: Move Prometheus binaries to /usr/local/bin/
-      command: |
-        mv /tmp/prometheus/prometheus-2.52.0-rc.1.linux-amd64/prometheus /usr/local/bin/
-        mv /tmp/prometheus/promtool /usr/local/bin/
+- name: Move Prometheus binaries to /usr/local/bin/
+  command: |
+    mv /tmp/prometheus/prometheus-2.52.0-rc.1.linux-amd64/prometheus /usr/local/bin/
+    mv /tmp/prometheus/promtool /usr/local/bin/
 
-    - name: Move Prometheus config files
-      command: |
-        mv /tmp/prometheus/prometheus-2.52.0-rc.1.linux-amd64/prometheus.yml /etc/prometheus/prometheus.yml
-        mv /tmp/prometheus/prometheus-2.52.0-rc.1.linux-amd64/consoles /etc/prometheus/
-        mv /tmp/prometheus/prometheus-2.52.0-rc.1.linux-amd64/console_libraries /etc/prometheus/
+- name: Move Prometheus config files
+  command: |
+    mv /tmp/prometheus/prometheus-2.52.0-rc.1.linux-amd64/prometheus.yml /etc/prometheus/prometheus.yml
+    mv /tmp/prometheus/prometheus-2.52.0-rc.1.linux-amd64/consoles /etc/prometheus/
+    mv /tmp/prometheus/prometheus-2.52.0-rc.1.linux-amd64/console_libraries /etc/prometheus/
 
-    - name: Create Prometheus systemd service
-      copy:
-        dest: "/etc/systemd/system/prometheus.service"
-        content: |
-          [Unit]
-          Description=Prometheus
-          Wants=network-online.target
-          After=network-online.target
+- name: Create Prometheus systemd service
+  copy:
+    dest: "/etc/systemd/system/prometheus.service"
+    content: |
+      [Unit]
+      Description=Prometheus
+      Wants=network-online.target
+      After=network-online.target
 
-          [Service]
-          User=prometheus
-          Group=prometheus
-          Type=simple
-          ExecStart=/usr/local/bin/prometheus \
-            --config.file /etc/prometheus/prometheus.yml \
-            --storage.tsdb.path /var/lib/prometheus/ \
-            --web.console.templates=/etc/prometheus/consoles \
-            --web.console.libraries=/etc/prometheus/console_libraries
+      [Service]
+      User=prometheus
+      Group=prometheus
+      Type=simple
+      ExecStart=/usr/local/bin/prometheus \
+        --config.file /etc/prometheus/prometheus.yml \
+        --storage.tsdb.path /var/lib/prometheus/ \
+        --web.console.templates=/etc/prometheus/consoles \
+        --web.console.libraries=/etc/prometheus/console_libraries
 
-          [Install]
-          WantedBy=multi-user.target
+      [Install]
+      WantedBy=multi-user.target
 
-    - name: Reload systemd daemons
-      systemd:
-        daemon_reload: yes
+- name: Reload systemd daemons
+  systemd:
+    daemon_reload: yes
 
-    - name: Start and enable Prometheus service
-      systemd:
-        name: prometheus
-        state: started
-        enabled: yes
+- name: Start and enable Prometheus service
+  systemd:
+    name: prometheus
+    state: started
+    enabled: yes
 
-    - name: Allow Nginx Full and Prometheus port in UFW
-      ufw:
-        rule: allow
-        name: "Nginx Full"
+- name: Allow Nginx Full and Prometheus port in UFW
+  ufw:
+    rule: allow
+    name: "Nginx Full"
 
-    - name: Allow Prometheus port 9090 in UFW
-      ufw:
-        rule: allow
-        proto: tcp
-        port: 9090
+- name: Allow Prometheus port 9090 in UFW
+  ufw:
+    rule: allow
+    proto: tcp
+    port: 9090
 
-    - name: Start and enable Nginx service
-      systemd:
-        name: nginx
-        state: started
-        enabled: yes
+- name: Start and enable Nginx service
+  systemd:
+    name: nginx
+    state: started
+    enabled: yes
 
-  handlers:
-    - name: restart nginx
-      systemd:
-        name: nginx
-        state: restarted
+
