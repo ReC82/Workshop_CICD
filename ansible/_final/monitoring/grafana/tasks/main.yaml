@@ -86,3 +86,19 @@
     name: nginx
     state: restarted
 
+- name: Ensure backup directory exists
+  file:
+    path: "/var/lib/grafana/backup"
+    state: directory
+    owner: grafana
+    group: grafana
+    mode: '0755'
+
+- name: Create backup script for Grafana database
+  template:
+    src: "grafana_backup_script.j2"
+    dest: "/var/lib/grafana/backup/backup_grafana_db.sh"
+    owner: grafana
+    group: grafana
+    mode: '0755'
+

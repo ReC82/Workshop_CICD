@@ -1,15 +1,3 @@
- ##############################
- #   udpate ubuntu
- ##############################
-- name: "apt-get update -y"
-  apt:
-    update_cache: yes
-    cache_valid_time: 3600
-
-- name: Set TimeZone
-  ansible.builtin.timezone:
-    name: Europe/Brussels
-
 ###############################
 # NAGIOS DEPEDENCIES
 ###############################
