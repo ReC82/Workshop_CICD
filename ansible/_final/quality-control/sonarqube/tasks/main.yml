@@ -95,6 +95,14 @@
     name: sonarqube
     enabled: yes
 
+- name: Ensure the SonarQube backup directory exists
+  file:
+    path: "/opt/sonarqube/backup"
+    state: directory
+    owner: sonar
+    group: sonar
+    mode: '0755'    
+
 - name: Create the Postgresql backup script
   template:
     src: "sonarqube_backup.j2"
