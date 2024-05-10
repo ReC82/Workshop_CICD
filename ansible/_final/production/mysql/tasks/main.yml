@@ -33,13 +33,13 @@
     name: mysql
     state: started
 
-- name: Ensure MySQL databases are present.
-  mysql_db:
-    name: moreless
-    collation: utf8_general_ci
-    encoding: utf8
+- name: Create user
+  mysql_user:
+    name: "moreless"
+    login_host: localhost
+    login_user: "api_user"
+    login_password: "api_user"
     state: present
-    target: omit  
 
 - name: Create a MySQL User
   mysql_user:
