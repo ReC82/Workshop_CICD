@@ -33,17 +33,26 @@
     name: mysql
     state: started
 
-- name: Create user
+- name: update mysql root password for root account
   mysql_user:
+    name: root
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    host: 'localhost'
+    password: 'root'
+    priv: "*.*:ALL,GRANT"
+    check_implicit_admin: true
+
+- name: Create user
+  mysql_db:
     name: "moreless"
-    login_host: localhost
-    login_user: "api_user"
-    login_password: "api_user"
     state: present
 
 - name: Create a MySQL User
   mysql_user:
-    name: api_user  # Name of the new user
-    password: api_user  # User's password
-    priv: "moreless.*:ALL"  # All privileges on the specified database
-    state: present  # Ensure the user exists
+    name: api_user
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    host: 'localhost'
+    password: 'api_user'
+    check_implicit_admin: true
+    priv: "moreless.*:ALL"
+    state: present
