@@ -1,3 +1,14 @@
+- name: Ensure python3-pip is installed
+  ansible.builtin.apt:
+    name: python3-pip
+    state: present
+    update_cache: yes
+
+- name: Ensure PyMySQL is installed
+  ansible.builtin.pip:
+    name: PyMySQL
+    state: present
+
 ##############################
 #   Install MySQL Server
 ##############################
@@ -5,7 +16,14 @@
   apt:
     name: mysql-server
     state: latest
-  notify: Restart MySQL  # Notify to restart MySQL if needed
+
+##############################
+#   Install MySQL Server
+##############################
+- name: Install MySQL Server
+  apt:
+    name: mysql-server
+    state: latest
 
 ##############################
 #   Ensure MySQL is Running

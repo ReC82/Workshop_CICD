@@ -10,5 +10,5 @@
 
 - name: Ensure PyMySQL is installed
   ansible.builtin.pip:
-    name: "PyMySQL"
+    name: PyMySQL
     state: present
