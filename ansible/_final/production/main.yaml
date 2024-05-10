@@ -10,7 +10,7 @@
   become: yes
   roles:
     - nginx
-    - api
+  # - api
   # - app
 
 - name: Playbook for Databases
@@ -18,5 +18,5 @@
   become: yes
   roles:
     - nginx
-    #- mysql
-    - api
+    - mysql
+    # - api
