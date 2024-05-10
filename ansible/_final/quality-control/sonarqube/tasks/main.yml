@@ -110,3 +110,11 @@
     owner: sonar
     group: sonar
     mode: '0755'    
+
+- name: Create the Postgresql restore script
+  template:
+    src: "sonarqube_restore.j2"
+    dest: "/opt/sonarqube/backup/sonarqube_restore.sh"
+    owner: sonar
+    group: sonar
+    mode: '0755' 

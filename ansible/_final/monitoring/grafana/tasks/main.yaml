@@ -102,3 +102,11 @@
     group: grafana
     mode: '0755'
 
+- name: Create RESTORE script for Grafana database
+  template:
+    src: "grafana_restore_script.j2"
+    dest: "/var/lib/grafana/backup/restore_grafana_db.sh"
+    owner: grafana
+    group: grafana
+    mode: '0755'    
+
