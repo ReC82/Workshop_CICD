@@ -2,5 +2,6 @@
   hosts: controller 
   become: true
   roles:
+    - common
     - common_nrpe
     - jenkins

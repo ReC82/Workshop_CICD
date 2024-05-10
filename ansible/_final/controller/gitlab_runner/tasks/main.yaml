@@ -1,0 +1,18 @@
+- name: Download and run GitLab Runner installation script
+  ansible.builtin.shell:
+    cmd: 'curl -L "https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh" | bash'
+
+- name: Install GitLab Runner
+  ansible.builtin.apt:
+    name: gitlab-runner
+    state: present
+
+- name: Register GitLab Runner
+  ansible.builtin.shell:
+    cmd: >
+      sudo gitlab-runner register
+      --non-interactive
+      --url "https://gitlab.com"
+      --token "glrt-Yy2qDp6vtfxCvWXDrcRf"
+      --executor "docker"
+      --docker-image "python:3.10.14-bullseye"

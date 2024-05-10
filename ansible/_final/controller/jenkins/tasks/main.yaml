@@ -38,6 +38,7 @@
     state: directory
     owner: "jenkins"
     group: "jenkins"
+    mode: '0700'
 
 - name: Add GitHub to known_hosts for Jenkins
   ansible.builtin.shell:
@@ -45,9 +46,18 @@
     executable: /bin/bash
   become_user: "jenkins"
 
-- name: Ensure proper ownership for Jenkins SSH folder
+- name: Ensure proper ownership and permissions for Jenkins SSH folder
   ansible.builtin.file:
     path: "/var/lib/jenkins/.ssh"
     owner: "jenkins"
     group: "jenkins"
+    mode: '0700'
     recurse: yes
+
+- name: Ensure Jenkins backup folder exists
+  ansible.builtin.file:
+    path: "/var/lib/jenkins/backup"
+    state: directory
+    owner: "jenkins"
+    group: "jenkins"
+    mode: '0755'

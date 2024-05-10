@@ -1,0 +1,3 @@
+- name: Change system timezone
+  ansible.builtin.shell:
+    cmd: "timedatectl set-timezone Europe/Brussels"
