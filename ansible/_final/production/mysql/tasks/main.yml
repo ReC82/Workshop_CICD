@@ -28,31 +28,27 @@
 ##############################
 #   Ensure MySQL is Running
 ##############################
-- name: Ensure MySQL Service is Running
+- name: Ensure mysql is running and starts on boot
   service:
     name: mysql
     state: started
+    enabled: yes
 
-- name: update mysql root password for root account
+- name: Ensure mysql root password is updated for all root accounts
   mysql_user:
     name: root
+    host: "{{ item }}"
     login_unix_socket: /var/run/mysqld/mysqld.sock
-    host: 'localhost'
-    password: 'root'
-    priv: "*.*:ALL,GRANT"
+    password: "{{ mysql.root_db_password }}"
+    priv: '*.*:ALL,GRANT'
     check_implicit_admin: true
+  loop: "{{ mysql.hosts }}"
+  notify: Restart MySQL
 
-- name: Create user
-  mysql_db:
-    name: "moreless"
-    state: present
-
-- name: Create a MySQL User
-  mysql_user:
-    name: api_user
-    login_unix_socket: /var/run/mysqld/mysqld.sock
-    host: 'localhost'
-    password: 'api_user'
-    check_implicit_admin: true
-    priv: "moreless.*:ALL"
-    state: present
+- name: Create `/root/.my.cnf`  with root password credentials
+  template:
+    src:  my.cnf.j2
+    dest: /root/.my.cnf
+    owner: root
+    mode: 0600
+  notify: Restart MySQL
