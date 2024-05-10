@@ -33,27 +33,17 @@
     name: mysql
     state: started
 
-- name: update mysql root password for all root accounts  
-  mysql_user:  
-    name: root  
-    host: "{{ item }}"  
-    password: "{{ mysql_root_password }}"  
-    login_user: root  
-    login_password: "{{ mysql_root_password }}"  
-    check_implicit_admin: yes  
-    priv: "*.*:ALL,GRANT"  
-    with_items:  
-    - "{{ ansible_hostname }}"  
-    - 127.0.0.1  
-    - ::1  
-    - localhost
-
-- name: create a new database  
-  mysql_db: name=moreless state=present login_user=root login_password="{{ mysql_root_password }}"
+- name: Ensure MySQL databases are present.
+  mysql_db:
+    name: moreless
+    collation: utf8_general_ci
+    encoding: utf8
+    state: present
+    target: omit  
 
 - name: Create a MySQL User
   mysql_user:
-    name: api_user  # Name of the new user
-    password: api_user  # User's password
+    name: {{ db_user }}  # Name of the new user
+    password: {{ db_pass: }}  # User's password
     priv: "moreless.*:ALL"  # All privileges on the specified database
     state: present  # Ensure the user exists
