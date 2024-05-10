@@ -43,7 +43,7 @@
 
 - name: Create a MySQL User
   mysql_user:
-    name: {{ db_user }}  # Name of the new user
-    password: {{ db_pass: }}  # User's password
+    name: api_user  # Name of the new user
+    password: api_user  # User's password
     priv: "moreless.*:ALL"  # All privileges on the specified database
     state: present  # Ensure the user exists
