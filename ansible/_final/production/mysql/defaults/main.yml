@@ -1,5 +1,5 @@
 mysql:
-  root_db_password: REDACTED
+  root_db_password: rootpwd
   hosts:
     - "{{ ansible_hostname }}"
     - 127.0.0.1
