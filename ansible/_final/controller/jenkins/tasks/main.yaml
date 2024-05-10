@@ -1,0 +1,53 @@
+- name: Ensure the keyring for Jenkins is present
+  ansible.builtin.get_url:
+    url: "https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key"
+    dest: "/usr/share/keyrings/jenkins-keyring.asc"
+    mode: '0644'
+
+- name: Add Jenkins repository to APT sources list
+  ansible.builtin.lineinfile:
+    path: "/etc/apt/sources.list.d/jenkins.list"
+    line: "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/"
+    create: yes
+    mode: '0644'
+
+- name: Update APT repository
+  ansible.builtin.apt:
+    update_cache: yes
+
+- name: Install OpenJDK 17
+  ansible.builtin.apt:
+    name: "openjdk-17-jdk"
+    state: present
+
+- name: Install Jenkins
+  ansible.builtin.apt:
+    name: "jenkins"
+    state: present
+
+- name: Create Jenkins backup folder
+  ansible.builtin.file:
+    path: "/var/lib/jenkins/backup"
+    state: directory
+    owner: "jenkins"
+    group: "jenkins"
+
+- name: Create Jenkins SSH folder
+  ansible.builtin.file:
+    path: "/var/lib/jenkins/.ssh"
+    state: directory
+    owner: "jenkins"
+    group: "jenkins"
+
+- name: Add GitHub to known_hosts for Jenkins
+  ansible.builtin.shell:
+    cmd: 'ssh-keyscan "github.com" >> /var/lib/jenkins/.ssh/known_hosts'
+    executable: /bin/bash
+  become_user: "jenkins"
+
+- name: Ensure proper ownership for Jenkins SSH folder
+  ansible.builtin.file:
+    path: "/var/lib/jenkins/.ssh"
+    owner: "jenkins"
+    group: "jenkins"
+    recurse: yes
