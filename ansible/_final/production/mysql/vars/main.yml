@@ -1,3 +1,4 @@
 db_user: api_user
 db_pass: api_user
 db_name: moreless
+mysql_root_password: password

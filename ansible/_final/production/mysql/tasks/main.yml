@@ -33,10 +33,23 @@
     name: mysql
     state: started
 
-- name: Create a MySQL Database
-  mysql_db:
-    name: moreless  # Name of the new database
-    state: present  # Ensure the database is created
+- name: update mysql root password for all root accounts  
+  mysql_user:  
+    name: root  
+    host: "{{ item }}"  
+    password: "{{ mysql_root_password }}"  
+    login_user: root  
+    login_password: "{{ mysql_root_password }}"  
+    check_implicit_admin: yes  
+    priv: "*.*:ALL,GRANT"  
+    with_items:  
+    - "{{ ansible_hostname }}"  
+    - 127.0.0.1  
+    - ::1  
+    - localhost
+
+- name: create a new database  
+  mysql_db: name=moreless state=present login_user=root login_password="{{ mysql_root_password }}"
 
 - name: Create a MySQL User
   mysql_user:
