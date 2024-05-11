@@ -89,7 +89,7 @@ rm -rf *
 # Copy Jenkins files to GitHub repository
 echo "Copying Jenkins files to repository..."
 for item in ${BACKUP_RESTORE_CONTENTS[@]}; do
-  if [ -e "\$item" ]; then
+  if [ -e "$DIR_TO_BACKUP\$item" ]; then
     echo "copying \$item "
     cp -r "$DIR_TO_BACKUP\$item" .
   else
