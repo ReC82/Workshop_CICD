@@ -46,6 +46,19 @@
     # is possible first
     check_implicit_admin: yes
 
+- name: Add user to access "moreless" database
+  mysql_user:
+    name: "{{ mysql_moreless_user }}"
+    host: localhost
+    password: "{{ mysql_moreless_password }}"
+    priv: "moreless.*:ALL"
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    login_port: "{{ mysql_port }}"
+    login_host: localhost
+    login_unix_socket: "{{ mysql_socket }}"
+    check_implicit_admin: yes    
+
 - name: Create system-wide mysql configuration file
   template:
     src: system_wide_mysql.cnf.j2

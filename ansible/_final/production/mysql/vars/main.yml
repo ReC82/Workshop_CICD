@@ -3,3 +3,6 @@ mysql_socket: /var/run/mysqld/mysqld.sock
 mysql_superuser: root
 mysql_superuser_home: "{% if mysql_superuser == 'root' %}/root{% else %}/home/{{ mysql_superuser }}{% endif %}"
 mysql_superuser_password: rootpwd
+
+mysql_moreless_user: api_user
+mysql_moreless_password: apiuserpwd

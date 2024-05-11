@@ -11,6 +11,7 @@ mkdir -p ${BACKUP_DIR}
 
 # Backup the Grafana database
 cp /var/lib/grafana/grafana.db ${BACKUP_DIR}/${BACKUP_FILE}
+chmod 755 ${BACKUP_DIR}/${BACKUP_FILE}
 
 # Output the result
 echo "Backup created: ${BACKUP_DIR}/${BACKUP_FILE}"
