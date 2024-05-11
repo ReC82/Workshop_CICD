@@ -53,7 +53,7 @@
 
 - name: Create mysql configuration file for `{{ mysql_superuser }}`
   template:
-    src: root.cnf.j2
+    src: root.my.cnf.j2
     dest: "{{ mysql_superuser_home }}/.my.cnf"
   notify:
   - Restart Mysql    
