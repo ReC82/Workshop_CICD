@@ -35,11 +35,9 @@ BACKUP_RESTORE_CONTENTS=(
   "plugins/"
   "users/"
   "secrets/"
-  "nodes/"
   "fingerprints"
   "jenkins.install.InstallUtil.lastExecVersion"
   "jenkins.install.UpgradeWizard.state"
-  "backup/sonarqube_db_backup.sql"
 )
 
 sudo mkdir -p "$SCRIPT_LOCATION"
@@ -84,6 +82,7 @@ else
 fi
 
 cd "$GITHUB_REPO"
+rm -rf *
 
 # List of important Jenkins files and directories to copy
 
@@ -135,7 +134,7 @@ fi
 
 chmod 600 "$GIT_KEY_LOCATION"
 ssh-add "$GIT_KEY_LOCATION"
-
+cd $SCRIPT_LOCATION
 # Clone the repository if it doesn't exist
 if [ ! -d "$GITHUB_REPO" ]; then
   echo "Repository directory not found. Cloning GitHub repository..."
@@ -199,5 +198,10 @@ sudo chown jenkins:jenkins "$RESTORE_SCRIPT"
 
 # Schedule cronjob
 # (crontab -l 2>/dev/null; echo "$CRONJOB_SCHEDULE $BACKUP_SCRIPT") | crontab -
+
+# Rooty can be jenkins to run the restore
+echo "rooty ALL=(jenkins) NOPASSWD: /var/lib/jenkins/backup/jenkins_restore_script.sh" | sudo tee /etc/sudoers.d/rooty > /dev/null
+sudo chmod 0440 /etc/sudoers.d/rooty
+
 
 echo "Cronjob for Jenkins backup created successfully."

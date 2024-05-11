@@ -179,7 +179,7 @@ module "agents_creation" {
   group_name            = var.group_name
   controller_public_key = module.control_security.public_key_content
   environment_name      = "Agents"
-  agents_count          = 2
+  agents_count          = 1
   depends_on = [
     azurerm_resource_group.EhealthResourceGroup,
     module.agents_access_security,
@@ -218,12 +218,60 @@ module "create_jenkins_backup_restore_scripts" {
   private_key = module.control_security.private_key_content
   description = "Create Jenkins Backup and Restore scripts"
   depends_on = [
+    module.control_security,
+    module.control_modules, 
+    module.peering_control_prod,
+    module.peering_prod_control,
+    module.control_provision,
+    module.start_ansible_on_controller,
+    module.control_generate_keys
+  ]
+}
+
+# CONTROLLER : Restore Jenkins
+module "restore_jenkins" {
+  count       = 1
+  source      = "./module_provisionner"
+  destination = module.control_modules.controller_ip
+  script_args = [""]
+  script      = pathexpand("./scripts/controller/control_restore_jenkins.sh")
+  username    = var.root_user_name
+  private_key = module.control_security.private_key_content
+  description = "Restore Jenkins Config"
+  depends_on = [
     module.control_modules,
     module.control_security,
     module.prod_modules,
     module.peering_control_prod,
     module.peering_prod_control,
-    module.control_provision
+    module.control_provision,
+    module.start_ansible_on_controller,
+    module.create_jenkins_backup_restore_scripts,
+    module.control_generate_keys
+  ]
+}
+
+# CONTROLLER : Restore Jenkins Credentials
+module "restore_jenkins_credentials" {
+  count       = 1
+  source      = "./module_provisionner"
+  destination = module.control_modules.controller_ip
+  script_args = [""]
+  script      = pathexpand("./scripts/controller/control_restore_jenkins_credentials.sh")
+  username    = var.root_user_name
+  private_key = module.control_security.private_key_content
+  description = "Restore Jenkins Credentials (private keys)"
+  depends_on = [ 
+    module.control_modules,
+    module.control_security,
+    module.prod_modules,
+    module.peering_control_prod,
+    module.peering_prod_control,
+    module.control_provision,
+    module.start_ansible_on_controller,
+    module.create_jenkins_backup_restore_scripts,
+    module.control_generate_keys,
+    module.restore_jenkins
   ]
 }
 
@@ -253,7 +301,8 @@ module "control_generate_keys" {
     module.production_security,
     azurerm_resource_group.EhealthResourceGroup,
     module.peering_control_prod,
-    module.peering_prod_control
+    module.peering_prod_control,
+    module.control_provision
   ]
 }
 
@@ -324,7 +373,7 @@ module "generate_agent_inventory_file" {
   count       = 1
   source      = "./module_provisionner"
   destination = module.control_modules.controller_ip
-  script_args = ["\"agents\" \"${module.agents_creation.private_ip_addresses}\" \"agents-java;agents-dotnet\""]
+  script_args = ["\"agents\" \"${module.agents_creation.private_ip_addresses}\" \"agents-java\""]
   script      = pathexpand("./scripts/controller/control_build_inventory_files.sh")
   username    = var.root_user_name
   private_key = module.control_security.private_key_content
@@ -391,6 +440,24 @@ module "generate_monitoring_inventory_file" {
   ]
 }
 
+# CONTROLLER
+module "generate_controller_inventory_file" {
+  count       = 1
+  source      = "./module_provisionner"
+  destination = module.control_modules.controller_ip
+  script_args = ["\"controller\" \"${module.control_modules.private_ip_addresses}\" \"controller\""]
+  script      = pathexpand("./scripts/controller/control_build_inventory_files.sh")
+  username    = var.root_user_name
+  private_key = module.control_security.private_key_content
+  description = "Create Controller Inv"
+  depends_on = [
+    module.control_modules,
+    module.control_security,
+    module.agents_creation,
+    module.agents_access_security
+  ]
+}
+
 #######################################
 ########   CLONE ANSIBLE  #############
 #######################################
@@ -432,7 +499,8 @@ module "start_ansible_on_agents" {
     module.agents_creation,
     module.agents_access_security,
     module.generate_agent_inventory_file,
-    module.control_generate_keys
+    module.control_generate_keys,
+    module.start_ansible_on_controller
   ]
 }
 
@@ -453,7 +521,8 @@ module "start_ansible_on_qc" {
     module.agents_creation,
     module.agents_access_security,
     module.generate_qc_inventory_file,
-    module.control_generate_keys
+    module.control_generate_keys,
+    module.start_ansible_on_controller
   ]
 }
 
@@ -474,7 +543,8 @@ module "start_ansible_on_production" {
     module.agents_creation,
     module.agents_access_security,
     module.generate_production_inventory_file,
-    module.control_generate_keys
+    module.control_generate_keys,
+    module.start_ansible_on_controller
   ]
 }
 
@@ -495,6 +565,25 @@ module "start_ansible_on_monitoring" {
     module.agents_creation,
     module.agents_access_security,
     module.generate_production_inventory_file,
+    module.control_generate_keys,
+    module.start_ansible_on_controller
+  ]
+}
+
+# Controller
+module "start_ansible_on_controller" {
+  count       = 1
+  source      = "./module_provisionner"
+  destination = module.control_modules.controller_ip
+  script_args = ["\"controller\"", "control.pem"]
+  script      = pathexpand("./scripts/controller/control_ansible_play.sh")
+  username    = var.root_user_name
+  private_key = module.control_security.private_key_content
+  description = "Start Ansible On Controller"
+  depends_on = [
+    module.control_modules,
+    module.control_git_clone_ansible_files,
+    module.control_security,
     module.control_generate_keys
   ]
 }

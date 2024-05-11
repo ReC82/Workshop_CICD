@@ -92,7 +92,8 @@ for arg in "$@"; do
   for ip in $EXTRACTED_IPS; do
 
     if [[ "$ip" == "$my_ip" ]]; then
-        echo "Skipping operation for IP ${ip}, matches server IP (${my_ip})"
+        sudo su root bash -c "ssh-keyscan -H ${ip} >> /etc/ssh/ssh_known_hosts"
+        echo "Skipping other operations for IP ${ip}, matches server IP (${my_ip})"
         continue
     fi
 
