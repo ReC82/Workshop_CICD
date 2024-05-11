@@ -1,6 +1,6 @@
 ﻿**********************
 Début de la transcription Windows PowerShell
-Heure de début : 20240511191225
+Heure de début : 20240511221012
 Nom d'utilisateur : LAPTOP-DEVOPSTR\Admin
 Utilisateur runAs :  LAPTOP-DEVOPSTR\Admin
 Nom de la configuration : 
@@ -17,8 +17,18 @@ PSRemotingProtocolVersion: 2.3
 SerializationVersion: 1.1.0.1
 **********************
 Transcription démarrée, le fichier de sortie est E:\Projects\Workshop_CICD\_FULL_DEPLOY\Azure\terraform_destroy_log.txt
+azurerm_resource_group.EhealthResourceGroup: Still destroying... [id=/subscriptions/3c301b3e-1216-44d4-9e5c-...67/resour
+ceGroups/EhealthResourceGroup, 50s elapsed]
+azurerm_resource_group.EhealthResourceGroup: Still destroying... [id=/subscriptions/3c301b3e-1216-44d4-9e5c-...67/resour
+ceGroups/EhealthResourceGroup, 1m0s elapsed]
+azurerm_resource_group.EhealthResourceGroup: Still destroying... [id=/subscriptions/3c301b3e-1216-44d4-9e5c-...67/resour
+ceGroups/EhealthResourceGroup, 1m10s elapsed]
+azurerm_resource_group.EhealthResourceGroup: Still destroying... [id=/subscriptions/3c301b3e-1216-44d4-9e5c-...67/resour
+ceGroups/EhealthResourceGroup, 1m20s elapsed]
+azurerm_resource_group.EhealthResourceGroup: Destruction complete after 1m21s
 
+Destroy complete! Resources: 89 destroyed.
 **********************
 Fin de la transcription Windows PowerShell
-Heure de fin : 20240511191805
+Heure de fin : 20240511221610
 **********************
