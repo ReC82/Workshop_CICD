@@ -1,21 +1,23 @@
-- name: Ensure python3-pip is installed
-  ansible.builtin.apt:
-    name: python3-pip
-    state: present
-    update_cache: yes
-
-- name: Ensure PyMySQL is installed
-  ansible.builtin.pip:
-    name: PyMySQL
-    state: present
-
 ##############################
 #   Install MySQL Server
 ##############################
 - name: Install MySQL Server
   apt:
-    name: mysql-server
-    state: latest
+    name: 
+    - mysql-server
+    - mysql-client
+    - python3-pip
+    state: present
+    update_cache: yes
+
+######################################
+# INSTALL MYSQL DEPEDENCIES
+######################################    
+
+- name: Ensure PyMySQL is installed
+  ansible.builtin.pip:
+    name: PyMySQL
+    state: present
 
 ##############################
 #   Ensure MySQL is Running
@@ -26,18 +28,32 @@
     state: started
     enabled: yes
 
-- name: user setup in mysql
+- name: Update mysql password for superuser `{{ mysql_superuser }}`
   mysql_user:
-    user: root
-    password: password
+    # Update the superuser to have all grants and a password
+    name: "{{ mysql_superuser }}"
     host: localhost
-    priv: '*.*:ALL,GRANT'
-    login_unix_socket: /var/run/mysqld/mysqld.sock
+    password: "{{ mysql_superuser_password }}"
+    priv: "*.*:ALL,GRANT"
+    # Login *as root* to perform this change, even though you might
+    # be altering the root user itself
+    login_user: root
+    login_password: ""
+    login_port: "{{ mysql_port }}"
+    login_host: localhost
+    login_unix_socket: "{{ mysql_socket }}"
+    # As a good measure,have ansible check whether an implicit login
+    # is possible first
+    check_implicit_admin: yes
 
-- name: Create `/root/.my.cnf`  with root password credentials
+- name: Create system-wide mysql configuration file
   template:
-    src:  my.cnf.j2
-    dest: /root/.my.cnf
-    owner: root
-    mode: 0600
-  notify: Restart MySQL
+    src: system_wide_mysql.cnf.j2
+    dest: /etc/my.cnf
+
+- name: Create mysql configuration file for `{{ mysql_superuser }}`
+  template:
+    src: root.cnf.j2
+    dest: "{{ mysql_superuser_home }}/.my.cnf"
+  notify:
+  - Restart Mysql    

@@ -1,4 +1,5 @@
-db_user: api_user
-db_pass: api_user
-db_name: moreless
-mysql_root_password: password
+mysql_port: 3306
+mysql_socket: /var/run/mysqld/mysqld.sock
+mysql_superuser: root
+mysql_superuser_home: "{% if mysql_superuser == 'root' %}/root{% else %}/home/{{ mysql_superuser }}{% endif %}"
+mysql_superuser_password: rootpwd
