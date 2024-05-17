@@ -3,7 +3,7 @@ Description=gunicorn daemon for Django
 After=network.target
 
 [Service]
-User={{ ansible_user }}
+User={{ django_user }}
 Group=www-data
 WorkingDirectory={{ django_app_path }}
 ExecStart={{ django_app_path }}/gunicorn_start.sh

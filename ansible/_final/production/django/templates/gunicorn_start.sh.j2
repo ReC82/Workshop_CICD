@@ -3,7 +3,7 @@
 NAME="django_app"                                    # Name of the application
 DJANGODIR={{ django_app_path }}                      # Django project directory
 SOCKFILE={{ django_app_path }}/gunicorn.sock         # Unix socket for communication
-USER={{ ansible_user }}                              # User to run as
+USER={{ django_user }}                              # User to run as
 GROUP=www-data                                       # Group to run as
 NUM_WORKERS=3                                        # Number of worker processes
 
