@@ -1,0 +1,32 @@
+#!/bin/bash
+
+NAME="django_app"                                    # Name of the application
+DJANGODIR={{ django_app_path }}                      # Django project directory
+SOCKFILE={{ django_app_path }}/gunicorn.sock         # Unix socket for communication
+USER={{ ansible_user }}                              # User to run as
+GROUP=www-data                                       # Group to run as
+NUM_WORKERS=3                                        # Number of worker processes
+
+DJANGO_SETTINGS_MODULE=myproject.settings            # Django settings module
+DJANGO_WSGI_MODULE=myproject.wsgi                    # WSGI module name
+
+echo "Starting $NAME as `whoami`"
+
+# Activate the virtual environment
+cd $DJANGODIR
+source {{ django_app_path }}/venv/bin/activate
+export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
+export PYTHONPATH=$DJANGODIR:$PYTHONPATH
+
+# Create the run directory if it doesn't exist
+RUNDIR=$(dirname $SOCKFILE)
+test -d $RUNDIR || mkdir -p $RUNDIR
+
+# Start your Django Unicorn
+exec {{ django_app_path }}/venv/bin/gunicorn ${DJANGO_WSGI_MODULE}:application \
+  --name $NAME \
+  --workers $NUM_WORKERS \
+  --user=$USER --group=$GROUP \
+  --bind=unix:$SOCKFILE \
+  --log-level=debug \
+  --log-file=-

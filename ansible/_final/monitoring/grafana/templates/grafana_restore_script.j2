@@ -3,16 +3,10 @@
 # Backup script for Grafana database
 
 # Backup directory and file name with timestamp
-BACKUP_DIR="/var/lib/grafana/backup"
-BACKUP_FILE="grafana_db_$(date +"%Y%m%d%H%M%S").db"
-
-LATEST_BACKUP_FILE=$(ls -t ${BACKUP_DIR} | head -n 1)
-
-# Ensure backup directory exists
-mkdir -p ${BACKUP_DIR}
+LATEST_BACKUP_FILE=$(ls -t /tmp/*db | head -n 1)
 
 # Backup the Grafana database
-cp ${BACKUP_DIR}/${BACKUP_FILE} /var/lib/grafana/grafana.db
+cp ${LATEST_BACKUP_FILE} /var/lib/grafana/grafana.db
 
 # Output the result
-echo "Grafana Restore Done : ${BACKUP_DIR}/${BACKUP_FILE}"
+echo "Grafana Restore Done : ${LATEST_BACKUP_FILE}"

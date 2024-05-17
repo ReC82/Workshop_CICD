@@ -1,0 +1,88 @@
+---
+- name: Update apt cache and install dependencies
+  apt:
+    update_cache: yes
+    name:
+      - python3
+      - python3-venv
+      - python3-pip
+      - libpq-dev
+      - nginx
+      - git
+    state: present
+
+- name: Create a directory for the Django app
+  file:
+    path: "{{ django_app_path }}"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+- name: Create a virtual environment
+  command: python3 -m venv {{ django_app_path }}/venv
+  args:
+    creates: "{{ django_app_path }}/venv/bin/activate"
+
+- name: Install Gunicorn
+  pip:
+    name: gunicorn
+    virtualenv: "{{ django_app_path }}/venv"
+
+- name: Configure Gunicorn
+  template:
+    src: gunicorn_start.sh.j2
+    dest: "{{ django_app_path }}/gunicorn_start.sh"
+    mode: '0755'
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+- name: Create systemd service for Gunicorn
+  template:
+    src: django.service.j2
+    dest: /etc/systemd/system/django.service
+
+- name: Enable and start Gunicorn service
+  systemd:
+    name: django
+    enabled: yes
+    state: started
+
+- name: Configure Nginx
+  copy:
+    src: /etc/nginx/sites-available/django
+    dest: /etc/nginx/sites-available/django
+    content: |
+      server {
+          listen 80;
+          server_name {{ django_server_name }};
+
+          location = /favicon.ico { access_log off; log_not_found off; }
+          location /static/ {
+              root {{ django_app_path }};
+          }
+
+          location / {
+              include proxy_params;
+              proxy_pass http://unix:{{ django_app_path }}/gunicorn.sock;
+          }
+      }
+  notify: restart nginx
+
+- name: Enable Nginx site
+  file:
+    src: /etc/nginx/sites-available/django
+    dest: /etc/nginx/sites-enabled/django
+    state: link
+  notify: restart nginx
+
+- name: Remove default Nginx site
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  notify: restart nginx
+
+- name: Ensure Nginx is running
+  service:
+    name: nginx
+    state: started
+    enabled: yes

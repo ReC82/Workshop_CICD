@@ -9,9 +9,7 @@
   hosts: node-web
   become: yes
   roles:
-    - nginx
-    - api
-  # - app
+    - django
 
 - name: Playbook for Databases
   hosts: node-db
@@ -19,4 +17,4 @@
   roles:
     - nginx
     - mysql
-    # - api
+    - api

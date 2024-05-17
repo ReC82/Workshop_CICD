@@ -1,0 +1,3 @@
+---
+django_app_path: /var/www/django_app
+django_server_name: node-web01
