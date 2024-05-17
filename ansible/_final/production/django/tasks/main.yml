@@ -48,24 +48,9 @@
     state: started
 
 - name: Configure Nginx
-  copy:
-    src: /etc/nginx/sites-available/django
+  template:
+    src: nginx_django.j2
     dest: /etc/nginx/sites-available/django
-    content: |
-      server {
-          listen 80;
-          server_name {{ django_server_name }};
-
-          location = /favicon.ico { access_log off; log_not_found off; }
-          location /static/ {
-              root {{ django_app_path }};
-          }
-
-          location / {
-              include proxy_params;
-              proxy_pass http://unix:{{ django_app_path }}/gunicorn.sock;
-          }
-      }
   notify: restart nginx
 
 - name: Enable Nginx site
