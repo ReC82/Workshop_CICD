@@ -15,8 +15,8 @@
   file:
     path: "{{ django_app_path }}"
     state: directory
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
+    owner: "{{ django_user }}"
+    group: "{{ django_user }}"
 
 - name: Create a virtual environment
   command: python3 -m venv {{ django_app_path }}/venv
@@ -33,8 +33,8 @@
     src: gunicorn_start.sh.j2
     dest: "{{ django_app_path }}/gunicorn_start.sh"
     mode: '0755'
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
+    owner: "{{ django_user }}"
+    group: "{{ django_user }}"
 
 - name: Create systemd service for Gunicorn
   template:
