@@ -1,4 +1,4 @@
 ---
-django_app_path: /var/www/django_app
+django_app_path: /var/www/moreless
 django_server_name: node-web01
 django_user: www-data
