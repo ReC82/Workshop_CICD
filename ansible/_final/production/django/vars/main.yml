@@ -3,7 +3,7 @@ project_name: moreless
 project_dir: /var/www/moreless
 venv_dir: /var/www/moreless/venv
 django_settings_path: /var/www/moreless/moreless/settings.py
-allowed_host: "http://moreless-lodydjango.centralus.cloudapp.azure.com/"
+allowed_host: "moreless-lodydjango.centralus.cloudapp.azure.com"
 static_route: "/var/www/moreless/static/"
 gunicorn_socket_path: /etc/systemd/system/gunicorn.socket
 gunicorn_service_path: /etc/systemd/system/gunicorn.service
