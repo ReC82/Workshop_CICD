@@ -67,7 +67,7 @@
   ansible.builtin.lineinfile:
     path: /etc/nginx/nginx.conf
     regexp: '^\s*#\s*server_names_hash_bucket_size\s+64;$'
-    line: 'server_names_hash_bucket_size 64;'
+    line: '    server_names_hash_bucket_size 18;'
   notify: Reload nginx
 
 - name: Allow NGINX Full
