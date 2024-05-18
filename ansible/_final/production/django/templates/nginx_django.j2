@@ -1,14 +1,14 @@
 server {
     listen 80;
-    server_name {{ django_server_name }};
+    server_name {{ allowed_host }};
 
     location = /favicon.ico { access_log off; log_not_found off; }
     location /static/ {
-        root {{ django_app_path }};
+        root {{ project_dir }};
     }
 
     location / {
         include proxy_params;
-        proxy_pass http://unix:{{ django_app_path }}/gunicorn.sock;
+        proxy_pass http://unix:/run/gunicorn.sock;
     }
 }

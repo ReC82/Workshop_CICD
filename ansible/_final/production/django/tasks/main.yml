@@ -13,33 +13,27 @@
 
 - name: Create a directory for the Django app
   file:
-    path: "{{ django_app_path }}"
+    path: "{{ project_dir }}"
     state: directory
-    owner: "{{ django_user }}"
-    group: "{{ django_user }}"
 
 - name: Create a virtual environment
-  command: python3 -m venv {{ django_app_path }}/venv
+  command: python3 -m venv {{ project_dir }}/venv
   args:
-    creates: "{{ django_app_path }}/venv/bin/activate"
+    creates: "{{ project_dir }}/venv/bin/activate"
 
 - name: Install Gunicorn
   pip:
     name: gunicorn
-    virtualenv: "{{ django_app_path }}/venv"
-
-- name: Configure Gunicorn
-  template:
-    src: gunicorn_start.sh.j2
-    dest: "{{ django_app_path }}/gunicorn_start.sh"
-    mode: '0755'
-    owner: "{{ django_user }}"
-    group: "{{ django_user }}"
+    virtualenv: "{{ project_dir }}/venv"
 
 - name: Create systemd service for Gunicorn
   template:
-    src: django.service.j2
-    dest: /etc/systemd/system/django.service
+    src: gunicorn.service.j2
+    dest: /etc/systemd/system/gunicorn.service
+
+- name: Reload systemd daemon
+  systemd:
+    daemon_reload: yes    
 
 - name: Enable and start Gunicorn service
   systemd:
@@ -47,27 +41,29 @@
     enabled: yes
     state: started
 
+- name: Start and enable gunicorn.socket
+  systemd:
+    name: gunicorn.socket
+    enabled: yes
+    state: started
+
 - name: Configure Nginx
   template:
     src: nginx_django.j2
     dest: /etc/nginx/sites-available/django
-  notify: restart nginx
 
 - name: Enable Nginx site
   file:
     src: /etc/nginx/sites-available/django
     dest: /etc/nginx/sites-enabled/django
     state: link
-  notify: restart nginx
 
-- name: Remove default Nginx site
-  file:
-    path: /etc/nginx/sites-enabled/default
-    state: absent
-  notify: restart nginx
+- name: Allow NGINX Full
+  ufw:
+    rule: allow
+    name: 'Nginx Full'
 
-- name: Ensure Nginx is running
-  service:
+- name: Reload NGINX
+  systemd:
     name: nginx
-    state: started
-    enabled: yes
+    state: reloaded
