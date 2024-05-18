@@ -42,7 +42,7 @@
 
 - name: Enable and start Gunicorn service
   systemd:
-    name: django
+    name: gunicorn
     enabled: yes
     state: started
 
