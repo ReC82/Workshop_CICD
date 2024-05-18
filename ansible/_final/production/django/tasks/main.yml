@@ -52,6 +52,13 @@
     enabled: yes
     state: started
 
+- name: Set hash bucket size to 128 in nginx configuration
+  ansible.builtin.lineinfile:
+    path: /etc/nginx/nginx.conf
+    regexp: '^(\s*server_names_hash_bucket_size)\s+\d+;$'
+    line: '\1 128;'
+    state: present   
+
 - name: Configure Nginx
   template:
     src: nginx_django.j2
