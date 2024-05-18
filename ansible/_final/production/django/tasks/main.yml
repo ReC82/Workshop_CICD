@@ -63,6 +63,14 @@
     dest: /etc/nginx/sites-enabled/django
     state: link
 
+- name: Set hash bucket size to 128 in nginx configuration
+  ansible.builtin.lineinfile:
+    path: /etc/nginx/nginx.conf
+    regexp: '^(\s*server_names_hash_bucket_size)\s+\d+;$'
+    line: '\1 128;'
+    state: present
+  notify: Reload nginx
+
 - name: Allow NGINX Full
   ufw:
     rule: allow
