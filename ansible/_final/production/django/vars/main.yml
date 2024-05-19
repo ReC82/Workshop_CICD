@@ -1,7 +1,7 @@
 ---
 project_name: moreless
 project_dir: /var/www/app
-venv_dir: /var/www/app/venv
+venv_dir: /var/www/app/vmoreless
 django_settings_path: /var/www/app/moreless/settings.py
 allowed_host: "moreless-lodydjango.centralus.cloudapp.azure.com"
 static_route: "/var/www/app/static/"

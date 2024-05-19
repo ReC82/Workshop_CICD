@@ -4,10 +4,11 @@ Requires=gunicorn.socket
 After=network.target
 
 [Service]
-User=www-data
-Group=www-data
-WorkingDirectory={{ project_dir }}
-ExecStart={{ venv_dir }}/bin/gunicorn --access-logfile - --workers 3 --bind unix:/run/gunicorn.sock {{ project_name }}.wsgi:application
+User=rooty
+Group=rooty
+WorkingDirectory=/var/www/app/moreless
+EnvironmentFile=/var/www/app/moreless/gunicorn.env
+ExecStart=/var/www/app/vmoreless/bin/gunicorn --config /var/www/app/moreless/gunicorn.conf.py  config.wsgi:application
 
 [Install]
 WantedBy=multi-user.target

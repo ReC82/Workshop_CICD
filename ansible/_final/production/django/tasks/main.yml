@@ -17,19 +17,19 @@
     state: directory
 
 - name: Create a virtual environment
-  command: python3 -m venv {{ project_dir }}/venv
+  command: python3 -m venv {{ venv_dir }}
   args:
-    creates: "{{ project_dir }}/venv/bin/activate"
+    creates: "{{ venv_dir }}/bin/activate"
 
 - name: Install Gunicorn
   pip:
     name: gunicorn
-    virtualenv: "{{ project_dir }}/venv"
+    virtualenv: "{{ venv_dir }}"
 
-- name: Create systemd socket for Gunicorn
-  template:
-    src: gunicorn.socket.j2
-    dest: /etc/systemd/system/gunicorn.socket   
+# - name: Create systemd socket for Gunicorn
+#  template:
+#    src: gunicorn.socket.j2
+#    dest: /etc/systemd/system/gunicorn.socket   
 
 - name: Create systemd service for Gunicorn
   template:
@@ -46,11 +46,11 @@
     enabled: yes
     state: started
 
-- name: Start and enable gunicorn.socket
-  systemd:
-    name: gunicorn.socket
-    enabled: yes
-    state: started
+# - name: Start and enable gunicorn.socket
+#  systemd:
+#    name: gunicorn.socket
+#    enabled: yes
+#    state: started
 
 - name: Configure Nginx
   template:
