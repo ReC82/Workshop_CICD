@@ -40,11 +40,11 @@
   systemd:
     daemon_reload: yes    
 
-- name: Enable and start Gunicorn service
-  systemd:
-    name: gunicorn
-    enabled: yes
-    state: started
+# - name: Enable and start Gunicorn service
+#  systemd:
+#    name: gunicorn
+#    enabled: yes
+#    state: started
 
 # - name: Start and enable gunicorn.socket
 #  systemd:
