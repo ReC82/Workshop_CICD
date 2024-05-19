@@ -52,6 +52,11 @@
 #    enabled: yes
 #    state: started
 
+- name: Disable Default Config
+  file:
+    src: /etc/nginx/sites-available/default
+    state: absent
+
 - name: Configure Nginx
   template:
     src: nginx_django.j2
