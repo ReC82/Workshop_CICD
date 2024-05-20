@@ -26,9 +26,9 @@ scrape_configs:
     # scheme defaults to 'http'.
 
     static_configs:
-      - targets: ["localhost:9090", "10.1.10.4:9100", "10.10.2.4:9100", "10.10.1.4:9100", "10.1.20.4:9100", "10.1.5.4:9100"]
+      - targets: ["localhost:9090", "localhost:9100", "10.1.10.4:9100", "10.10.2.4:9100", "10.10.1.4:9100", "10.1.20.4:9100", "10.1.5.4:9100"]
 
   - job_name: "http"
   
-      static_configs:
-          - targets: ["10.10.1.4:80"]
+    static_configs:
+      - targets: ["10.10.1.4:80"]
