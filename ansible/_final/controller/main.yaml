@@ -5,3 +5,4 @@
     - common
     - common_nrpe
     - jenkins
+    - node_exporter
