@@ -3,7 +3,6 @@
     name:
       - wget
       - tar
-      - ufw
     state: present
     update_cache: yes
 
@@ -61,10 +60,4 @@
     state: absent
   with_items:
     - /tmp/node_exporter-1.8.0.linux-amd64.tar.gz
-    - /usr/local/bin/node_exporter-1.8.0.linux-amd64
-
-- name: Allow Prometheus exporters 9100 in UFW
-  ufw:
-    rule: allow
-    proto: tcp
-    port: 9100      
+    - /usr/local/bin/node_exporter-1.8.0.linux-amd64    

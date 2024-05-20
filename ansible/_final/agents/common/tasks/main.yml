@@ -88,10 +88,22 @@
   shell: apt-get install ufw -y 
 
 - name: Allow SSH connections on port 22
-  shell: ufw allow 22/tcp comment 'Allow SSH'
+  ufw:
+    rule: allow
+    proto: tcp
+    port: 22 
 
 - name: Allow SSH connections on port 5666
-  shell: ufw allow 5666/tcp comment 'Allow NagiosNrpe'
+  ufw:
+    rule: allow
+    proto: tcp
+    port: 5666 
+
+- name: Allow Prometheus exporters 9100 in UFW
+  ufw:
+    rule: allow
+    proto: tcp
+    port: 9100 
 
 - name:  Enabled firewall ufw
-  shell: ufw --force enable  
+  shell: ufw --force enable 
