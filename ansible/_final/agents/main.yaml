@@ -5,6 +5,7 @@
     - common
     - common_nrpe
     - node_exporter
+    
 - name: Playbook for deploying java tools
   hosts: agents-java
   become: yes
