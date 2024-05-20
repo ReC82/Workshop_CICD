@@ -54,7 +54,7 @@
 
 - name: Disable Default Config
   file:
-    src: /etc/nginx/sites-available/default
+    path: /etc/nginx/sites-enabled/default
     state: absent
 
 - name: Configure Nginx

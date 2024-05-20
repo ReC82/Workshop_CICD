@@ -1,0 +1,63 @@
+- name: Ensure necessary dependencies are installed
+  apt:
+    name:
+      - wget
+      - tar
+    state: present
+    update_cache: yes
+
+- name: Download Node Exporter
+  get_url:
+    url: https://github.com/prometheus/node_exporter/releases/download/v1.8.0/node_exporter-1.8.0.linux-amd64.tar.gz
+    dest: /tmp/node_exporter-1.8.0.linux-amd64.tar.gz
+
+- name: Extract Node Exporter
+  unarchive:
+    src: /tmp/node_exporter-1.8.0.linux-amd64.tar.gz
+    dest: /usr/local/bin/
+    remote_src: yes
+    creates: /usr/local/bin/node_exporter-1.8.0.linux-amd64
+
+- name: Move Node Exporter binary to /usr/local/bin
+  command: mv /usr/local/bin/node_exporter-1.8.0.linux-amd64/node_exporter /usr/local/bin/node_exporter
+  args:
+    creates: /usr/local/bin/node_exporter
+
+- name: Create node_exporter user
+  user:
+    name: node_exporter
+    system: yes
+    shell: /sbin/nologin
+
+- name: Create systemd service file for Node Exporter
+  copy:
+    dest: /etc/systemd/system/node_exporter.service
+    content: |
+      [Unit]
+      Description=Node Exporter
+      Wants=network-online.target
+      After=network-online.target
+
+      [Service]
+      User=node_exporter
+      ExecStart=/usr/local/bin/node_exporter
+
+      [Install]
+      WantedBy=default.target
+
+- name: Reload systemd
+  command: systemctl daemon-reload
+
+- name: Enable and start Node Exporter service
+  systemd:
+    name: node_exporter
+    enabled: yes
+    state: started
+
+- name: Clean up downloaded and extracted files
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - /tmp/node_exporter-1.8.0.linux-amd64.tar.gz
+    - /usr/local/bin/node_exporter-1.8.0.linux-amd64
