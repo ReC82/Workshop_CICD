@@ -114,6 +114,14 @@
   systemd:
     daemon_reload: yes
 
+- name: Apply the Prometheus Config
+  template:
+    src: "prometheus_config.j2"
+    dest: "/etc/prometheus/prometheus.yml"
+    owner: prometheus
+    group: prometheus
+    mode: '0775'    
+
 - name: Start and enable Prometheus service
   systemd:
     name: prometheus

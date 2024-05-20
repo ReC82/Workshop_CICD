@@ -3,7 +3,8 @@
   become: yes
   roles:
     - common
-    - common_nrpe    
+    - common_nrpe
+    - node_exporter
 
 - name: Playbook for WebApplication
   hosts: node-web

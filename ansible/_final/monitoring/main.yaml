@@ -6,3 +6,4 @@
     - common_nrpe_server
     - prometheus
     - grafana
+    - node_exporter

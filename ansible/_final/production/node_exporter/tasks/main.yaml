@@ -67,4 +67,4 @@
   ufw:
     rule: allow
     proto: tcp
-    port: 9100      
+    port: 9100     

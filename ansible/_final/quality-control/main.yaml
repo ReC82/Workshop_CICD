@@ -10,3 +10,4 @@
     - sonarqube
     - jmeter
     - owasp
+    - node_exporter
