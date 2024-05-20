@@ -26,7 +26,7 @@ resource "azurerm_public_ip" "pubip_quality_control" {
   resource_group_name = var.group_name
   location            = var.group_location
   allocation_method   = "Static"
-  domain_name_label   = "qualitycontrol-lodycicd"
+  domain_name_label   = "qualitycontrol-lodydjango"
 }
 
 
@@ -34,7 +34,7 @@ resource "azurerm_linux_virtual_machine" "QualityControl" {
   name                = "QualityController"
   resource_group_name = var.group_name
   location            = var.group_location
-  size                = "Standard_B1s"
+  size                = "Standard_DS1_v2"
   admin_username      = var.root_user_name
   admin_password      = var.root_user_password
   disable_password_authentication = true

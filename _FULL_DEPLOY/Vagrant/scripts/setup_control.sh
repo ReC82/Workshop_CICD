@@ -1,5 +1,5 @@
 # ENV
-environment="prod"
+# environment="prod"
 # WEB
 web_ip_prod="10.0.1.10"
 web_ip_preprod="10.0.2.10"
@@ -15,18 +15,19 @@ api_ip_ci="10.0.3.12"
 
 
 
-sudo wget -O /usr/share/keyrings/jenkins-keyring.asc https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
-sudo echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/" | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
+# sudo wget -O /usr/share/keyrings/jenkins-keyring.asc https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+# sudo echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/" | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
 sudo apt-get -y update
-sudo apt-get install -y ansible nano iputils-ping vim git openjdk-17-jdk fontconfig
+sudo apt-get install -y ansible nano iputils-ping vim git jq # openjdk-17-jdk fontconfig
 
 sudo touch /home/vagrant/.ssh/known_hosts
 sudo chown vagrant:vagrant /home/vagrant/.ssh/known_hosts
 ssh-keyscan -H "${web_ip_prod}" >> /home/vagrant/.ssh/known_hosts
 ssh-keyscan -H "${db_ip_prod}" >> /home/vagrant/.ssh/known_hosts
 ssh-keyscan -H "${api_ip_prod}" >> /home/vagrant/.ssh/known_hosts
-eval "$(ssh-agent -s)"
 ssh-keyscan -H github.com >> /home/vagrant/.ssh/known_hosts
+
+eval "$(ssh-agent -s)"
 ssh-add /home/vagrant/.ssh/infrakey
 
 # Cleanup Directory
@@ -65,11 +66,11 @@ sudo chown $username:$username $jenkins_home/.ssh/known_hosts
 ssh-keyscan -H "10.0.50.150" >> $jenkins_home/.ssh/known_hosts
 
 # Install JMETER -- DO IT WITH ANSIBLE LATER
-wget -P /tmp https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.6.3.tgz
-sudo tar -xvzf /tmp/apache-jmeter-5.6.3.tgz --directory=/tmp
-mv /tmp/apache-jmeter-5.6.3 /var/lib/apache-jmeter
-echo "export JMETER_HOME=/var/lib/apache-jmeter/bin/" >> /etc/profile
-echo "export PATH=\$JMETER_HOME/bin:\$PATH" >> /etc/profile
+# wget -P /tmp https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.6.3.tgz
+# sudo tar  -xvzf /tmp/apache-jmeter-5.6.3.tgz --directory=/tmp
+# mv /tmp/apache-jmeter-5.6.3 /var/lib/apache-jmeter
+# echo "export JMETER_HOME=/var/lib/apache-jmeter/bin/" >> /etc/profile
+# echo "export PATH=\$JMETER_HOME/bin:\$PATH" >> /etc/profile
 
 # ANSIBLE AGENT
 # 

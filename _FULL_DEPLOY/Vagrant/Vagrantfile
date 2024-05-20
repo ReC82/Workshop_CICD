@@ -2,10 +2,8 @@ require 'csv'
 
 servers = []
 
-env = "prod" # !!! CONTROLLER
-
 CSV.foreach("servers.csv", headers: true) do |row|
-  if true # row["env"] == env
+  if true
     servers << {
       :server_hostname => row["server_hostname"],
       :server_ip => row["server_ip"],
@@ -18,11 +16,18 @@ CSV.foreach("servers.csv", headers: true) do |row|
   end
 end
 
+# Create Ansible inventory file
+File.open("inventory.ini", "w") do |file|
+  servers.each do |server|
+    file.puts "#{server[:server_hostname]} ansible_host=#{server[:server_ip]} ansible_port=#{server[:ssh_port]} ansible_user=vagrant"
+  end
+end
+
 Vagrant.configure("2") do |config|
   servers.each do |server|
     config.vm.define server[:server_hostname] do |srv|
 
-      # COMMON CONFIGURATIONS
+      # COMMON CONFIG
       srv.vm.box = server[:server_box]
       srv.vm.hostname = server[:server_hostname]
       srv.vm.network "private_network", ip: server[:server_ip]
@@ -30,49 +35,57 @@ Vagrant.configure("2") do |config|
       config.vm.synced_folder "./shared_folder", "/home/vagrant/shared"
 
       # PROVISION COMMON
-      srv.vm.provision "shell", run: "always", path: "scripts/setup_common.sh"
-      # PROVISION SPECIFIC
-      if server[:server_function] == "NODE"
-        # CONFIGURE PORT FOR WEBSERVER
+      # srv.vm.provision "shell", run: "always", path: "scripts/setup_common.sh"
+
+      case server[:server_function]
+      when "NODE"
         if server[:server_hostname].include?("web")
+          # NETWORK
           srv.vm.network "forwarded_port", guest: 80, host: server[:http_port], id: "http"
+
+          # CONFIG
           srv.vm.provider :virtualbox do |vbox|
-            vbox.customize ["modifyvm", :id, "--memory", 2048]
-            vbox.customize ["modifyvm", :id, "--cpus", 2]
+            vbox.customize ["modifyvm", :id, "--memory", server[:ram]]
+            vbox.customize ["modifyvm", :id, "--cpus", server[:cpu]]
           end
+
         elsif server[:server_hostname].include?("db")
-          # CONFIGURE MEMORY AND CPU FOR NODES != WEB
+          # CONFIG
           srv.vm.provider :virtualbox do |vbox|
-            vbox.customize ["modifyvm", :id, "--memory", 1024]
-            vbox.customize ["modifyvm", :id, "--cpus", 1]
-          end
-        else
-          # CONFIGURE MEMORY AND CPU FOR NODES != WEB && != DB
-          srv.vm.provider :virtualbox do |vbox|
-            vbox.customize ["modifyvm", :id, "--memory", 512]
-            vbox.customize ["modifyvm", :id, "--cpus", 1]
+            vbox.customize ["modifyvm", :id, "--memory", server[:ram]]
+            vbox.customize ["modifyvm", :id, "--cpus", server[:cpu]]
           end
         end
 
-        # EXECUTE NODE SCRIPT
-        srv.vm.provision "shell", run: "always", path: "scripts/setup_nodes.sh"
-      elsif server[:server_function] == "CONTROL"
-        # OPEN PORT 8080 for JENKINS
+      when "CONTROL"
+        # NETWORK
         srv.vm.network "forwarded_port", guest: 8080, host: server[:http_port], id: "http"
-        # EXECUTE CONTROLLER SCRIPT
+
+        # PROVISIONING
         srv.vm.provision "shell", run: "always", path: "scripts/setup_control.sh"
-        # CONFIGURE MEMORY AND CPU FOR CONTROLLER
+
+        # CONFIG
         srv.vm.provider :virtualbox do |vbox|
-          vbox.customize ["modifyvm", :id, "--memory", 2048]
-          vbox.customize ["modifyvm", :id, "--cpus", 2]
+          vbox.customize ["modifyvm", :id, "--memory", server[:ram]]
+          vbox.customize ["modifyvm", :id, "--cpus", server[:cpu]]
         end
-      elsif server[:server_function] == "AGENT"
-        srv.vm.provision "shell", run: "always", path: "scripts/setup_agent.sh"
+
+      when "AGENT"
+        # CONFIG
         srv.vm.provider :virtualbox do |agent|
-          agent.customize ["modifyvm", :id, "--memory", 1024]
-          agent.customize ["modifyvm", :id, "--cpus", 2]
+          agent.customize ["modifyvm", :id, "--memory", server[:ram]]
+          agent.customize ["modifyvm", :id, "--cpus", server[:cpu]]
         end
-      end
-    end
-  end
-end
+
+      else
+        # CONFIG MONITOR & QUALITY
+        srv.vm.provider :virtualbox do |checkers|
+          checkers.customize ["modifyvm", :id, "--memory", server[:ram]]
+          checkers.customize ["modifyvm", :id, "--cpus", server[:cpu]]
+        end
+
+      end # END OF CASE
+
+    end # END OF config.vm.define
+  end # END OF servers.each
+end # END OF Vagrant.configure("2")

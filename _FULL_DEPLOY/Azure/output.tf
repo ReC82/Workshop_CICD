@@ -10,8 +10,16 @@ output "quality_controller_dns" {
   value = module.quality_control_modules.quality_controller_dns
 }
 
-output "private_ips_prod" {
+output "private_ip_addresses" {
   value = module.prod_modules.private_ip_addresses
+}
+
+output "private_ip_addresses_mapping" {
+  value = module.prod_modules.private_ip_addresses_mapping
+}
+
+output "private_ips_prod" {
+  value = module.prod_modules.prod_private_ips
 }
 
 output "private_ips_agents" {
@@ -20,6 +28,10 @@ output "private_ips_agents" {
 
 output "webapp_public_ip_prod" {
   value = module.prod_modules.webapp_ip
+}
+
+output "web_dns" {
+  value = module.prod_modules.web_dns
 }
 
 /*

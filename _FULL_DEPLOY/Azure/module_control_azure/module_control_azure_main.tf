@@ -34,7 +34,7 @@ resource "azurerm_public_ip" "pubip_controller" {
   resource_group_name = var.group_name
   location            = var.group_location
   allocation_method   = "Static"
-  domain_name_label   = "jenkins-lodycicd"
+  domain_name_label   = "jenkins-lodydjango"
 }
 
 

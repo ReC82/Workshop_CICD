@@ -16,6 +16,7 @@ locals {
     for node_config in var.nodes_configuration : node_config.node_name => {
       name             = "subnet_${var.environment_name}_${node_config.node_name}"
       address_prefixes = node_config.subnet
+      ip_address = node_config.ip_address
       count            = node_config.count
     }
   }
@@ -42,7 +43,8 @@ resource "azurerm_network_interface" "nics" {
     content {
       name                          = "nic_${var.environment_name}_${each.key}_config_${ip_configuration.key}"
       subnet_id                     = azurerm_subnet.subnets_dynamic[each.key].id
-      private_ip_address_allocation = "Dynamic"
+      private_ip_address_allocation = "Static"
+      private_ip_address = each.value.ip_address
       public_ip_address_id = each.key == "web" ? azurerm_public_ip.pubip_node_web.id : null
     }
   }
@@ -55,6 +57,7 @@ resource "azurerm_public_ip" "pubip_node_web" {
   resource_group_name = var.resource_group_name
   location            = var.resource_location
   allocation_method   = "Static"
+  domain_name_label   = "moreless-lodydjango"
 }
 
 resource "azurerm_linux_virtual_machine" "nodes" {
@@ -62,7 +65,7 @@ resource "azurerm_linux_virtual_machine" "nodes" {
   name                            = "node-${keys(local.subnet_configurations)[count.index]}${format("%02d", count.index + 1)}"
   resource_group_name             = var.resource_group_name
   location                        = var.resource_location
-  size                            = "Standard_B1s"
+  size                            = "Standard_DS1_v2"
   admin_username                  = var.root_user_name
   admin_password                  = var.root_user_password
   disable_password_authentication = true
@@ -121,7 +124,7 @@ resource "azurerm_network_security_group" "prod_security_group_nodes" {
     source_port_range          = "*"
     destination_port_range     = "80"
     source_address_prefix      = "*"
-    destination_address_prefix = "10.0.1.10/32"
+    destination_address_prefix = "*"
   }
   security_rule {
     name                       = "HTTP-API"
@@ -131,8 +134,8 @@ resource "azurerm_network_security_group" "prod_security_group_nodes" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "80"
-    source_address_prefix      = "10.0.1.10/32"
-    destination_address_prefix = "10.0.1.11/32"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
   }
   security_rule {
     name                       = "MYSQL"
@@ -142,8 +145,8 @@ resource "azurerm_network_security_group" "prod_security_group_nodes" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "3306"
-    source_address_prefix      = "10.0.1.11/32"
-    destination_address_prefix = "10.0.1.12/32"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
   }
 
   tags = {

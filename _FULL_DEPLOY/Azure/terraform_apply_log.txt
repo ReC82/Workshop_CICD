@@ -1,12 +1,12 @@
 ﻿**********************
 Début de la transcription Windows PowerShell
-Heure de début : 20240515164036
+Heure de début : 20240520142505
 Nom d'utilisateur : LAPTOP-DEVOPSTR\Admin
 Utilisateur runAs :  LAPTOP-DEVOPSTR\Admin
 Nom de la configuration : 
 Ordinateur : LAPTOP-DEVOPSTR (Microsoft Windows NT 10.0.19045.0)
 Application hôte : C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -noexit -command try { . "c:\Program Files\Microsoft VS Code\resources\app\out\vs\workbench\contrib\terminal\browser\media\shellIntegration.ps1" } catch {}
-ID de processus : 17952
+ID de processus : 21628
 PSVersion: 5.1.19041.4412
 PSEdition: Desktop
 PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.4412
@@ -17,17 +17,8 @@ PSRemotingProtocolVersion: 2.3
 SerializationVersion: 1.1.0.1
 **********************
 Transcription démarrée, le fichier de sortie est E:\Projects\Workshop_CICD\_FULL_DEPLOY\Azure\terraform_apply_log.txt
-Apply complete! Resources: 4 added, 0 changed, 0 destroyed.
 
-Outputs:
-
-controller_public_dns = "jenkins-lodycicd.centralus.cloudapp.azure.com"
-controller_public_ip_prod = "13.67.150.31"
-private_ips_agents = "10.1.10.4"
-private_ips_prod = "10.10.2.4;10.10.1.4"
-quality_controller_dns = "qualitycontrol-lodycicd.centralus.cloudapp.azure.com"
-webapp_public_ip_prod = "13.67.145.39"
 **********************
 Fin de la transcription Windows PowerShell
-Heure de fin : 20240515164549
+Heure de fin : 20240520144321
 **********************

@@ -18,6 +18,7 @@ resource "null_resource" "script_execution" {
   provisioner "remote-exec" {
     inline = [
       "chmod +x ${var.remote_tmp_folder}/${basename(var.script)}",
+      "dos2unix ${var.remote_tmp_folder}/${basename(var.script)}",
       "${var.remote_tmp_folder}/${basename(var.script)} ${join(" ", var.script_args)}"
     ]
     connection {

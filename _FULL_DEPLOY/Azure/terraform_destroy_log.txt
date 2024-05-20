@@ -1,34 +1,44 @@
 ﻿**********************
 Début de la transcription Windows PowerShell
-Heure de début : 20240511221012
+Heure de début : 20240520141309
 Nom d'utilisateur : LAPTOP-DEVOPSTR\Admin
 Utilisateur runAs :  LAPTOP-DEVOPSTR\Admin
 Nom de la configuration : 
 Ordinateur : LAPTOP-DEVOPSTR (Microsoft Windows NT 10.0.19045.0)
 Application hôte : C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -noexit -command try { . "c:\Program Files\Microsoft VS Code\resources\app\out\vs\workbench\contrib\terminal\browser\media\shellIntegration.ps1" } catch {}
-ID de processus : 3516
-PSVersion: 5.1.19041.4291
+ID de processus : 21628
+PSVersion: 5.1.19041.4412
 PSEdition: Desktop
-PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.4291
-BuildVersion: 10.0.19041.4291
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.4412
+BuildVersion: 10.0.19041.4412
 CLRVersion: 4.0.30319.42000
 WSManStackVersion: 3.0
 PSRemotingProtocolVersion: 2.3
 SerializationVersion: 1.1.0.1
 **********************
 Transcription démarrée, le fichier de sortie est E:\Projects\Workshop_CICD\_FULL_DEPLOY\Azure\terraform_destroy_log.txt
-azurerm_resource_group.EhealthResourceGroup: Still destroying... [id=/subscriptions/3c301b3e-1216-44d4-9e5c-...67/resour
-ceGroups/EhealthResourceGroup, 50s elapsed]
-azurerm_resource_group.EhealthResourceGroup: Still destroying... [id=/subscriptions/3c301b3e-1216-44d4-9e5c-...67/resour
-ceGroups/EhealthResourceGroup, 1m0s elapsed]
-azurerm_resource_group.EhealthResourceGroup: Still destroying... [id=/subscriptions/3c301b3e-1216-44d4-9e5c-...67/resour
-ceGroups/EhealthResourceGroup, 1m10s elapsed]
-azurerm_resource_group.EhealthResourceGroup: Still destroying... [id=/subscriptions/3c301b3e-1216-44d4-9e5c-...67/resour
-ceGroups/EhealthResourceGroup, 1m20s elapsed]
-azurerm_resource_group.EhealthResourceGroup: Destruction complete after 1m21s
+module.control_security.local_file.export_private_key: Destruction complete after 0s
+module.control_security.tls_private_key.ssh_key_linux_openssh: Destroying... [id=2676e3c664f6d302d44d03815e37a11d27eea6e
+5]
+module.control_security.tls_private_key.ssh_key_linux_openssh: Destruction complete after 0s
+azurerm_resource_group.EhealthResourceGroup: Still destroying... [id=/subscriptions/a23d7bbf-64d7-4f3e-b3c7-...e/resourc
+eGroups/MoreLessResourceGroup, 10s elapsed]
+azurerm_resource_group.EhealthResourceGroup: Still destroying... [id=/subscriptions/a23d7bbf-64d7-4f3e-b3c7-...e/resourc
+eGroups/MoreLessResourceGroup, 20s elapsed]
+azurerm_resource_group.EhealthResourceGroup: Still destroying... [id=/subscriptions/a23d7bbf-64d7-4f3e-b3c7-...e/resourc
+eGroups/MoreLessResourceGroup, 30s elapsed]
+azurerm_resource_group.EhealthResourceGroup: Still destroying... [id=/subscriptions/a23d7bbf-64d7-4f3e-b3c7-...e/resourc
+eGroups/MoreLessResourceGroup, 40s elapsed]
+azurerm_resource_group.EhealthResourceGroup: Still destroying... [id=/subscriptions/a23d7bbf-64d7-4f3e-b3c7-...e/resourc
+eGroups/MoreLessResourceGroup, 50s elapsed]
+azurerm_resource_group.EhealthResourceGroup: Still destroying... [id=/subscriptions/a23d7bbf-64d7-4f3e-b3c7-...e/resourc
+eGroups/MoreLessResourceGroup, 1m0s elapsed]
+azurerm_resource_group.EhealthResourceGroup: Still destroying... [id=/subscriptions/a23d7bbf-64d7-4f3e-b3c7-...e/resourc
+eGroups/MoreLessResourceGroup, 1m10s elapsed]
+azurerm_resource_group.EhealthResourceGroup: Destruction complete after 1m20s
 
 Destroy complete! Resources: 89 destroyed.
 **********************
 Fin de la transcription Windows PowerShell
-Heure de fin : 20240511221610
+Heure de fin : 20240520142457
 **********************

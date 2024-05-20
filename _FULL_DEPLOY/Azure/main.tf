@@ -8,7 +8,7 @@ variable "group_location" {
 
 variable "group_name" {
   description = "Global Resource Group"
-  default     = "EhealthResourceGroup"
+  default     = "MoreLessResourceGroup"
 }
 
 ##########################
@@ -141,14 +141,16 @@ module "prod_modules" {
   node_count                         = 2
   nodes_configuration = [
     {
-      node_name = "web"
-      subnet    = ["10.10.1.0/24"]
-      count     = 1
+      node_name  = "web"
+      subnet     = ["10.10.1.0/24"]
+      ip_address = "10.10.1.4"
+      count      = 1
     },
     {
-      node_name = "database"
-      subnet    = ["10.10.2.0/24"]
-      count     = 1
+      node_name  = "database"
+      subnet     = ["10.10.2.0/24"]
+      ip_address = "10.10.2.4"
+      count      = 1
     } #,
     #{
     #  node_name = "api"
@@ -219,7 +221,7 @@ module "create_jenkins_backup_restore_scripts" {
   description = "Create Jenkins Backup and Restore scripts"
   depends_on = [
     module.control_security,
-    module.control_modules, 
+    module.control_modules,
     module.peering_control_prod,
     module.peering_prod_control,
     module.control_provision,
@@ -261,7 +263,7 @@ module "restore_jenkins_credentials" {
   username    = var.root_user_name
   private_key = module.control_security.private_key_content
   description = "Restore Jenkins Credentials (private keys)"
-  depends_on = [ 
+  depends_on = [
     module.control_modules,
     module.control_security,
     module.prod_modules,
@@ -391,7 +393,7 @@ module "generate_production_inventory_file" {
   count       = 1
   source      = "./module_provisionner"
   destination = module.control_modules.controller_ip
-  script_args = ["\"production\" \"${module.prod_modules.private_ip_addresses}\" \"node-web;node-db\""]
+  script_args = ["\"production\" \"${module.prod_modules.private_ip_addresses}\" \"node-db;node-web\""]
   script      = pathexpand("./scripts/controller/control_build_inventory_files.sh")
   username    = var.root_user_name
   private_key = module.control_security.private_key_content

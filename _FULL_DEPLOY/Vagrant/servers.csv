@@ -1,6 +1,7 @@
-server_hostname,server_ip,env,server_function,server_box,ssh_port,http_port
-node-web01,10.0.1.10,PROD,NODE,ubuntu/jammy64,2210,81
-node-db01,10.0.1.11,PROD,NODE,ubuntu/jammy64,2211,0
-node-api01,10.0.1.12,PROD,NODE,ubuntu/jammy64,2212,0
-agent-01,10.0.50.150,PROD,AGENT,ubuntu/jammy64,2550,0
-controller,10.0.50.100,CONTROL,CONTROL,ubuntu/jammy64,2500,8888
+server_hostname,server_ip,env,server_function,server_box,ssh_port,http_port,ram,cpu
+node-web01,10.0.1.10,PROD,NODE,ubuntu/jammy64,2210,81,512,1
+node-db01,10.0.1.11,PROD,NODE,ubuntu/jammy64,2211,0,512,1
+agent-01,10.0.50.150,PROD,AGENT,ubuntu/jammy64,2550,0,1024,1
+controller,10.0.50.100,CONTROL,CONTROL,ubuntu/jammy64,2500,8888,1024,1
+monitoring,10.0.50.101,CONTROL,MONITOR,ubuntu/jammy64,2501,9999,1024,1
+quality,10.0.50.102,CONTROL,QUALITY,ubuntu/jammy64,2502,9090,1024,1

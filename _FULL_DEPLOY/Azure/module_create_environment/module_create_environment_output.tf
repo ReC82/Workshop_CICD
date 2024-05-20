@@ -40,3 +40,7 @@ output "all_nics_ids" {
     for nic_key, nic in azurerm_network_interface.nics : nic_key => nic.id
   }
 }
+
+output "web_dns" {
+  value = azurerm_public_ip.pubip_node_web.fqdn
+}

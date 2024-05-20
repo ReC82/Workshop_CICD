@@ -8,6 +8,7 @@ FILE_PATH="/home/rooty/keys.json"
 AUTHORIZE_KEYS_FILE_PATH="/home/rooty/generated_authorized_keys"
 IP_TO_SCAN="/home/rooty/ip_to_scan.txt"
 KNOWN_HOSTS_FILE_PATH="/home/rooty/generated_known_hosts"
+ETC_HOSTS_FILE_PATH="/home/rooty/generated_hosts"
 KEYS_FILES_PATH="/home/rooty/keys"
 
 # Create or clear the output file
@@ -15,6 +16,7 @@ KEYS_FILES_PATH="/home/rooty/keys"
 > "$AUTHORIZE_KEYS_FILE_PATH"
 > "$IP_TO_SCAN"
 > "$KNOWN_HOSTS_FILE_PATH"
+> "$ETC_HOSTS_FILE_PATH"
 
 # Create a directory for the keys
 mkdir -p "$KEYS_FILES_PATH"
@@ -55,6 +57,7 @@ for arg in "$@"; do
 
   # GENERATE KNOWN_HOSTS FILE
   for ip in $EXTRACTED_IPS; do
+    echo "$ip ${keyname}_host" >> "$ETC_HOSTS_FILE_PATH"
     ssh-keyscan -H "$ip" | while read -r line; do
         echo "$line $keyname" >> "$KNOWN_HOSTS_FILE_PATH"
     done
@@ -91,17 +94,17 @@ for arg in "$@"; do
 
   for ip in $EXTRACTED_IPS; do
 
-    if [[ "$ip" == "$my_ip" ]]; then
-        sudo su root bash -c "ssh-keyscan -H ${ip} >> /etc/ssh/ssh_known_hosts"
-        echo "Skipping other operations for IP ${ip}, matches server IP (${my_ip})"
-        continue
-    fi
-
     # FOR EACH IP
     echo "ADD ${ip} to global and root known_hosts"
     #sudo su root bash -c "ls -ahl /root/.ssh/known_hosts"
-    sudo su root bash -c "ssh-keyscan -H ${ip} >> /root/.ssh/known_hosts"
-    sudo su root bash -c "ssh-keyscan -H ${ip} >> /etc/ssh/ssh_known_hosts"
+    sudo su root bash -c "echo \"\$(ssh-keyscan -H ${ip})\" \"${key}\" >> /root/.ssh/known_hosts"
+    sudo su root bash -c "echo \"\$(ssh-keyscan -H ${ip})\" \"${key}\" >> /etc/ssh/ssh_known_hosts"
+    
+    if [[ "$ip" == "$my_ip" ]]; then
+        
+        echo "Skipping other operations for IP ${ip}, matches server IP (${my_ip})"
+        continue
+    fi
     
     # Help to identify IPS
     echo "IP : ${ip} - KeyName : ${key_filename}"
@@ -124,7 +127,7 @@ for arg in "$@"; do
     # COPY THE PRIVATE KEYS FOLDER TO EACH
     echo "D) SCP private keys folder to ${ip} to rooty"
     scp -i "$KEYS_FILES_PATH/${key_filename}" -r $KEYS_FILES_PATH rooty@${ip}:/home/rooty/.ssh/
-    echo "STEP D -- OK"
+    echo "STEP D -- OK"   
     
     # CREATE JENKINS USER IF DOESN'T EXIST
     echo "Create user jenkins if not exist"
@@ -151,3 +154,6 @@ EOF
     echo "scp -- OK"
   done
 done
+
+# sudo -u root bash -c "mkdir -p /var/lib/jenkins/.ssh"
+# sudo -u root bash -c "cp /etc/ssh/ssh_known_hosts /var/lib/jenkins/.ssh/known_hosts"

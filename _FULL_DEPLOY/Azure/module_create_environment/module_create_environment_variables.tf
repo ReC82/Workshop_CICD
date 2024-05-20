@@ -24,6 +24,7 @@ variable "nodes_configuration" {
   type        = list(object({
     node_name    = string
     subnet  = list(string)
+    ip_address = string
     count = number
   }))
 }
